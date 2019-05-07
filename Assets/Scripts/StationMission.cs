@@ -11,12 +11,12 @@ public class StationMission : MonoBehaviour
     public void StartLevel()
     {
         taskText.text = "Waiting for new task...";
-        getTaskButtonAnim.SetBool("isPushed", false);
+        //getTaskButtonAnim.SetBool("isPushed", false);
     }
 
     public void GetTask()
     {
-        getTaskButtonAnim.SetBool("isPushed", true);
+        //getTaskButtonAnim.SetBool("isPushed", true);
         taskText.text = "Please bring back one blue cube. \nStart at the number station";
     }
 }

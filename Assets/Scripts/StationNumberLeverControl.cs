@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class leverControl : MonoBehaviour
+public class StationNumberLeverControl : MonoBehaviour
 {
-
     public Transform leverBase, numberWheel;
     private float localRotationX, distanceToLeverBase;
     const float leverTopMin = 0.09f, leverTopMax = -0.05f, leverBaseMin = -60f, leverBaseMax = -120f, numberWheelMin = -70f, numberWheelMax = -160f;
-    public StationNumber stationNumberVariable;
+    public StationNumber stationNumber;
 
     private void Start()
     {
@@ -24,18 +23,17 @@ public class leverControl : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-
         if (transform.localPosition.z > 0.091f)
         {
             transform.localPosition = new Vector3(0f, 0.15f, 0.09f);
             //update board total with a zero
-            stationNumberVariable.UpdateBitText(1, 0);
+            stationNumber.UpdateBitText(1, 0);
         }
         else if (transform.localPosition.z < -0.05f)
         {
             transform.localPosition = new Vector3(0f, 0.15f, -0.05f);
             //update board total with a one
-            stationNumberVariable.UpdateBitText(1, 1);
+            stationNumber.UpdateBitText(1, 1);
         }
         else transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
         
@@ -58,5 +56,4 @@ public class leverControl : MonoBehaviour
         if (NewValue > NewMin) NewValue = NewMin;
         return (NewValue);
     }
-
 }

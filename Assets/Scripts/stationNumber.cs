@@ -15,7 +15,7 @@ public class StationNumber : MonoBehaviour
     {
         leverTop.GetComponent<SphereCollider>().enabled = false;
         leverTop.GetComponent<Renderer>().material.SetColor("_Color", disabledColor);
-        leverTop.GetComponent<leverControl>().StartLevel();
+        leverTop.GetComponent<StationNumberLeverControl>().StartLevel();
         stationText.text = "Waiting for new task...";
         bit01.text = "";
         bit02.text = "";

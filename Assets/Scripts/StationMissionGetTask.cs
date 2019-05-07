@@ -4,11 +4,67 @@ using UnityEngine;
 
 public class StationMissionGetTask : MonoBehaviour
 {
+    private bool isTouched = false;
+    public bool isPoppable = false;
+    private float heightDiff;
+    public Transform buttonUpPosition, buttonDownPosition;
+
+    //collider isnt popping into the right place
+    //color should pop into another color once you release not once its down
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 9) //Hand sphere
         {
-            transform.root.GetComponent<StationManager>().GetTask();
+            if(other.transform.position.y > transform.position.y)
+            {
+                isTouched = true;
+                heightDiff = other.transform.position.y - transform.position.y;
+                Debug.Log("button is touched");
+            }
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == 9 && isTouched) //Hand sphere
+        {
+            if(transform.position.y < buttonDownPosition.position.y)
+            {
+                transform.root.GetComponent<StationManager>().GetTask();
+                this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().hitColor;
+                transform.position = buttonDownPosition.position;
+                isTouched = false;
+                GetComponent<BoxCollider>().center = new Vector3(0f, 1f, 0f);
+                Debug.Log("button is down");
+            }
+            else if(transform.position.y > buttonUpPosition.position.y)
+            {
+                //button is at highest point, user is releasing button, dont move now so we trigger OnTriggerExit
+                Debug.Log("button is up");
+                transform.position = buttonUpPosition.position;
+                GetComponent<BoxCollider>().center = Vector3.zero;
+            }
+            else
+            {
+                transform.position = new Vector3(transform.position.x, other.transform.position.y - heightDiff, transform.position.z);
+                GetComponent<BoxCollider>().center = buttonUpPosition.position;
+                Debug.Log("button is going down");
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 9 && isPoppable) //Hand sphere && releasing button after not pushing it all the way down
+        {
+            transform.position = buttonUpPosition.position;
+            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().activeColor;
+            isTouched = false;
+            GetComponent<BoxCollider>().center = Vector3.zero;
+            Debug.Log("button is released");
+        }
+    }
+
+
 }

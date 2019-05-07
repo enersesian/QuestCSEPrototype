@@ -8,7 +8,6 @@ public class StationOutput : MonoBehaviour
     public GameObject runButtonCollider, runButton;
     public Color activeColor;
     public Text stationText;
-    public StationNumber stationNumberMng;
     public Transform cubeGrabbable, cubeGrabbleStartPosition;
 
     public void StartLevel()
@@ -16,6 +15,7 @@ public class StationOutput : MonoBehaviour
         runButtonCollider.GetComponent<BoxCollider>().enabled = false;
         runButton.GetComponent<Animator>().SetBool("isPushed", false);
         stationText.text = "";
+
         cubeGrabbable.position = cubeGrabbleStartPosition.position;
         cubeGrabbable.rotation = cubeGrabbleStartPosition.rotation;
 

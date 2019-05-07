@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class buttonPushOutput : MonoBehaviour
+public class StationMissionRunTask : MonoBehaviour
 {
     public Animator buttonAnim;
     public Text TaskText;

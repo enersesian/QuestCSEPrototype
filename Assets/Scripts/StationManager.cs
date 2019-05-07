@@ -9,6 +9,8 @@ public class StationManager : MonoBehaviour
     public StationNumber stationNumber;
     public StationOutput stationOutput;
 
+    public Color activeColor, disabledColor, hitColor;
+
     private enum UserProgression { startLevel, getTask, runOutput };
     private UserProgression userProgression;
 
