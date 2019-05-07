@@ -8,11 +8,17 @@ public class leverControl : MonoBehaviour
     public Transform leverBase, numberWheel;
     private float localRotationX, distanceToLeverBase;
     const float leverTopMin = 0.09f, leverTopMax = -0.05f, leverBaseMin = -60f, leverBaseMax = -120f, numberWheelMin = -70f, numberWheelMax = -160f;
-    public stationNumber stationNumberVariable;
+    public StationNumber stationNumberVariable;
 
     private void Start()
     {
+        StartLevel();
+    }
+
+    public void StartLevel()
+    {
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
+        transform.localPosition = new Vector3(0f, 0.15f, 0.09f);
     }
 
     // Update is called once per frame

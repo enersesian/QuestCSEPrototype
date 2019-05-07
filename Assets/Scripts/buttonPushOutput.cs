@@ -8,7 +8,7 @@ public class buttonPushOutput : MonoBehaviour
     public Animator buttonAnim;
     public Text TaskText;
     public GameObject cubeCollectable;
-    public stationNumber stationNumMng;
+    public StationNumber stationNumMng;
 
     private void OnTriggerEnter(Collider other)
     {

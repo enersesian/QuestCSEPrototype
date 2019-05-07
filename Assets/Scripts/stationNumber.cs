@@ -3,18 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class stationNumber : MonoBehaviour {
-
-    public GameObject levelTop;
-    public Color activeColor;
+public class StationNumber : MonoBehaviour
+{
+    public GameObject leverTop;
+    public Color activeColor, disabledColor;
     public Text stationText, bit01, bit02, bit03, bit04;
-    private int totalCount = 0;
-    public OutputStationManager outputMng;
+    private int totalCount;
+    public StationOutput stationOutput;
 
-    public void ActivateStation()
+    public void StartLevel()
     {
-        levelTop.GetComponent<SphereCollider>().enabled = true;
-        levelTop.GetComponent<Renderer>().material.SetColor("_Color", activeColor);
+        leverTop.GetComponent<SphereCollider>().enabled = false;
+        leverTop.GetComponent<Renderer>().material.SetColor("_Color", disabledColor);
+        leverTop.GetComponent<leverControl>().StartLevel();
+        stationText.text = "Waiting for new task...";
+        bit01.text = "";
+        bit02.text = "";
+        bit03.text = "";
+        bit04.text = "";
+        totalCount = 0;
+    }
+
+    public void GetTask()
+    {
+        leverTop.GetComponent<SphereCollider>().enabled = true;
+        leverTop.GetComponent<Renderer>().material.SetColor("_Color", activeColor);
         stationText.text = "Total = 0";
         bit01.text = "0";
         bit02.text = "0";
@@ -49,8 +62,7 @@ public class stationNumber : MonoBehaviour {
                 break;
         }
         stationText.text = "Total = " + totalCount.ToString();
-        outputMng.ActivateStation();
-
+        stationOutput.UpdateUI(totalCount);
     }
 
     public int GetTotalCount()

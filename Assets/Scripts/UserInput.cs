@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class UserInput : MonoBehaviour
 {
+    public StationManager stationManager;
+
     public float movementSpeed = 0.01f;
 
     private Vector2 rightThumbAxis;
     private float heightChange = 0f;
 	
 	// Update is called once per frame
+    //Possible feature: disable hand colliders when moving avatar around level 
+    //to remove chance of superuser accidently interacting with a station's controls while moving
 	void Update ()
     {
-        rightThumbAxis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) * movementSpeed;
+        rightThumbAxis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) * movementSpeed; //position control
 
         if (OVRInput.Get(OVRInput.Button.One)) //Right-hand A button
         {
@@ -27,5 +31,11 @@ public class UserInput : MonoBehaviour
         else heightChange = 0f;
 
         transform.position = new Vector3(transform.position.x + rightThumbAxis.x, transform.position.y + heightChange, transform.position.z + rightThumbAxis.y);
+
+        if (OVRInput.Get(OVRInput.Button.Three)) //Left-hand X button //Reset level
+        {
+            stationManager.StartLevel();
+        }
+
     }
 }
