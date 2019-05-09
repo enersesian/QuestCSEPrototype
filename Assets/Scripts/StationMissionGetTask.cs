@@ -31,7 +31,14 @@ public class StationMissionGetTask : MonoBehaviour
         {
             if(transform.position.y < buttonDownPosition.position.y)
             {
-                transform.root.GetComponent<StationManager>().GetTask();
+                if(gameObject.name == "buttonGetTask")
+                {
+                    transform.root.GetComponent<StationManager>().GetTask();
+                }
+                if (gameObject.name == "buttonRunOutput")
+                {
+                    transform.root.GetComponent<StationManager>().RunOutput();
+                }
                 this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().hitColor;
                 transform.position = buttonDownPosition.position;
                 isTouched = false;

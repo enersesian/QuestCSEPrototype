@@ -35,4 +35,13 @@ public class StationOutput : MonoBehaviour
     {
         stationText.text = "Hit button to generate:\n" + totalCount.ToString() + " blue cube(s)";
     }
+
+    public void RunOutput()
+    {
+        stationText.text = "Output generated\nPlease take output to task station";
+        if (transform.parent.GetComponent<StationManager>().stationNumber.GetTotalCount() == 1)
+        {
+            cubeGrabbable.transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
 }

@@ -37,4 +37,11 @@ public class StationManager : MonoBehaviour
         stationNumber.GetTask();
         stationOutput.GetTask();
     }
+
+    public void RunOutput()
+    {
+        userProgression = UserProgression.runOutput;
+
+        stationOutput.RunOutput();
+    }
 }
