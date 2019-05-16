@@ -20,7 +20,7 @@ public class StationMissionGetTask : MonoBehaviour
             {
                 isTouched = true;
                 heightDiff = other.transform.position.y - transform.position.y;
-                Debug.Log("button is touched");
+                Debug.Log("button is touched" + transform.position.y.ToString());
             }
         }
     }
@@ -43,20 +43,21 @@ public class StationMissionGetTask : MonoBehaviour
                 transform.position = buttonDownPosition.position;
                 isTouched = false;
                 GetComponent<BoxCollider>().center = new Vector3(0f, 1f, 0f);
-                Debug.Log("button is down");
+                Debug.Log("button is down" + transform.position.y.ToString());
             }
             else if(transform.position.y > buttonUpPosition.position.y)
             {
                 //button is at highest point, user is releasing button, dont move now so we trigger OnTriggerExit
-                Debug.Log("button is up");
+                
                 transform.position = buttonUpPosition.position;
                 GetComponent<BoxCollider>().center = Vector3.zero;
+                Debug.Log("button is up" + transform.position.y.ToString());
             }
             else
             {
                 transform.position = new Vector3(transform.position.x, other.transform.position.y - heightDiff, transform.position.z);
                 GetComponent<BoxCollider>().center = buttonUpPosition.position;
-                Debug.Log("button is going down");
+                Debug.Log("button is going down" + transform.position.y.ToString());
             }
         }
     }
@@ -69,7 +70,7 @@ public class StationMissionGetTask : MonoBehaviour
             this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().activeColor;
             isTouched = false;
             GetComponent<BoxCollider>().center = Vector3.zero;
-            Debug.Log("button is released");
+            Debug.Log("button is released" + transform.position.y.ToString());
         }
     }
 

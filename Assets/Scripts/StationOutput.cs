@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StationOutput : MonoBehaviour
 {
-    public GameObject runButtonCollider, runButton;
+    public GameObject runButtonCollider;
     public Color activeColor;
     public Text stationText;
     public Transform cubeGrabbable, cubeGrabbleStartPosition;
@@ -13,7 +13,6 @@ public class StationOutput : MonoBehaviour
     public void StartLevel()
     {
         runButtonCollider.GetComponent<BoxCollider>().enabled = false;
-        runButton.GetComponent<Animator>().SetBool("isPushed", false);
         stationText.text = "";
 
         cubeGrabbable.position = cubeGrabbleStartPosition.position;
@@ -28,7 +27,6 @@ public class StationOutput : MonoBehaviour
     {
         runButtonCollider.GetComponent<BoxCollider>().enabled = true;
         UpdateUI(0);
-        //runButton.GetComponent<Renderer>().material.SetColor("_Color", activeColor);
     }
 
     public void UpdateUI(int totalCount)

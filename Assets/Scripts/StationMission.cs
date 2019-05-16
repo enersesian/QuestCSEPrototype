@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class StationMission : MonoBehaviour
 {
-    public Animator getTaskButtonAnim;
     public Text taskText;
 
     public void StartLevel()
