@@ -16,7 +16,7 @@ public class StationMissionGetTask : MonoBehaviour
     {
         if (other.gameObject.layer == 9) //Hand sphere
         {
-            if(other.transform.position.y > transform.position.y)
+            if(other.transform.position.y > buttonDownPosition.position.y)
             {
                 isTouched = true;
                 heightDiff = other.transform.position.y - transform.position.y;

@@ -6,15 +6,13 @@ using UnityEngine.UI;
 public class StationNumber : MonoBehaviour
 {
     public GameObject leverTop;
-    public Color activeColor, disabledColor;
     public Text stationText, bit01, bit02, bit03, bit04;
     private int totalCount;
-    public StationOutput stationOutput;
 
     public void StartLevel()
     {
         leverTop.GetComponent<SphereCollider>().enabled = false;
-        leverTop.GetComponent<Renderer>().material.SetColor("_Color", disabledColor);
+        leverTop.GetComponent<Renderer>().material.SetColor("_Color", transform.parent.GetComponent<StationManager>().disabledColor);
         leverTop.GetComponent<StationNumberLeverControl>().StartLevel();
         stationText.text = "Waiting for new task...";
         bit01.text = "";
@@ -27,7 +25,7 @@ public class StationNumber : MonoBehaviour
     public void GetTask()
     {
         leverTop.GetComponent<SphereCollider>().enabled = true;
-        leverTop.GetComponent<Renderer>().material.SetColor("_Color", activeColor);
+        leverTop.GetComponent<Renderer>().material.SetColor("_Color", transform.parent.GetComponent<StationManager>().activeColor);
         stationText.text = "Total = 0";
         bit01.text = "0";
         bit02.text = "0";
@@ -62,7 +60,7 @@ public class StationNumber : MonoBehaviour
                 break;
         }
         stationText.text = "Total = " + totalCount.ToString();
-        stationOutput.UpdateUI(totalCount);
+        transform.parent.GetComponent<StationManager>().stationOutput.UpdateUI(totalCount);
     }
 
     public int GetTotalCount()

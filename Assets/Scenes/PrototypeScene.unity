@@ -2609,7 +2609,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leverBase: {fileID: 845050402}
   numberWheel: {fileID: 1582098681}
-  stationNumber: {fileID: 1103065052}
 --- !u!114 &178192964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3313,7 +3312,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leverBase: {fileID: 2029107081}
   numberWheel: {fileID: 319653617}
-  stationNumber: {fileID: 309991975}
 --- !u!114 &217653130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4373,7 +4371,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-31500
+  m_Name: pb_Mesh19910
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -4626,15 +4624,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953010b28d982d94f873bb6b4df2b860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leverTop: {fileID: 217653127}
-  activeColor: {r: 0.40784317, g: 0.6039216, b: 0.41176474, a: 1}
-  disabledColor: {r: 0.8867924, g: 0.50614095, b: 0.56817305, a: 1}
-  stationText: {fileID: 672851574}
-  bit01: {fileID: 574160428}
-  bit02: {fileID: 1719259209}
-  bit03: {fileID: 323053652}
-  bit04: {fileID: 1933325039}
-  stationOutput: {fileID: 1233791850}
+  leverTop: {fileID: 0}
+  stationText: {fileID: 0}
+  bit01: {fileID: 0}
+  bit02: {fileID: 0}
+  bit03: {fileID: 0}
+  bit04: {fileID: 0}
 --- !u!1 &319653616
 GameObject:
   m_ObjectHideFlags: 0
@@ -4930,7 +4925,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leverBase: {fileID: 498351989}
   numberWheel: {fileID: 561894630}
-  stationNumber: {fileID: 1396692998}
 --- !u!114 &337762677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6355,15 +6349,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953010b28d982d94f873bb6b4df2b860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leverTop: {fileID: 1634049705}
-  activeColor: {r: 0.40784317, g: 0.6039216, b: 0.41176474, a: 1}
-  disabledColor: {r: 0.8867924, g: 0.50614095, b: 0.56817305, a: 1}
-  stationText: {fileID: 1992948657}
-  bit01: {fileID: 1975628432}
-  bit02: {fileID: 949810148}
-  bit03: {fileID: 2041929058}
-  bit04: {fileID: 985488693}
-  stationOutput: {fileID: 1233791850}
+  leverTop: {fileID: 0}
+  stationText: {fileID: 0}
+  bit01: {fileID: 0}
+  bit02: {fileID: 0}
+  bit03: {fileID: 0}
+  bit04: {fileID: 0}
 --- !u!1 &471360074
 GameObject:
   m_ObjectHideFlags: 0
@@ -12320,7 +12311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aada3e5ffe5ab2d469282cdb1312d1d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPoppable: 1
+  isPoppable: 0
   buttonUpPosition: {fileID: 609757956}
   buttonDownPosition: {fileID: 1677411112}
 --- !u!65 &883056789
@@ -12704,7 +12695,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leverBase: {fileID: 450945126}
   numberWheel: {fileID: 569135614}
-  stationNumber: {fileID: 1140785159}
 --- !u!1 &915823436
 GameObject:
   m_ObjectHideFlags: 0
@@ -15633,15 +15623,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953010b28d982d94f873bb6b4df2b860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leverTop: {fileID: 178192961}
-  activeColor: {r: 0.40784317, g: 0.6039216, b: 0.41176474, a: 1}
-  disabledColor: {r: 0.8867924, g: 0.50614095, b: 0.56817305, a: 1}
-  stationText: {fileID: 737672864}
-  bit01: {fileID: 1118397115}
-  bit02: {fileID: 819389420}
-  bit03: {fileID: 1909999756}
-  bit04: {fileID: 858595523}
-  stationOutput: {fileID: 1233791850}
+  leverTop: {fileID: 0}
+  stationText: {fileID: 0}
+  bit01: {fileID: 0}
+  bit02: {fileID: 0}
+  bit03: {fileID: 0}
+  bit04: {fileID: 0}
 --- !u!1 &1105574703
 GameObject:
   m_ObjectHideFlags: 0
@@ -15810,7 +15797,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1113926092}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 4.654}
+  m_LocalPosition: {x: 0.397, y: 0.2, z: 0.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1919883465}
@@ -16099,15 +16086,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953010b28d982d94f873bb6b4df2b860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leverTop: {fileID: 905458275}
-  activeColor: {r: 0.40784317, g: 0.6039216, b: 0.41176474, a: 1}
-  disabledColor: {r: 0.8867924, g: 0.50614095, b: 0.56817305, a: 1}
-  stationText: {fileID: 1387750072}
-  bit01: {fileID: 437746121}
-  bit02: {fileID: 2114195656}
-  bit03: {fileID: 1833767180}
-  bit04: {fileID: 2007134240}
-  stationOutput: {fileID: 1932694029}
+  leverTop: {fileID: 0}
+  stationText: {fileID: 0}
+  bit01: {fileID: 0}
+  bit02: {fileID: 0}
+  bit03: {fileID: 0}
+  bit04: {fileID: 0}
 --- !u!1 &1145033226
 GameObject:
   m_ObjectHideFlags: 0
@@ -19376,14 +19360,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leverTop: {fileID: 337762674}
-  activeColor: {r: 0.40784317, g: 0.6039216, b: 0.41176474, a: 1}
-  disabledColor: {r: 0.8867924, g: 0.50614095, b: 0.56817305, a: 1}
   stationText: {fileID: 55087660}
   bit01: {fileID: 1975594440}
   bit02: {fileID: 788303744}
   bit03: {fileID: 113738976}
   bit04: {fileID: 728567891}
-  stationOutput: {fileID: 1233791850}
 --- !u!4 &1396692999
 Transform:
   m_ObjectHideFlags: 0
@@ -22624,7 +22605,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leverBase: {fileID: 1466089794}
   numberWheel: {fileID: 1587590254}
-  stationNumber: {fileID: 464638917}
 --- !u!114 &1634049708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23044,7 +23024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aada3e5ffe5ab2d469282cdb1312d1d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPoppable: 1
+  isPoppable: 0
   buttonUpPosition: {fileID: 1450749851}
   buttonDownPosition: {fileID: 425122133}
 --- !u!65 &1662937624
