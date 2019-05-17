@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StationMissionGetTask : MonoBehaviour
+public class ButtonPushable : MonoBehaviour
 {
-    private bool isTouched = false;
+    private bool isTouched = false, isPushable = true;
     public bool isPoppable = false;
     private float heightDiff;
     public Transform buttonUpPosition, buttonDownPosition;
@@ -12,9 +12,18 @@ public class StationMissionGetTask : MonoBehaviour
     //collider isnt popping into the right place
     //color should pop into another color once you release not once its down
 
+    public void ResetButton()
+    {
+        transform.position = buttonUpPosition.position;
+        this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().activeColor;
+        isTouched = false;
+        isPushable = true;
+        GetComponent<BoxCollider>().center = Vector3.zero;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 9) //Hand sphere
+        if (other.gameObject.layer == 9 && isPushable) //Hand sphere
         {
             if(other.transform.position.y > buttonDownPosition.position.y)
             {
@@ -42,6 +51,7 @@ public class StationMissionGetTask : MonoBehaviour
                 this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().hitColor;
                 transform.position = buttonDownPosition.position;
                 isTouched = false;
+                isPushable = false;
                 GetComponent<BoxCollider>().center = new Vector3(0f, 1f, 0f);
                 Debug.Log("button is down" + transform.position.y.ToString());
             }
@@ -66,13 +76,7 @@ public class StationMissionGetTask : MonoBehaviour
     {
         if (other.gameObject.layer == 9 && isPoppable) //Hand sphere && releasing button after not pushing it all the way down
         {
-            transform.position = buttonUpPosition.position;
-            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().activeColor;
-            isTouched = false;
-            GetComponent<BoxCollider>().center = Vector3.zero;
-            Debug.Log("button is released" + transform.position.y.ToString());
+            ResetButton();
         }
     }
-
-
 }

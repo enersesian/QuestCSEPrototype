@@ -12263,8 +12263,8 @@ GameObject:
   - component: {fileID: 883056791}
   - component: {fileID: 883056790}
   - component: {fileID: 883056789}
-  - component: {fileID: 883056788}
   - component: {fileID: 883056787}
+  - component: {fileID: 883056788}
   m_Layer: 0
   m_Name: buttonGetTask
   m_TagString: Untagged
@@ -12308,7 +12308,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 883056785}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aada3e5ffe5ab2d469282cdb1312d1d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 982f3fc36d98ed5409e8769c333b6680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isPoppable: 0
@@ -15797,7 +15797,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1113926092}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.397, y: 0.2, z: 0.53}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1919883465}
@@ -17381,7 +17381,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1233791849}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.069, y: 0.2, z: 0.537}
+  m_LocalPosition: {x: -0.52, y: 0.2, z: 0.537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 510726006}
@@ -19372,7 +19372,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1396692997}
   m_LocalRotation: {x: 0, y: 0.42261827, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 3.99, y: 0.19999999, z: 2.5}
+  m_LocalPosition: {x: 0.67, y: 0.19999999, z: 0.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1630909795}
@@ -22976,8 +22976,8 @@ GameObject:
   - component: {fileID: 1662937626}
   - component: {fileID: 1662937625}
   - component: {fileID: 1662937624}
-  - component: {fileID: 1662937623}
   - component: {fileID: 1662937622}
+  - component: {fileID: 1662937623}
   m_Layer: 0
   m_Name: buttonRunOutput
   m_TagString: Untagged
@@ -23021,7 +23021,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1662937620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aada3e5ffe5ab2d469282cdb1312d1d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 982f3fc36d98ed5409e8769c333b6680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isPoppable: 0
@@ -23583,7 +23583,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1691719772}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
