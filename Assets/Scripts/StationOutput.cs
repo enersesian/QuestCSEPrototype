@@ -30,16 +30,16 @@ public class StationOutput : MonoBehaviour
         UpdateUI(0);
     }
 
-    public void UpdateUI(int totalCount)
+    public void UpdateUI(int number)
     {
-        stationText.text = "Hit button to generate:\n" + totalCount.ToString() + " blue cube(s)";
+        stationText.text = "Hit button to generate:\n" + number.ToString() + " blue cube(s)";
     }
 
     public void RunOutput()
     {
         stationText.text = "Output generated\nPlease take output to task station";
         cubeGrabbable.GetComponent<BoxCollider>().enabled = true;
-        if (transform.parent.GetComponent<StationManager>().stationNumber.GetTotalCount() == 1)
+        if (transform.parent.GetComponent<StationManager>().GetNumber() == 1)
         {
             cubeGrabbable.transform.GetChild(0).gameObject.SetActive(true);
         }

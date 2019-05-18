@@ -8,6 +8,12 @@ public class StationNumber : MonoBehaviour
     public GameObject leverTop;
     public Text stationText, bit01, bit02, bit03, bit04;
     private int totalCount;
+    private StationManager stationManager;
+
+    private void Start()
+    {
+        stationManager = transform.parent.GetComponent<StationManager>();
+    }
 
     public void StartLevel()
     {
@@ -19,13 +25,22 @@ public class StationNumber : MonoBehaviour
         bit02.text = "";
         bit03.text = "";
         bit04.text = "";
-        totalCount = 0;
+        //totalCount = 0;
     }
 
-    public void GetTask()
+    public void GetTask(int currentTask)
     {
-        leverTop.GetComponent<SphereCollider>().enabled = true;
-        leverTop.GetComponent<Renderer>().material.SetColor("_Color", transform.parent.GetComponent<StationManager>().activeColor);
+        switch(currentTask)
+        {
+            case 1:
+                leverTop.GetComponent<SphereCollider>().enabled = true;
+                leverTop.GetComponent<Renderer>().material.SetColor("_Color", transform.parent.GetComponent<StationManager>().activeColor);
+                break;
+
+            default:
+                break;
+        }
+
         stationText.text = "Total = 0";
         bit01.text = "0";
         bit02.text = "0";
@@ -33,16 +48,16 @@ public class StationNumber : MonoBehaviour
         bit04.text = "0";
     }
 
-    public void UpdateBitText(int bitNumber, int bitAmount)
+    public void UpdateBitText(int bit, int bitStatus)
     {
-        totalCount = 0;
-        switch(bitNumber)
+        //totalCount = 0;
+        switch(bit)
         {
             case 1:
-                if (bitAmount == 1)
+                if (bitStatus == 1)
                 {
                     bit01.text = "1";
-                    totalCount++;
+                    //totalCount++;
                 }
                 else bit01.text = "0";
                 break;
@@ -59,12 +74,7 @@ public class StationNumber : MonoBehaviour
             default:
                 break;
         }
-        stationText.text = "Total = " + totalCount.ToString();
-        transform.parent.GetComponent<StationManager>().stationOutput.UpdateUI(totalCount);
-    }
-
-    public int GetTotalCount()
-    {
-        return totalCount;
+        stationText.text = "Total = " + stationManager.GetNumber().ToString();
+        //transform.parent.GetComponent<StationManager>().stationOutput.UpdateUI(totalCount);
     }
 }

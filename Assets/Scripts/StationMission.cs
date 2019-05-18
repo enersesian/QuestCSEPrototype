@@ -10,13 +10,16 @@ public class StationMission : MonoBehaviour
 
     public void StartLevel()
     {
-        taskText.text = "Waiting for new task...";
+        taskText.text = "Waiting for new task...\nPush Get Task Button";
         getButton.ResetButton(true);
     }
 
-    public void GetTask()
+    public void GetTask(int currentTask)
     {
-        taskText.text = "Please bring back one blue cube. \nStart at the number station";
+        if(currentTask == 1)
+        {
+            taskText.text = "Welcome to task one \nPlease bring back one blue cube. \nStart at the number station";
+        }
     }
 
     public void SendOutput()

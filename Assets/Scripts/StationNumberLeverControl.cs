@@ -8,9 +8,12 @@ public class StationNumberLeverControl : MonoBehaviour
     private float localRotationX, distanceToLeverBase;
     const float leverTopMin = 0.09f, leverTopMax = -0.05f, leverBaseMin = -60f, leverBaseMax = -120f, numberWheelMin = -70f, numberWheelMax = -160f;
 
+    private StationManager stationManager;
+
     private void Start()
     {
         StartLevel();
+        stationManager = transform.parent.parent.parent.parent.GetComponent<StationManager>();
     }
 
     public void StartLevel()
@@ -26,13 +29,15 @@ public class StationNumberLeverControl : MonoBehaviour
         {
             transform.localPosition = new Vector3(0f, 0.15f, 0.09f);
             //update board total with a zero
-            transform.parent.parent.parent.GetComponent<StationNumber>().UpdateBitText(1, 0);
+            stationManager.SetNumber(1, 0); //bit 0 = 0
+            //transform.parent.parent.parent.GetComponent<StationNumber>().UpdateBitText(1, 0);
         }
         else if (transform.localPosition.z < -0.05f)
         {
             transform.localPosition = new Vector3(0f, 0.15f, -0.05f);
             //update board total with a one
-            transform.parent.parent.parent.GetComponent<StationNumber>().UpdateBitText(1, 1);
+            stationManager.SetNumber(1, 1); //bit 0 = 1
+            //transform.parent.parent.parent.GetComponent<StationNumber>().UpdateBitText(1, 1);
         }
         else transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
         
