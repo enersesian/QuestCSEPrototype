@@ -16,7 +16,11 @@ public class StationMission : MonoBehaviour
 
     public void GetTask()
     {
-        //getTaskButtonAnim.SetBool("isPushed", true);
         taskText.text = "Please bring back one blue cube. \nStart at the number station";
+    }
+
+    public void SendOutput()
+    {
+        taskText.text = "You performed the task perfectly! Congratulations!";
     }
 }

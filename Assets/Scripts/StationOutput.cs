@@ -44,4 +44,9 @@ public class StationOutput : MonoBehaviour
             cubeGrabbable.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
+
+    public void SendOutput()
+    {
+        cubeGrabbable.GetChild(0).GetComponent<RandomMovement>().isSent = true;
+    }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StationMissionSendOutput : MonoBehaviour
+public class SendOutput : MonoBehaviour
 {
     public Text taskText;
 
@@ -11,8 +11,7 @@ public class StationMissionSendOutput : MonoBehaviour
     {
         if (other.gameObject.layer == 10) //layer SendOutput, collider on cubeGrabbable
         {
-            transform.GetChild(0).GetComponent<RandomMovement>().isSent = true;
-            taskText.text = "You performed the task perfectly! Congratulations!";
+            transform.parent.parent.parent.GetComponent<StationManager>().SendOutput();
         }
     }
 }

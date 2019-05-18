@@ -44,4 +44,10 @@ public class StationManager : MonoBehaviour
 
         stationOutput.RunOutput();
     }
+
+    public void SendOutput()
+    {
+        stationMission.SendOutput();
+        stationOutput.SendOutput();
+    }
 }
