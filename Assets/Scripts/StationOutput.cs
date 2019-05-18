@@ -5,18 +5,19 @@ using UnityEngine.UI;
 
 public class StationOutput : MonoBehaviour
 {
-    public GameObject runButtonCollider;
     public Color activeColor;
     public Text stationText;
     public Transform cubeGrabbable, cubeGrabbleStartPosition;
+    public ButtonPushable runButton;
 
     public void StartLevel()
     {
-        runButtonCollider.GetComponent<BoxCollider>().enabled = false;
+        runButton.ResetButton(false);
         stationText.text = "";
 
         cubeGrabbable.position = cubeGrabbleStartPosition.position;
         cubeGrabbable.rotation = cubeGrabbleStartPosition.rotation;
+        cubeGrabbable.GetComponent<BoxCollider>().enabled = false;
 
         cubeGrabbable.GetChild(0).GetComponent<RandomMovement>().isSent = false;
         cubeGrabbable.GetChild(0).gameObject.SetActive(false);
@@ -25,7 +26,7 @@ public class StationOutput : MonoBehaviour
 
     public void GetTask()
     {
-        runButtonCollider.GetComponent<BoxCollider>().enabled = true;
+        runButton.ResetButton(true);
         UpdateUI(0);
     }
 
@@ -37,6 +38,7 @@ public class StationOutput : MonoBehaviour
     public void RunOutput()
     {
         stationText.text = "Output generated\nPlease take output to task station";
+        cubeGrabbable.GetComponent<BoxCollider>().enabled = true;
         if (transform.parent.GetComponent<StationManager>().stationNumber.GetTotalCount() == 1)
         {
             cubeGrabbable.transform.GetChild(0).gameObject.SetActive(true);

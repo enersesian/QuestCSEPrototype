@@ -6,11 +6,12 @@ using UnityEngine.UI;
 public class StationMission : MonoBehaviour
 {
     public Text taskText;
+    public ButtonPushable getButton;
 
     public void StartLevel()
     {
         taskText.text = "Waiting for new task...";
-        //getTaskButtonAnim.SetBool("isPushed", false);
+        getButton.ResetButton(true);
     }
 
     public void GetTask()

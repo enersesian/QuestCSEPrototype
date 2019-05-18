@@ -12,13 +12,22 @@ public class ButtonPushable : MonoBehaviour
     //collider isnt popping into the right place
     //color should pop into another color once you release not once its down
 
-    public void ResetButton()
+    public void ResetButton(bool active)
     {
         transform.position = buttonUpPosition.position;
-        this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().activeColor;
-        isTouched = false;
-        isPushable = true;
         GetComponent<BoxCollider>().center = Vector3.zero;
+        isTouched = false;
+
+        if (active)
+        {
+            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().activeColor;
+            isPushable = true;
+        }
+        else
+        {
+            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().disabledColor;
+            isPushable = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -76,7 +85,7 @@ public class ButtonPushable : MonoBehaviour
     {
         if (other.gameObject.layer == 9 && isPoppable) //Hand sphere && releasing button after not pushing it all the way down
         {
-            ResetButton();
+            ResetButton(true);
         }
     }
 }
