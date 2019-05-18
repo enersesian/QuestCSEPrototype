@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StationNumberLeverControl : MonoBehaviour
+public class LeverPullable : MonoBehaviour
 {
     public Transform leverBase, numberWheel;
     private float localRotationX, distanceToLeverBase;
     const float leverTopMin = 0.09f, leverTopMax = -0.05f, leverBaseMin = -60f, leverBaseMax = -120f, numberWheelMin = -70f, numberWheelMax = -160f;
+    private Vector3 startPosition;
 
     private StationManager stationManager;
 
@@ -14,6 +15,7 @@ public class StationNumberLeverControl : MonoBehaviour
     {
         StartLevel();
         stationManager = transform.parent.parent.parent.parent.GetComponent<StationManager>();
+        startPosition = transform.position;
     }
 
     public void StartLevel()
@@ -39,7 +41,8 @@ public class StationNumberLeverControl : MonoBehaviour
             stationManager.SetNumber(1, 1); //bit 0 = 1
             //transform.parent.parent.parent.GetComponent<StationNumber>().UpdateBitText(1, 1);
         }
-        else transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
+        else transform.position = new Vector3(startPosition.x, leverBase.GetChild(1).position.y, transform.position.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
+        transform.localRotation = Quaternion.identity;
         
         //rebuild lever system off center rotation of 0 so its easy to find angle hence use cosine to find where to fix y position of levelTop
 

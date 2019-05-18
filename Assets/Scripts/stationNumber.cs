@@ -19,12 +19,12 @@ public class StationNumber : MonoBehaviour
     {
         leverTop.GetComponent<SphereCollider>().enabled = false;
         leverTop.GetComponent<Renderer>().material.SetColor("_Color", transform.parent.GetComponent<StationManager>().disabledColor);
-        leverTop.GetComponent<StationNumberLeverControl>().StartLevel();
-        stationText.text = "Waiting for new task...";
-        bit01.text = "";
-        bit02.text = "";
-        bit03.text = "";
-        bit04.text = "";
+        leverTop.GetComponent<LeverPullable>().StartLevel();
+        stationText.text = "Total = 0";
+        bit01.text = "0";
+        bit02.text = "0";
+        bit03.text = "0";
+        bit04.text = "0";
         //totalCount = 0;
     }
 
