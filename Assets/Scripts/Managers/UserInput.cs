@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UserInput : MonoBehaviour
 {
-    public StationManager stationManager;
+    public LevelManager LevelManager;
 
     public float movementSpeed = 0.01f;
 
@@ -34,7 +34,7 @@ public class UserInput : MonoBehaviour
 
         if (OVRInput.Get(OVRInput.Button.Three)) //Left-hand X button //Reset level
         {
-            stationManager.StartLevel();
+            LevelManager.SetTask("start", 1); //task one
         }
 
     }

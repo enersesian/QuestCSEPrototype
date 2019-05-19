@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonPushable : MonoBehaviour
+public class ButtonPushed : MonoBehaviour
 {
     private bool isTouched = false, isPushable = true;
     public bool isPoppable = false;
@@ -20,12 +20,12 @@ public class ButtonPushable : MonoBehaviour
 
         if (active)
         {
-            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().activeColor;
+            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<LevelManager>().activeColor;
             isPushable = true;
         }
         else
         {
-            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().disabledColor;
+            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<LevelManager>().disabledColor;
             isPushable = false;
         }
     }
@@ -51,13 +51,13 @@ public class ButtonPushable : MonoBehaviour
             {
                 if(gameObject.name == "buttonGetTask")
                 {
-                    transform.root.GetComponent<StationManager>().GetTask();
+                    transform.root.GetComponent<LevelManager>().GetTaskButtonPushed();
                 }
                 if (gameObject.name == "buttonRunOutput")
                 {
-                    transform.root.GetComponent<StationManager>().RunOutput();
+                    transform.root.GetComponent<LevelManager>().RunOutputButtonPushed();
                 }
-                this.GetComponent<Renderer>().material.color = transform.root.GetComponent<StationManager>().hitColor;
+                this.GetComponent<Renderer>().material.color = transform.root.GetComponent<LevelManager>().hitColor;
                 transform.position = buttonDownPosition.position;
                 isTouched = false;
                 isPushable = false;

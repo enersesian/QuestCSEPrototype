@@ -3,49 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StationNumber : MonoBehaviour
+public class NumberStation : MonoBehaviour
 {
-    public GameObject leverTop;
+    public LeverPulled[] levers;
     public Text stationText, bit01, bit02, bit03, bit04;
     private int totalCount;
-    private StationManager stationManager;
+    private LevelManager LevelManager;
 
     private void Start()
     {
-        stationManager = transform.parent.GetComponent<StationManager>();
+        LevelManager = transform.root.GetComponent<LevelManager>();
     }
 
-    public void StartLevel()
+    public void SetTask()
     {
-        leverTop.GetComponent<SphereCollider>().enabled = false;
-        leverTop.GetComponent<Renderer>().material.SetColor("_Color", transform.parent.GetComponent<StationManager>().disabledColor);
-        leverTop.GetComponent<LeverPullable>().StartLevel();
+        foreach(LeverPulled lever in levers) lever.SetTask();
         stationText.text = "Total = 0";
         bit01.text = "0";
         bit02.text = "0";
         bit03.text = "0";
         bit04.text = "0";
-        //totalCount = 0;
     }
 
-    public void GetTask(int currentTask)
+    public void GetTaskButtonPushed(int currentTask)
     {
         switch(currentTask)
         {
             case 1:
-                leverTop.GetComponent<SphereCollider>().enabled = true;
-                leverTop.GetComponent<Renderer>().material.SetColor("_Color", transform.parent.GetComponent<StationManager>().activeColor);
+                levers[0].GetTaskButtonPushed(currentTask);
+                break;
+
+            case 2:
+                levers[0].GetTaskButtonPushed(currentTask);
+                levers[1].GetTaskButtonPushed(currentTask);
                 break;
 
             default:
                 break;
         }
-
         stationText.text = "Total = 0";
         bit01.text = "0";
         bit02.text = "0";
         bit03.text = "0";
         bit04.text = "0";
+    }
+
+    public void RunOutputButtonPushed()
+    {
+        foreach (LeverPulled lever in levers) lever.RunOutputButtonPushed();
     }
 
     public void UpdateBitText(int bit, int bitStatus)
@@ -63,6 +68,12 @@ public class StationNumber : MonoBehaviour
                 break;
 
             case 2:
+                if (bitStatus == 1)
+                {
+                    bit02.text = "1";
+                    //totalCount++;
+                }
+                else bit02.text = "0";
                 break;
 
             case 3:
@@ -74,7 +85,7 @@ public class StationNumber : MonoBehaviour
             default:
                 break;
         }
-        stationText.text = "Total = " + stationManager.GetNumber().ToString();
-        //transform.parent.GetComponent<StationManager>().stationOutput.UpdateUI(totalCount);
+        stationText.text = "Total = " + LevelManager.GetNumber().ToString();
+        //transform.parent.GetComponent<LevelManager>().OutputStation.UpdateUI(totalCount);
     }
 }
