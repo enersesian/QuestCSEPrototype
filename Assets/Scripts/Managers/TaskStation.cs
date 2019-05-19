@@ -16,6 +16,11 @@ public class TaskStation : MonoBehaviour
         getButton.ResetButton(true);
     }
 
+    public void LevelComplete()
+    {
+        taskText.text = "You win! Awesome Job! Now get out of here!";
+    }
+
     public void GetTaskButtonPushed(int currentTask)
     {
         if(currentTask == 1)
@@ -26,6 +31,16 @@ public class TaskStation : MonoBehaviour
         if (currentTask == 2)
         {
             taskText.text = "Welcome to task two \nPlease bring back two blue cubes. \nStart at the number station.";
+        }
+
+        if (currentTask == 3)
+        {
+            taskText.text = "Welcome to task three \nPlease bring back four blue cubes. \nStart at the number station.";
+        }
+
+        if (currentTask == 4)
+        {
+            taskText.text = "Welcome to task four \nPlease bring back eight blue cubes. \nStart at the number station.";
         }
     }
 }

@@ -10,6 +10,8 @@ public class OutputStation : MonoBehaviour
     public Transform cubeGrabbable, cubeGrabbleStartPosition;
     public ButtonPushed runButton;
     private LevelManager levelManager;
+    public GameObject cube;
+    private GameObject cubeSpawn;
 
     private void Start()
     {
@@ -30,21 +32,30 @@ public class OutputStation : MonoBehaviour
         ResetCubeGrabbable();
     }
 
-    public void RunOutputButtonPushed()
+    public void RunOutputButtonPushed(int number)
     {
         stationText.text = "Output generated\nPlease take output to task station";
         cubeGrabbable.GetComponent<BoxCollider>().enabled = true;
         cubeGrabbable.GetComponent<OVRGrabbable>().enabled = true;
-        if (transform.parent.GetComponent<LevelManager>().GetNumber() == 1)
+
+        Vector3 cubePosition;
+        for (int i = 0; i < number; i++)
         {
-            cubeGrabbable.transform.GetChild(0).gameObject.SetActive(true);
+            cubePosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.05f, 0.05f), cubeGrabbable.position.y + Random.Range(-0.2f, 0.2f), cubeGrabbable.position.z + Random.Range(-0.05f, 0.05f));
+            cubeSpawn = Instantiate(cube, cubePosition, Quaternion.identity);
+            cubeSpawn.transform.parent = cubeGrabbable;
+            cubeSpawn.GetComponent<RandomMovement>().isSent = false;
         }
     }
 
-    public void OutputSent()
+    public void OutputSent(int number)
     {
-        cubeGrabbable.GetChild(0).GetComponent<RandomMovement>().isSent = true;
-        //cubeGrabbable.GetChild(0).parent = this.transform;
+        Vector3 cubePosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.y + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.z + Random.Range(-0.1f, 0.1f));
+        for (int i = 0; i < number; i++)
+        {
+            
+            cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent = true;
+        }
     }
 
     public void UpdateUI(int number)
@@ -60,9 +71,9 @@ public class OutputStation : MonoBehaviour
         cubeGrabbable.position = cubeGrabbleStartPosition.position;
         cubeGrabbable.rotation = cubeGrabbleStartPosition.rotation;
 
-        cubeGrabbable.GetChild(0).GetComponent<RandomMovement>().isSent = false;
-        cubeGrabbable.GetChild(0).gameObject.SetActive(false);
-        cubeGrabbable.GetChild(0).localPosition = Vector3.zero;
-        //cubeGrabbable.GetChild(0).parent = cubeGrabbable.transform;
+        for (int i = 0; i < cubeGrabbable.childCount; i++)
+        {
+            Destroy(cubeGrabbable.GetChild(i).gameObject);
+        }
     }
 }

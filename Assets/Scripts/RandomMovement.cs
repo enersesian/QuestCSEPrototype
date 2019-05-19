@@ -18,6 +18,10 @@ public class RandomMovement : MonoBehaviour {
 
     private float height;
 
+    private void Start()
+    {
+        xScale *= Random.Range(0.8f, 1.2f);
+    }
 
     void Update()
     {

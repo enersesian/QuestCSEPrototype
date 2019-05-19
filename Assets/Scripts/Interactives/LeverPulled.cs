@@ -60,8 +60,10 @@ public class LeverPulled : MonoBehaviour
             {
                 transform.localPosition = new Vector3(0f, 0.15f, 0.09f);
                 //update board total
-                if(transform.parent.name == "lever0001") LevelManager.SetNumber(1, 0); //bit 1 = 0
-                if(transform.parent.name == "lever0010") LevelManager.SetNumber(2, 0); //bit 2 = 0
+                if (transform.parent.name == "lever0001") LevelManager.SetNumber(1, 0); //bit 1 = 0
+                if (transform.parent.name == "lever0010") LevelManager.SetNumber(2, 0); //bit 2 = 0
+                if (transform.parent.name == "lever0100") LevelManager.SetNumber(3, 0); //bit 3 = 0
+                if (transform.parent.name == "lever1000") LevelManager.SetNumber(4, 0); //bit 4 = 0
             }
             else if (transform.localPosition.z < -0.0502f)
             {
@@ -69,6 +71,8 @@ public class LeverPulled : MonoBehaviour
                 //update board total
                 if (transform.parent.name == "lever0001") LevelManager.SetNumber(1, 1); //bit 1 = 1
                 if (transform.parent.name == "lever0010") LevelManager.SetNumber(2, 1); //bit 2 = 1
+                if (transform.parent.name == "lever0100") LevelManager.SetNumber(3, 1); //bit 3 = 1
+                if (transform.parent.name == "lever1000") LevelManager.SetNumber(4, 1); //bit 4 = 1
             }
             else transform.position = new Vector3(startPosition.x, leverBase.GetChild(1).position.y, transform.position.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
             transform.localRotation = Quaternion.identity;

@@ -70,10 +70,34 @@ public class LevelManager : MonoBehaviour
 
             case 2:
                 currentTaskRequirements[0] = 1;
-                currentTaskRequirements[1] = 2;
-                currentTaskRequirements[2] = 0;
+                currentTaskRequirements[1] = 0;
+                currentTaskRequirements[2] = 1;
                 currentTaskRequirements[3] = 0;
                 currentTaskRequirements[4] = 0;
+                currentTaskRequirements[5] = 1;
+                currentTaskRequirements[6] = 1;
+                currentTaskRequirements[7] = 1;
+                currentTaskRequirements[8] = 1;
+                break;
+
+            case 3:
+                currentTaskRequirements[0] = 1;
+                currentTaskRequirements[1] = 0;
+                currentTaskRequirements[2] = 0;
+                currentTaskRequirements[3] = 1;
+                currentTaskRequirements[4] = 0;
+                currentTaskRequirements[5] = 1;
+                currentTaskRequirements[6] = 1;
+                currentTaskRequirements[7] = 1;
+                currentTaskRequirements[8] = 1;
+                break;
+
+            case 4:
+                currentTaskRequirements[0] = 1;
+                currentTaskRequirements[1] = 0;
+                currentTaskRequirements[2] = 0;
+                currentTaskRequirements[3] = 0;
+                currentTaskRequirements[4] = 1;
                 currentTaskRequirements[5] = 1;
                 currentTaskRequirements[6] = 1;
                 currentTaskRequirements[7] = 1;
@@ -95,28 +119,45 @@ public class LevelManager : MonoBehaviour
 
         //taskStation.RunOutputButtonPushed();
         numberStation.RunOutputButtonPushed();
-        outputStation.RunOutputButtonPushed();
+        outputStation.RunOutputButtonPushed(GetNumber());
     }
 
     public void OutputSent()
     {
+        int number = GetNumber();
         switch (currentTask)
         {
             case 1:
-                if (GetNumber() == 1) SetTask("success", 2); //user successful, iterate currentTask
+                if (number == 1) SetTask("success", 2); //user successful, iterate currentTask
                 else SetTask("failure", 1); //user failed, keep currentTask
                 break;
 
             case 2:
-                if (GetNumber() == 2) SetTask("success", 3);
+                if (number == 2) SetTask("success", 3);
                 else SetTask("failure", 2); //user failed, keep currentTask
+                break;
+
+            case 3:
+                if (number == 4) SetTask("success", 4);
+                else SetTask("failure", 3); //user failed, keep currentTask
+                break;
+
+            case 4:
+                if (number == 8) LevelComplete();
+                else SetTask("failure", 4); //user failed, keep currentTask
                 break;
 
             default:
                 break;
         }
 
-        outputStation.OutputSent();
+        outputStation.OutputSent(GetNumber());
+    }
+
+    public void LevelComplete()
+    {
+        //Disable everything
+        taskStation.LevelComplete();
     }
 
     public void SetNumber(int bit, int bitStatus)

@@ -38,6 +38,19 @@ public class NumberStation : MonoBehaviour
                 levers[1].GetTaskButtonPushed(currentTask);
                 break;
 
+            case 3:
+                levers[0].GetTaskButtonPushed(currentTask);
+                levers[1].GetTaskButtonPushed(currentTask);
+                levers[2].GetTaskButtonPushed(currentTask);
+                break;
+
+            case 4:
+                levers[0].GetTaskButtonPushed(currentTask);
+                levers[1].GetTaskButtonPushed(currentTask);
+                levers[2].GetTaskButtonPushed(currentTask);
+                levers[3].GetTaskButtonPushed(currentTask);
+                break;
+
             default:
                 break;
         }
@@ -55,37 +68,31 @@ public class NumberStation : MonoBehaviour
 
     public void UpdateBitText(int bit, int bitStatus)
     {
-        //totalCount = 0;
         switch(bit)
         {
             case 1:
-                if (bitStatus == 1)
-                {
-                    bit01.text = "1";
-                    //totalCount++;
-                }
+                if (bitStatus == 1) bit01.text = "1";
                 else bit01.text = "0";
                 break;
 
             case 2:
-                if (bitStatus == 1)
-                {
-                    bit02.text = "1";
-                    //totalCount++;
-                }
+                if (bitStatus == 1) bit02.text = "1";
                 else bit02.text = "0";
                 break;
 
             case 3:
+                if (bitStatus == 1) bit03.text = "1";
+                else bit03.text = "0";
                 break;
 
             case 4:
+                if (bitStatus == 1) bit04.text = "1";
+                else bit04.text = "0";
                 break;
 
             default:
                 break;
         }
         stationText.text = "Total = " + LevelManager.GetNumber().ToString();
-        //transform.parent.GetComponent<LevelManager>().OutputStation.UpdateUI(totalCount);
     }
 }
