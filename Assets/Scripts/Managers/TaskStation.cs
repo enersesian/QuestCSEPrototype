@@ -25,22 +25,22 @@ public class TaskStation : MonoBehaviour
     {
         if(currentTask == 1)
         {
-            taskText.text = "Welcome to task one \nPlease bring back one blue cube. \nStart at the number station.";
+            taskText.text = "Welcome to task one \nPlease bring back one small blue cube. \nStart at the number station.";
         }
 
         if (currentTask == 2)
         {
-            taskText.text = "Welcome to task two \nPlease bring back two blue cubes. \nStart at the number station.";
+            taskText.text = "Welcome to task two \nPlease bring back two small blue cubes. \nStart at the number station.";
         }
 
         if (currentTask == 3)
         {
-            taskText.text = "Welcome to task three \nPlease bring back four blue cubes. \nStart at the number station.";
+            taskText.text = "Welcome to task three \nPlease bring back four small blue cubes. \nStart at the number station.";
         }
 
         if (currentTask == 4)
         {
-            taskText.text = "Welcome to task four \nPlease bring back eight blue cubes. \nStart at the number station.";
+            taskText.text = "Welcome to task four \nPlease bring back eight small blue cubes. \nStart at the number station.";
         }
     }
 }

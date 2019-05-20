@@ -76,17 +76,17 @@ public class NumberStation : MonoBehaviour
                 break;
 
             case 2:
-                if (bitStatus == 1) bit02.text = "1";
+                if (bitStatus == 1) bit02.text = "2";
                 else bit02.text = "0";
                 break;
 
             case 3:
-                if (bitStatus == 1) bit03.text = "1";
+                if (bitStatus == 1) bit03.text = "4";
                 else bit03.text = "0";
                 break;
 
             case 4:
-                if (bitStatus == 1) bit04.text = "1";
+                if (bitStatus == 1) bit04.text = "8";
                 else bit04.text = "0";
                 break;
 

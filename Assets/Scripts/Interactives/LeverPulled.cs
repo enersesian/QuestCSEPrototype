@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LeverPulled : MonoBehaviour
 {
-    public Transform leverBase, numberWheel;
+    public Transform leverBase, numberWheel,leverTopYLocalPosition;
     private float localRotationX, distanceToLeverBase;
-    const float leverTopMin = 0.09f, leverTopMax = -0.05f, leverBaseMin = -60f, leverBaseMax = -120f, numberWheelMin = -70f, numberWheelMax = -160f;
+    const float leverTopMin = 0.09f, leverTopMax = -0.05f, leverBaseMin = -60f, leverBaseMax = -120f, numberWheelMin = -150f, numberWheelMax = -240f;
     private Vector3 startPosition;
     private Quaternion leverBaseStartRotation, numberWheelStartRotation;
     private LevelManager LevelManager;
@@ -16,7 +16,7 @@ public class LeverPulled : MonoBehaviour
     {
         LevelManager = transform.root.GetComponent<LevelManager>();
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
-        startPosition = transform.position;
+        startPosition = transform.localPosition;
         leverBaseStartRotation = leverBase.rotation;
         numberWheelStartRotation = numberWheel.rotation;
         SetTask();
@@ -27,9 +27,9 @@ public class LeverPulled : MonoBehaviour
         isActive = false;
         LevelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = false;
-        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         GetComponent<Renderer>().material.SetColor("_Color", LevelManager.disabledColor);
-        transform.position = startPosition;
+        transform.localPosition = startPosition;
         leverBase.rotation = leverBaseStartRotation;
         numberWheel.rotation = numberWheelStartRotation;
     }
@@ -37,7 +37,7 @@ public class LeverPulled : MonoBehaviour
     public void GetTaskButtonPushed(int currentTask)
     {
         isActive = true;
-        GetComponent<SphereCollider>().enabled = true;
+        GetComponent<Collider>().enabled = true;
         GetComponent<OVRGrabbable>().enabled = true;
         GetComponent<Renderer>().material.SetColor("_Color", LevelManager.activeColor);
     }
@@ -47,7 +47,7 @@ public class LeverPulled : MonoBehaviour
         isActive = false;
         LevelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = false;
-        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         GetComponent<Renderer>().material.SetColor("_Color", LevelManager.disabledColor);
     }
 
@@ -74,7 +74,7 @@ public class LeverPulled : MonoBehaviour
                 if (transform.parent.name == "lever0100") LevelManager.SetNumber(3, 1); //bit 3 = 1
                 if (transform.parent.name == "lever1000") LevelManager.SetNumber(4, 1); //bit 4 = 1
             }
-            else transform.position = new Vector3(startPosition.x, leverBase.GetChild(1).position.y, transform.position.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
+            else transform.localPosition = new Vector3(startPosition.x, leverTopYLocalPosition.localPosition.y, transform.localPosition.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
             transform.localRotation = Quaternion.identity;
 
             //rebuild lever system off center rotation of 0 so its easy to find angle hence use cosine to find where to fix y position of levelTop

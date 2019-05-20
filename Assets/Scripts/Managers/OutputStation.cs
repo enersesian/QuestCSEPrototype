@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class OutputStation : MonoBehaviour
 {
     public Color activeColor;
-    public Text stationText;
+    public Text stationText, numberItem, colorItem, shapeItem, sizeItem;
     public Transform cubeGrabbable, cubeGrabbleStartPosition;
     public ButtonPushed runButton;
     private LevelManager levelManager;
@@ -20,8 +20,12 @@ public class OutputStation : MonoBehaviour
 
     public void SetTask()
     {
-        runButton.ResetButton(false);
-        stationText.text = "";
+        //runButton.ResetButton(false);
+        stationText.text = "No output currently available...";
+        numberItem.text = "-";
+        sizeItem.text = "-";
+        colorItem.text = "-";
+        shapeItem.text = "-";
         //ResetCubeGrabbable();
     }
 
@@ -50,7 +54,7 @@ public class OutputStation : MonoBehaviour
 
     public void OutputSent(int number)
     {
-        Vector3 cubePosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.y + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.z + Random.Range(-0.1f, 0.1f));
+        //Vector3 cubePosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.y + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.z + Random.Range(-0.1f, 0.1f));
         for (int i = 0; i < number; i++)
         {
             
@@ -60,7 +64,21 @@ public class OutputStation : MonoBehaviour
 
     public void UpdateUI(int number)
     {
-        stationText.text = "Hit button to generate:\n" + number.ToString() + " blue cube(s)";
+        if (number > 0)
+        {
+            stationText.text = "Hit button to generate:\n" + number.ToString() + " small blue cube(s)";
+            numberItem.text = number.ToString();
+            sizeItem.text = "Small";
+            colorItem.text = "Blue";
+            shapeItem.text = "Cube";
+            runButton.ResetButton(true);
+        }
+        else
+        {
+            stationText.text = "No output currently available...";
+            numberItem.text = "-";
+            runButton.ResetButton(false);
+        }
     }
 
     private void ResetCubeGrabbable()
