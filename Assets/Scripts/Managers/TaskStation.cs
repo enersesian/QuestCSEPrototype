@@ -31,22 +31,37 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 1)
         {
-            taskText.text = "Welcome to task one \nPlease bring back one small blue cube. \nStart at the number station.";
+            taskText.text = "Welcome to task one \nPlease bring back one small red cube. \nUse the number station.";
         }
 
         if (currentTask == 2)
         {
-            taskText.text = "Welcome to task two \nPlease bring back two small blue cubes. \nStart at the number station.";
+            taskText.text = "Welcome to task two \nPlease bring back two small red cubes. \nUse the number station.";
         }
 
         if (currentTask == 3)
         {
-            taskText.text = "Welcome to task three \nPlease bring back four small blue cubes. \nStart at the number station.";
+            taskText.text = "Welcome to task three \nPlease bring back four medium red cubes. \nUse the number and size stations.";
         }
 
         if (currentTask == 4)
         {
-            taskText.text = "Welcome to task four \nPlease bring back eight small blue cubes. \nStart at the number station.";
+            taskText.text = "Welcome to task four \nPlease bring back three medium green cubes. \nUse the number, size, and color stations.";
+        }
+
+        if (currentTask == 5)
+        {
+            taskText.text = "Welcome to task five \nPlease bring back five large blue cubes. \nUse the number, size, and color stations.";
+        }
+
+        if (currentTask == 6)
+        {
+            taskText.text = "Welcome to task six \nPlease bring back seven large yellow cubes. \nUse the number, size, and color stations.";
+        }
+
+        if (currentTask == 6)
+        {
+            taskText.text = "Welcome to task seven \nPlease bring back six x-large purple cubes. \nUse the number, size, and color stations.";
         }
     }
 

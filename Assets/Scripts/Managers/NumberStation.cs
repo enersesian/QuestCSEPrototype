@@ -38,20 +38,10 @@ public class NumberStation : MonoBehaviour
                 levers[1].GetTaskButtonPushed(currentTask);
                 break;
 
-            case 3:
-                levers[0].GetTaskButtonPushed(currentTask);
-                levers[1].GetTaskButtonPushed(currentTask);
-                levers[2].GetTaskButtonPushed(currentTask);
-                break;
-
-            case 4:
-                levers[0].GetTaskButtonPushed(currentTask);
-                levers[1].GetTaskButtonPushed(currentTask);
-                levers[2].GetTaskButtonPushed(currentTask);
-                levers[3].GetTaskButtonPushed(currentTask);
-                break;
-
             default:
+                levers[0].GetTaskButtonPushed(currentTask);
+                levers[1].GetTaskButtonPushed(currentTask);
+                levers[2].GetTaskButtonPushed(currentTask);
                 break;
         }
         stationText.text = "0";

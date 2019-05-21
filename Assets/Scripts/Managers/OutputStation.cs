@@ -22,21 +22,21 @@ public class OutputStation : MonoBehaviour
     {
         runButton.ResetButton(false);
         stationText.text = "No output currently available...";
-        numberItem.text = "-";
-        sizeItem.text = "-";
-        colorItem.text = "-";
-        shapeItem.text = "-";
+        numberItem.text = "0";
+        sizeItem.text = "Small";
+        colorItem.text = "Red";
+        shapeItem.text = "Cubes";
         //ResetCubeGrabbable();
     }
 
     public void GetTaskButtonPushed(int currentTask)
     {
         runButton.ResetButton(true);
-        UpdateUI(0);
+        UpdateNumText(0);
         ResetCubeGrabbable();
     }
 
-    public void RunOutputButtonPushed(int number)
+    public void RunOutputButtonPushed(int number, Color currentColor, string size)
     {
         stationText.text = "Output generated\nPlease take output to task station";
         cubeGrabbable.GetComponent<BoxCollider>().enabled = true;
@@ -49,6 +49,11 @@ public class OutputStation : MonoBehaviour
             cubeSpawn = Instantiate(cube, cubePosition, Quaternion.identity);
             cubeSpawn.transform.parent = cubeGrabbable;
             cubeSpawn.GetComponent<RandomMovement>().isSent = false;
+            cubeSpawn.GetComponent<Renderer>().material.color = currentColor;
+            if (size == "small") cubeSpawn.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            if (size == "medium") cubeSpawn.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+            if (size == "large") cubeSpawn.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            else cubeSpawn.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
         }
     }
 
@@ -63,23 +68,32 @@ public class OutputStation : MonoBehaviour
         }
     }
 
-    public void UpdateUI(int number)
+    public void UpdateNumText(int number)
     {
         if (number > 0)
         {
-            stationText.text = "Hit button to generate:\n" + number.ToString() + " small white cube(s)";
+            stationText.text = "Hit button to generate output";
             numberItem.text = number.ToString();
-            sizeItem.text = "Small";
-            colorItem.text = "Blue";
-            shapeItem.text = "Cube";
+            /*if (sizeItem.text == "-") sizeItem.text = "Small";
+            if (colorItem.text == "-") colorItem.text = "Red";
+            if (number > 1) shapeItem.text = "Cubes";
+            else shapeItem.text = "Cube";*/
             runButton.ResetButton(true);
         }
         else
         {
             stationText.text = "No output currently available...";
-            numberItem.text = "-";
+            /*numberItem.text = "-";
+            sizeItem.text = "-";
+            colorItem.text = "-";
+            shapeItem.text = "-";*/
             runButton.ResetButton(false);
         }
+    }
+
+    public void UpdateSizeText(string size)
+    {
+        sizeItem.text = size;
     }
 
     private void ResetCubeGrabbable()
