@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     public TaskStation taskStation;
     public NumberStation numberStation;
     public OutputStation outputStation;
+    public SizeStation sizeStation;
 
     public Color activeColor, disabledColor, hitColor;
     public OVRGrabber leftHandGrabber, rightHandGrabber;
@@ -42,6 +43,8 @@ public class LevelManager : MonoBehaviour
 
         taskStation.SetTask(condition);
         numberStation.SetTask();
+        sizeStation.SetTask();
+        sizeStation.GetTaskButtonPushed(1);
         outputStation.SetTask();
     }
 

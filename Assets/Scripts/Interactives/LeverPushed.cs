@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeverPulled : MonoBehaviour
+public class LeverPushed : MonoBehaviour
 {
-    public Transform leverBase, numberWheel,leverTopYLocalPosition, zeroPosition, onePosition;
+    public Transform leverBase, numberWheel,leverTopYLocalPosition;
     private float localRotationX, distanceToLeverBase;
     const float leverTopMin = 0.09f, leverTopMax = -0.05f, leverBaseMin = -60f, leverBaseMax = -120f, numberWheelMin = -150f, numberWheelMax = -240f;
     private Vector3 startPosition;
@@ -24,6 +24,11 @@ public class LeverPulled : MonoBehaviour
 
     public void SetTask()
     {
+        isActive = true;
+        GetComponent<Collider>().enabled = true;
+        GetComponent<OVRGrabbable>().enabled = true;
+        GetComponent<Renderer>().material.SetColor("_Color", LevelManager.activeColor);
+        /*
         isActive = false;
         LevelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = false;
@@ -32,6 +37,7 @@ public class LeverPulled : MonoBehaviour
         transform.localPosition = startPosition;
         leverBase.rotation = leverBaseStartRotation;
         numberWheel.rotation = numberWheelStartRotation;
+        */
     }
 
     public void GetTaskButtonPushed(int currentTask)
@@ -56,18 +62,18 @@ public class LeverPulled : MonoBehaviour
     {
         if(isActive)
         {
-            if (transform.localPosition.z > onePosition.localPosition.z)
+            if (transform.localPosition.z > 0.0902f)
             {
-                transform.localPosition = onePosition.localPosition;
+                transform.localPosition = new Vector3(0f, 0.15f, 0.09f);
                 //update board total
                 if (transform.parent.name == "lever0001") LevelManager.SetNumber(1, 0); //bit 1 = 0
                 if (transform.parent.name == "lever0010") LevelManager.SetNumber(2, 0); //bit 2 = 0
                 if (transform.parent.name == "lever0100") LevelManager.SetNumber(3, 0); //bit 3 = 0
                 if (transform.parent.name == "lever1000") LevelManager.SetNumber(4, 0); //bit 4 = 0
             }
-            else if (transform.localPosition.z < zeroPosition.localPosition.z)
+            else if (transform.localPosition.z < -0.0502f)
             {
-                transform.localPosition = zeroPosition.localPosition;
+                transform.localPosition = new Vector3(0f, 0.15f, -0.05f);
                 //update board total
                 if (transform.parent.name == "lever0001") LevelManager.SetNumber(1, 1); //bit 1 = 1
                 if (transform.parent.name == "lever0010") LevelManager.SetNumber(2, 1); //bit 2 = 1

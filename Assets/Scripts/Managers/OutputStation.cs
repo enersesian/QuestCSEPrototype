@@ -67,7 +67,7 @@ public class OutputStation : MonoBehaviour
     {
         if (number > 0)
         {
-            stationText.text = "Hit button to generate:\n" + number.ToString() + " small blue cube(s)";
+            stationText.text = "Hit button to generate:\n" + number.ToString() + " small white cube(s)";
             numberItem.text = number.ToString();
             sizeItem.text = "Small";
             colorItem.text = "Blue";
