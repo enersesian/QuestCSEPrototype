@@ -20,7 +20,7 @@ public class OutputStation : MonoBehaviour
 
     public void SetTask()
     {
-        //runButton.ResetButton(false);
+        runButton.ResetButton(false);
         stationText.text = "No output currently available...";
         numberItem.text = "-";
         sizeItem.text = "-";
@@ -54,11 +54,12 @@ public class OutputStation : MonoBehaviour
 
     public void OutputSent(int number)
     {
+        Debug.Log(number.ToString());
         //Vector3 cubePosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.y + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.z + Random.Range(-0.1f, 0.1f));
         for (int i = 0; i < number; i++)
         {
-            
             cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent = true;
+            Debug.Log(cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent.ToString());
         }
     }
 

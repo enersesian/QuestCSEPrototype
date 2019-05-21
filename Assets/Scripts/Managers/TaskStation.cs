@@ -6,13 +6,17 @@ using UnityEngine.UI;
 public class TaskStation : MonoBehaviour
 {
     public Text taskText;
-    public ButtonPushed getButton;
+    public ButtonPushed getButton, sendOutputButton;
 
     public void SetTask(string condition)
     {
-        if(condition == "start") taskText.text = "Waiting for new task...\nPress the Get Task button.";
-        if(condition == "success") taskText.text = "You performed the task perfectly! Congratulations! \nPress the Get Task button to receive next task.";
-        if(condition == "failure") taskText.text = "You did not performed the task correctly. \nPress the Get Task button to try the task again.";
+        if (condition == "start")
+        {
+            taskText.text = "Waiting for new task...\nPress the Get Task button.";
+            sendOutputButton.ResetButton(false); //only reset at beginning as pushing this button will execute SetTask in game and can cause double execution
+        }
+        if(condition == "success") taskText.text = "You performed the task perfectly! \nPress Get Task button to receive next task.";
+        if(condition == "failure") taskText.text = "You did not performed the task correctly. \nPress Get Task button to try the task again.";
         getButton.ResetButton(true);
     }
 
@@ -23,7 +27,9 @@ public class TaskStation : MonoBehaviour
 
     public void GetTaskButtonPushed(int currentTask)
     {
-        if(currentTask == 1)
+        sendOutputButton.ResetButton(false);
+
+        if (currentTask == 1)
         {
             taskText.text = "Welcome to task one \nPlease bring back one small blue cube. \nStart at the number station.";
         }
@@ -42,5 +48,15 @@ public class TaskStation : MonoBehaviour
         {
             taskText.text = "Welcome to task four \nPlease bring back eight small blue cubes. \nStart at the number station.";
         }
+    }
+
+    public void PlacedOutput()
+    {
+        sendOutputButton.ResetButton(true);
+    }
+
+    public void RemovedOutput()
+    {
+        sendOutputButton.ResetButton(false);
     }
 }

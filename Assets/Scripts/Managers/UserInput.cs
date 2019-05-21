@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UserInput : MonoBehaviour
 {
-    public LevelManager LevelManager;
+    public LevelManager levelManager;
 
     public float movementSpeed = 0.01f;
 
@@ -30,11 +30,11 @@ public class UserInput : MonoBehaviour
 
         else heightChange = 0f;
 
-        transform.position = new Vector3(transform.position.x + rightThumbAxis.x, transform.position.y + heightChange, transform.position.z + rightThumbAxis.y);
+        levelManager.transform.position = new Vector3(transform.position.x + rightThumbAxis.x, transform.position.y + heightChange, transform.position.z + rightThumbAxis.y);
 
         if (OVRInput.Get(OVRInput.Button.Three)) //Left-hand X button //Reset level
         {
-            LevelManager.SetTask("start", 1); //task one
+            levelManager.SetTask("start", 1); //task one
         }
 
     }

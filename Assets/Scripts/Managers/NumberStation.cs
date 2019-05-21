@@ -18,11 +18,11 @@ public class NumberStation : MonoBehaviour
     public void SetTask()
     {
         foreach(LeverPulled lever in levers) lever.SetTask();
-        stationText.text = "Total = 0";
-        bit01.text = "0";
+        stationText.text = "0";
+        /*bit01.text = "0";
         bit02.text = "0";
         bit03.text = "0";
-        bit04.text = "0";
+        bit04.text = "0";*/
     }
 
     public void GetTaskButtonPushed(int currentTask)
@@ -54,11 +54,11 @@ public class NumberStation : MonoBehaviour
             default:
                 break;
         }
-        stationText.text = "Total = 0";
-        bit01.text = "0";
+        stationText.text = "0";
+        /*bit01.text = "0";
         bit02.text = "0";
         bit03.text = "0";
-        bit04.text = "0";
+        bit04.text = "0";*/
     }
 
     public void RunOutputButtonPushed()
@@ -68,7 +68,7 @@ public class NumberStation : MonoBehaviour
 
     public void UpdateBitText(int bit, int bitStatus)
     {
-        switch(bit)
+        /*switch(bit)
         {
             case 1:
                 if (bitStatus == 1) bit01.text = "1";
@@ -92,7 +92,7 @@ public class NumberStation : MonoBehaviour
 
             default:
                 break;
-        }
-        stationText.text = "Total = " + LevelManager.GetNumber().ToString();
+        }*/
+        stationText.text = LevelManager.GetNumber().ToString();
     }
 }

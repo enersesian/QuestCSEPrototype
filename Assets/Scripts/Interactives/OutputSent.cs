@@ -11,7 +11,15 @@ public class OutputSent : MonoBehaviour
     {
         if (other.gameObject.layer == 10) //layer OutputSent, collider on cubeGrabbable
         {
-            transform.root.GetComponent<LevelManager>().OutputSent();
+            transform.root.GetComponent<LevelManager>().PlacedOutput();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 10) //layer OutputSent, collider on cubeGrabbable
+        {
+            transform.root.GetComponent<LevelManager>().RemovedOutput();
         }
     }
 }

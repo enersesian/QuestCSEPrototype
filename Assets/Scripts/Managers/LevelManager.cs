@@ -122,9 +122,20 @@ public class LevelManager : MonoBehaviour
         outputStation.RunOutputButtonPushed(GetNumber());
     }
 
+    public void PlacedOutput()
+    {
+        taskStation.PlacedOutput();
+    }
+
+    public void RemovedOutput()
+    {
+        taskStation.RemovedOutput();
+    }
+
     public void OutputSent()
     {
         int number = GetNumber();
+        outputStation.OutputSent(number);
         switch (currentTask)
         {
             case 1:
@@ -150,8 +161,6 @@ public class LevelManager : MonoBehaviour
             default:
                 break;
         }
-
-        outputStation.OutputSent(GetNumber());
     }
 
     public void LevelComplete()
