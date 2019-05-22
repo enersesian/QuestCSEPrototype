@@ -14,9 +14,6 @@ public class LevelManager : MonoBehaviour
     public Color activeColor, disabledColor, hitColor, red, green, blue;
     public OVRGrabber leftHandGrabber, rightHandGrabber;
 
-    private enum UserProgression { SetTask, getTask, runOutput };
-    private UserProgression userProgression;
-
     private int currentTask;
     //0 = task, 1 = number bit 1, 2 = number bit 2, 3 = number bit 3, 4 = size bit 1, 5 = size bit 2
     //6 = color red bit, 7 = color green bit, 8 = color blue bit, possibly add shape later
@@ -27,14 +24,8 @@ public class LevelManager : MonoBehaviour
 
     void Start ()
     {
-        SetLevel();
-        SetTask("start", 3);
+        SetTask("start", 1);
 	}
-
-    public void SetLevel()
-    {
-        userProgression = UserProgression.SetTask;
-    }
 
     public void SetTask(string condition, int taskIterator)
     {
@@ -47,8 +38,8 @@ public class LevelManager : MonoBehaviour
         currentColor = new Color(1f, 0f, 0f);
         taskStation.SetTask(condition);
         numberStation.SetTask();
-        sizeStation.SetTask();
-        colorStation.SetTask();
+        //sizeStation.SetTask();
+        //colorStation.SetTask();
         outputStation.SetTask();
     }
 
@@ -63,7 +54,6 @@ public class LevelManager : MonoBehaviour
 
     public void GetTaskButtonPushed()
     {
-        userProgression = UserProgression.getTask;
         switch(currentTask)
         {
             case 1:
@@ -156,18 +146,15 @@ public class LevelManager : MonoBehaviour
 
         taskStation.GetTaskButtonPushed(currentTask);
         numberStation.GetTaskButtonPushed(currentTask);
-        sizeStation.GetTaskButtonPushed(currentTask);
+        //sizeStation.GetTaskButtonPushed(currentTask);
         //colorStation.GetTaskButtonPushed(currentTask);
         outputStation.GetTaskButtonPushed(currentTask);
     }
 
     public void RunOutputButtonPushed()
     {
-        userProgression = UserProgression.runOutput;
-
-        //taskStation.RunOutputButtonPushed();
         numberStation.RunOutputButtonPushed();
-        sizeStation.RunOutputButtonPushed();
+        //sizeStation.RunOutputButtonPushed();
         outputStation.RunOutputButtonPushed(GetNumber(), currentColor, size);
     }
 
@@ -220,7 +207,6 @@ public class LevelManager : MonoBehaviour
 
     public void SetNumber(int bit, int bitStatus)
     {
-        //Debug.Log("SetNumber bit " + bit.ToString() + " bitStatus " + bitStatus.ToString());
         currentTaskStatus[bit] = bitStatus;
         numberStation.UpdateBitText(bit, bitStatus);
         outputStation.UpdateNumText(GetNumber());

@@ -8,6 +8,11 @@ public class TaskStation : MonoBehaviour
     public Text taskText;
     public ButtonPushed getButton, sendOutputButton;
 
+    private void Start()
+    {
+        if (Application.isEditor) transform.position = new Vector3(-0.6f, 0.2f, 0.5f); //Sitting Rift position
+    }
+
     public void SetTask(string condition)
     {
         if (condition == "start")

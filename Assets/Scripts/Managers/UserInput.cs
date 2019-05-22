@@ -30,7 +30,7 @@ public class UserInput : MonoBehaviour
 
         else heightChange = 0f;
 
-        levelManager.transform.position = new Vector3(transform.position.x + rightThumbAxis.x, transform.position.y + heightChange, transform.position.z + rightThumbAxis.y);
+        //levelManager.transform.position = new Vector3(levelManager.transform.position.x + rightThumbAxis.x, levelManager.transform.position.y + heightChange, levelManager.transform.position.z + rightThumbAxis.y);
 
         if (OVRInput.Get(OVRInput.Button.Three)) //Left-hand X button //Reset level
         {

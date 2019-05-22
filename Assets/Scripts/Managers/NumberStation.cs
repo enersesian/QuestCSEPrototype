@@ -13,6 +13,7 @@ public class NumberStation : MonoBehaviour
     private void Start()
     {
         LevelManager = transform.root.GetComponent<LevelManager>();
+        if (Application.isEditor) transform.position = new Vector3(0.6f, 0.2f, 0.5f); //Sitting Rift position
     }
 
     public void SetTask()

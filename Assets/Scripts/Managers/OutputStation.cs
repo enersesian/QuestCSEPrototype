@@ -16,6 +16,7 @@ public class OutputStation : MonoBehaviour
     private void Start()
     {
         levelManager = transform.root.GetComponent<LevelManager>();
+        if (Application.isEditor) transform.position = new Vector3(0f, 0.2f, 2.2f); //Sitting Rift position
     }
 
     public void SetTask()
@@ -26,12 +27,12 @@ public class OutputStation : MonoBehaviour
         sizeItem.text = "Small";
         colorItem.text = "Red";
         shapeItem.text = "Cubes";
-        //ResetCubeGrabbable();
+        ResetCubeGrabbable(); //onlu useful for user resetting level with A button
     }
 
     public void GetTaskButtonPushed(int currentTask)
     {
-        runButton.ResetButton(true);
+        //runButton.ResetButton(true);
         UpdateNumText(0);
         ResetCubeGrabbable();
     }
@@ -39,7 +40,7 @@ public class OutputStation : MonoBehaviour
     public void RunOutputButtonPushed(int number, Color currentColor, string size)
     {
         stationText.text = "Output generated\nPlease take output to task station";
-        cubeGrabbable.GetComponent<BoxCollider>().enabled = true;
+        cubeGrabbable.GetComponent<Collider>().enabled = true;
         cubeGrabbable.GetComponent<OVRGrabbable>().enabled = true;
 
         Vector3 cubePosition;
@@ -59,12 +60,10 @@ public class OutputStation : MonoBehaviour
 
     public void OutputSent(int number)
     {
-        Debug.Log(number.ToString());
-        //Vector3 cubePosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.y + Random.Range(-0.1f, 0.1f), cubeGrabbable.position.z + Random.Range(-0.1f, 0.1f));
         for (int i = 0; i < number; i++)
         {
             cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent = true;
-            Debug.Log(cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent.ToString());
+            //Debug.Log(cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent.ToString());
         }
     }
 
@@ -74,15 +73,17 @@ public class OutputStation : MonoBehaviour
         {
             stationText.text = "Hit button to generate output";
             numberItem.text = number.ToString();
-            /*if (sizeItem.text == "-") sizeItem.text = "Small";
-            if (colorItem.text == "-") colorItem.text = "Red";
+            //if (sizeItem.text == "-") sizeItem.text = "Small";
+            //if (colorItem.text == "-") colorItem.text = "Red";
             if (number > 1) shapeItem.text = "Cubes";
-            else shapeItem.text = "Cube";*/
+            else shapeItem.text = "Cube";
             runButton.ResetButton(true);
         }
         else
         {
             stationText.text = "No output currently available...";
+            numberItem.text = number.ToString();
+            shapeItem.text = "Cubes";
             /*numberItem.text = "-";
             sizeItem.text = "-";
             colorItem.text = "-";
@@ -99,7 +100,7 @@ public class OutputStation : MonoBehaviour
     private void ResetCubeGrabbable()
     {
         levelManager.ForceGrabberRelease(cubeGrabbable.GetComponent<OVRGrabbable>());
-        cubeGrabbable.GetComponent<BoxCollider>().enabled = false;
+        cubeGrabbable.GetComponent<Collider>().enabled = false;
         cubeGrabbable.GetComponent<OVRGrabbable>().enabled = false;
         cubeGrabbable.position = cubeGrabbleStartPosition.position;
         cubeGrabbable.rotation = cubeGrabbleStartPosition.rotation;

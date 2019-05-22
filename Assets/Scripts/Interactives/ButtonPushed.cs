@@ -15,7 +15,7 @@ public class ButtonPushed : MonoBehaviour
     public void ResetButton(bool active)
     {
         transform.position = buttonUpPosition.position;
-        GetComponent<BoxCollider>().center = Vector3.zero;
+        //GetComponent<BoxCollider>().center = Vector3.zero;
         isTouched = false;
 
         if (active)
@@ -40,7 +40,7 @@ public class ButtonPushed : MonoBehaviour
                 heightDiff = other.transform.position.y - transform.position.y;
                 startY = other.transform.position.y;
                 startZ = transform.localPosition.z;
-                Debug.Log("button is touched " + transform.localPosition.z.ToString() + " " + buttonDownPosition.localPosition.z.ToString());
+                //Debug.Log("button is touched " + transform.localPosition.z.ToString() + " " + buttonDownPosition.localPosition.z.ToString());
             }
         }
     }
@@ -68,21 +68,21 @@ public class ButtonPushed : MonoBehaviour
                 isTouched = false;
                 isPushable = false;
                 //GetComponent<BoxCollider>().center = new Vector3(0f, 1f, 0f);
-                Debug.Log("button is down " + transform.localPosition.z.ToString() + " " + buttonDownPosition.localPosition.z.ToString());
+                //Debug.Log("button is down " + transform.localPosition.z.ToString() + " " + buttonDownPosition.localPosition.z.ToString());
             }
             else if(transform.localPosition.z < buttonUpPosition.localPosition.z)
             {
                 //button is at highest point, user is releasing button, dont move now so we trigger OnTriggerExit
                 
                 transform.position = buttonUpPosition.position;
-                GetComponent<BoxCollider>().center = Vector3.zero;
-                Debug.Log("button is up " + transform.position.y.ToString());
+                //GetComponent<BoxCollider>().center = Vector3.zero;
+                //Debug.Log("button is up " + transform.position.y.ToString());
             }
             else
             {
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, startZ + 5.5f*(startY - other.transform.position.y));
                 //GetComponent<BoxCollider>().center = buttonUpPosition.localPosition;
-                Debug.Log("button is going down" + transform.position.y.ToString());
+                //Debug.Log("button is going down" + transform.position.y.ToString());
             }
         }
     }
