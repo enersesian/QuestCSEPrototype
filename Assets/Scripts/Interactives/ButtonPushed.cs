@@ -14,7 +14,7 @@ public class ButtonPushed : MonoBehaviour
 
     public void ResetButton(bool active)
     {
-        transform.position = buttonUpPosition.position;
+        transform.localPosition = buttonUpPosition.localPosition;
         //GetComponent<BoxCollider>().center = Vector3.zero;
         isTouched = false;
 
@@ -64,7 +64,7 @@ public class ButtonPushed : MonoBehaviour
                     transform.root.GetComponent<LevelManager>().OutputSent();
                 }
                 this.GetComponent<Renderer>().material.color = transform.root.GetComponent<LevelManager>().hitColor;
-                transform.position = buttonDownPosition.position;
+                transform.localPosition = buttonDownPosition.localPosition;
                 isTouched = false;
                 isPushable = false;
                 //GetComponent<BoxCollider>().center = new Vector3(0f, 1f, 0f);
@@ -74,7 +74,7 @@ public class ButtonPushed : MonoBehaviour
             {
                 //button is at highest point, user is releasing button, dont move now so we trigger OnTriggerExit
                 
-                transform.position = buttonUpPosition.position;
+                transform.localPosition = buttonUpPosition.localPosition;
                 //GetComponent<BoxCollider>().center = Vector3.zero;
                 //Debug.Log("button is up " + transform.position.y.ToString());
             }

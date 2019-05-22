@@ -10,11 +10,15 @@ public class UserInput : MonoBehaviour
 
     private Vector2 rightThumbAxis;
     private float heightChange = 0f;
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
     //Possible feature: disable hand colliders when moving avatar around level 
     //to remove chance of superuser accidently interacting with a station's controls while moving
-	void Update ()
+    private void Start()
+    {
+        levelManager.transform.position = new Vector3(levelManager.transform.position.x, levelManager.transform.position.y + 0.02f, levelManager.transform.position.z);
+    }
+    void Update ()
     {
         rightThumbAxis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) * movementSpeed; //position control
 
@@ -31,6 +35,7 @@ public class UserInput : MonoBehaviour
         else heightChange = 0f;
 
         //levelManager.transform.position = new Vector3(levelManager.transform.position.x + rightThumbAxis.x, levelManager.transform.position.y + heightChange, levelManager.transform.position.z + rightThumbAxis.y);
+        levelManager.transform.position = new Vector3(levelManager.transform.position.x, levelManager.transform.position.y + heightChange, levelManager.transform.position.z);
 
         if (OVRInput.Get(OVRInput.Button.Three)) //Left-hand X button //Reset level
         {

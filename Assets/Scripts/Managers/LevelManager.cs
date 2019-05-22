@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
         currentColor = new Color(1f, 0f, 0f);
         taskStation.SetTask(condition);
         numberStation.SetTask();
-        //sizeStation.SetTask();
+        sizeStation.SetTask();
         //colorStation.SetTask();
         outputStation.SetTask();
     }
@@ -146,7 +146,7 @@ public class LevelManager : MonoBehaviour
 
         taskStation.GetTaskButtonPushed(currentTask);
         numberStation.GetTaskButtonPushed(currentTask);
-        //sizeStation.GetTaskButtonPushed(currentTask);
+        sizeStation.GetTaskButtonPushed(currentTask);
         //colorStation.GetTaskButtonPushed(currentTask);
         outputStation.GetTaskButtonPushed(currentTask);
     }
@@ -154,7 +154,7 @@ public class LevelManager : MonoBehaviour
     public void RunOutputButtonPushed()
     {
         numberStation.RunOutputButtonPushed();
-        //sizeStation.RunOutputButtonPushed();
+        sizeStation.RunOutputButtonPushed();
         outputStation.RunOutputButtonPushed(GetNumber(), currentColor, size);
     }
 
