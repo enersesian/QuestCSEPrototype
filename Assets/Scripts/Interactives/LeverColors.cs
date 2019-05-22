@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeverPulled : MonoBehaviour
+public class LeverColors : MonoBehaviour
 {
     public Transform leverBase, numberWheel,leverTopYLocalPosition, zeroPosition, onePosition;
     private float localRotationX, distanceToLeverBase;

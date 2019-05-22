@@ -9,8 +9,9 @@ public class LevelManager : MonoBehaviour
     public NumberStation numberStation;
     public OutputStation outputStation;
     public SizeStation sizeStation;
+    public ColorStation colorStation;
 
-    public Color activeColor, disabledColor, hitColor;
+    public Color activeColor, disabledColor, hitColor, red, green, blue;
     public OVRGrabber leftHandGrabber, rightHandGrabber;
 
     private enum UserProgression { SetTask, getTask, runOutput };
@@ -47,6 +48,7 @@ public class LevelManager : MonoBehaviour
         taskStation.SetTask(condition);
         numberStation.SetTask();
         sizeStation.SetTask();
+        colorStation.SetTask();
         outputStation.SetTask();
     }
 
@@ -155,6 +157,7 @@ public class LevelManager : MonoBehaviour
         taskStation.GetTaskButtonPushed(currentTask);
         numberStation.GetTaskButtonPushed(currentTask);
         sizeStation.GetTaskButtonPushed(currentTask);
+        //colorStation.GetTaskButtonPushed(currentTask);
         outputStation.GetTaskButtonPushed(currentTask);
     }
 
