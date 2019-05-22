@@ -12,7 +12,7 @@ public class LeverPulled : MonoBehaviour
     private LevelManager levelManager;
     private bool isActive;
 
-    private void Start()
+    private void Awake()
     {
         levelManager = transform.root.GetComponent<LevelManager>();
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
@@ -21,6 +21,7 @@ public class LeverPulled : MonoBehaviour
         numberWheelStartRotation = numberWheel.rotation;
         leverTopMin = zeroPosition.localPosition.z;
         leverTopMax = onePosition.localPosition.z;
+
         if (transform.parent.name == "lever01" || transform.parent.name == "lever10")
         {
             leverBaseMin = -70f;
@@ -35,6 +36,8 @@ public class LeverPulled : MonoBehaviour
 
     public void SetTask()
     {
+        //levelManager = levelManagerTemp;
+        
         levelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
 
         if(transform.parent.name == "leverRed")

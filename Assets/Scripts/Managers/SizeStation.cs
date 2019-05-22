@@ -7,11 +7,10 @@ public class SizeStation : MonoBehaviour
 {
     public LeverPulled[] levers;
     public Text stationText;
-    private LevelManager levelManager;
 
     private void Start()
     {
-        levelManager = transform.root.GetComponent<LevelManager>();
+        if (Application.isEditor) transform.position = new Vector3(0.5f, 0.35f, -1.0f); //Sitting Rift position
     }
 
     public void SetTask()

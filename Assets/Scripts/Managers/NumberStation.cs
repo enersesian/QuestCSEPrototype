@@ -8,12 +8,12 @@ public class NumberStation : MonoBehaviour
     public LeverPulled[] levers;
     public Text stationText, bit01, bit02, bit03, bit04;
     private int totalCount;
-    private LevelManager LevelManager;
+    private LevelManager levelManager;
 
     private void Start()
     {
-        LevelManager = transform.root.GetComponent<LevelManager>();
-        if (Application.isEditor) transform.position = new Vector3(0.6f, 0.2f, 0.5f); //Sitting Rift position
+        levelManager = transform.root.GetComponent<LevelManager>();
+        if (Application.isEditor) transform.position = new Vector3(0.6f, 0.2f, 0.0f); //Sitting Rift position
     }
 
     public void SetTask()
@@ -84,6 +84,6 @@ public class NumberStation : MonoBehaviour
             default:
                 break;
         }*/
-        stationText.text = LevelManager.GetNumber().ToString();
+        stationText.text = levelManager.GetNumber().ToString();
     }
 }

@@ -10,7 +10,7 @@ public class TaskStation : MonoBehaviour
 
     private void Start()
     {
-        if (Application.isEditor) transform.position = new Vector3(-0.6f, 0.2f, 0.5f); //Sitting Rift position
+        if (Application.isEditor) transform.position = new Vector3(-0.6f, 0.2f, 0.0f); //Sitting Rift position
     }
 
     public void SetTask(string condition)
