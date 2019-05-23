@@ -9,6 +9,7 @@ public class OutputStation : MonoBehaviour
     public Text stationText, numberItem, colorItem, shapeItem, sizeItem;
     public Transform cubeGrabbable, cubeGrabbleStartPosition;
     public ButtonPushed runButton;
+    public LeverPulled leverRunOutput;
     private LevelManager levelManager;
     public GameObject cube;
     private GameObject cubeSpawn;
@@ -16,21 +17,22 @@ public class OutputStation : MonoBehaviour
     private void Start()
     {
         levelManager = transform.root.GetComponent<LevelManager>();
-        if (Application.isEditor) transform.position = new Vector3(0f, 0.2f, 1.7f); //Sitting Rift position
+        if (Application.isEditor) transform.position = new Vector3(-2f, 0.2f, 0.0f); //Sitting Rift position
     }
 
     public void SetTask()
     {
-        runButton.ResetButton(false);
+        //runButton.ResetButton(false);
+        leverRunOutput.SetTask();
         stationText.text = "No output currently available...";
         numberItem.text = "0";
         sizeItem.text = "Small";
         colorItem.text = "Red";
         shapeItem.text = "Cubes";
-        ResetCubeGrabbable(); //onlu useful for user resetting level with A button
+        //ResetCubeGrabbable(); //only useful for user resetting level with A button
     }
 
-    public void GetTaskButtonPushed(int currentTask)
+    public void GetTaskLeverPulled(int currentTask)
     {
         //runButton.ResetButton(true);
         UpdateNumText(0);
@@ -39,6 +41,8 @@ public class OutputStation : MonoBehaviour
 
     public void RunOutputButtonPushed(int number, Color currentColor, string size)
     {
+        levelManager.RunOutput(); //to reset the sendOutputLever
+
         stationText.text = "Output generated\nPlease take output to task station";
         cubeGrabbable.GetComponent<Collider>().enabled = true;
         cubeGrabbable.GetComponent<OVRGrabbable>().enabled = true;
@@ -77,7 +81,8 @@ public class OutputStation : MonoBehaviour
             //if (colorItem.text == "-") colorItem.text = "Red";
             if (number > 1) shapeItem.text = "Cubes";
             else shapeItem.text = "Cube";
-            runButton.ResetButton(true);
+            //runButton.ResetButton(true);
+            leverRunOutput.GetTaskButtonPushed(1);
         }
         else
         {
@@ -88,7 +93,8 @@ public class OutputStation : MonoBehaviour
             sizeItem.text = "-";
             colorItem.text = "-";
             shapeItem.text = "-";*/
-            runButton.ResetButton(false);
+            //runButton.ResetButton(false);
+            leverRunOutput.SetTask();
         }
     }
 

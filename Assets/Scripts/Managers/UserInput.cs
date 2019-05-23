@@ -40,6 +40,7 @@ public class UserInput : MonoBehaviour
         if (OVRInput.Get(OVRInput.Button.Three)) //Left-hand X button //Reset level
         {
             levelManager.SetTask("start", 1); //task one
+            levelManager.outputStation.GetTaskLeverPulled(1); //need to resetCubeGrabbable if manually resetting level
         }
 
     }

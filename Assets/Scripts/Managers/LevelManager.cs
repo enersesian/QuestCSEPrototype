@@ -36,13 +36,30 @@ public class LevelManager : MonoBehaviour
             currentTaskRequirements[i] = 0;
         }
         currentColor = new Color(1f, 0f, 0f);
+
         taskStation.SetTask(condition);
         numberStation.SetTask();
         sizeStation.SetTask();
-        //colorStation.SetTask();
+        colorStation.SetTask();
         outputStation.SetTask();
     }
 
+    /*
+    public void InteractableActivacted(string name, int action)
+    {
+        if (name == "lever0001") SetNumber(1, action); //number bit 1 = action
+        if (name == "lever0010") SetNumber(2, action); //number bit 2 = action
+        if (name == "lever0100") SetNumber(3, action); //number bit 3 = action
+        //if (transform.parent.name == "lever1000") SetNumber(4, action); //if I return to 4 bit numbers
+        if (name == "lever01") SetSize(4, action); //size bit 1 = action
+        if (name == "lever10") SetSize(5, action); //size bit 2 = action
+
+        //lever pulled to up to onePosition
+        if (name == "leverGetTask") GetTaskLeverPulled();
+        if (name == "leverRunOutput") RunOutputLeverPulled();
+        if (name == "leverSendOutput") SendOutputLeverPulled();
+    }
+    */
     public void ForceGrabberRelease(OVRGrabbable grabbable)
     {
         if (grabbable != null)
@@ -52,7 +69,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void GetTaskButtonPushed()
+    public void GetTaskLeverPulled()
     {
         switch(currentTask)
         {
@@ -144,11 +161,11 @@ public class LevelManager : MonoBehaviour
                 break;
         }
 
-        taskStation.GetTaskButtonPushed(currentTask);
-        numberStation.GetTaskButtonPushed(currentTask);
-        sizeStation.GetTaskButtonPushed(currentTask);
-        //colorStation.GetTaskButtonPushed(currentTask);
-        outputStation.GetTaskButtonPushed(currentTask);
+        taskStation.GetTaskLeverPulled(currentTask);
+        numberStation.GetTaskLeverPulled(currentTask);
+        sizeStation.GetTaskLeverPulled(currentTask);
+        colorStation.GetTaskLeverPulled(currentTask);
+        outputStation.GetTaskLeverPulled(currentTask);
     }
 
     public void RunOutputButtonPushed()
@@ -156,6 +173,11 @@ public class LevelManager : MonoBehaviour
         numberStation.RunOutputButtonPushed();
         sizeStation.RunOutputButtonPushed();
         outputStation.RunOutputButtonPushed(GetNumber(), currentColor, size);
+    }
+
+    public void RunOutput()
+    {
+        taskStation.RunOutput();
     }
 
     public void PlacedOutput()

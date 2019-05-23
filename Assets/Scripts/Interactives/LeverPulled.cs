@@ -18,7 +18,7 @@ public class LeverPulled : MonoBehaviour
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
         startPosition = transform.localPosition;
         leverBaseStartRotation = leverBase.rotation;
-        numberWheelStartRotation = numberWheel.rotation;
+        if(numberWheel != null) numberWheelStartRotation = numberWheel.rotation;
         leverTopMin = zeroPosition.localPosition.z;
         leverTopMax = onePosition.localPosition.z;
 
@@ -34,49 +34,61 @@ public class LeverPulled : MonoBehaviour
         }
     }
 
-    public void SetTask()
+    public void SetToZeroPosition()
     {
-        //levelManager = levelManagerTemp;
-        
-        levelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
-
-        if(transform.parent.name == "leverRed")
-        {
-            isActive = true;
-            GetComponent<OVRGrabbable>().enabled = true;
-            GetComponent<Collider>().enabled = true;
-            GetComponent<Renderer>().material.SetColor("_Color", levelManager.activeColor);
-            transform.localPosition = onePosition.localPosition;
-            leverBase.localRotation = onePosition.localRotation;
-            numberWheel.localRotation = Quaternion.Euler(numberWheelMax, 0f, 0f);
-        }
-        else
-        {
-            isActive = false;
-            GetComponent<OVRGrabbable>().enabled = false;
-            GetComponent<Collider>().enabled = false;
-            GetComponent<Renderer>().material.SetColor("_Color", levelManager.disabledColor);
-            transform.localPosition = startPosition;
-            leverBase.rotation = leverBaseStartRotation;
-            numberWheel.rotation = numberWheelStartRotation;
-        }
+        transform.localPosition = zeroPosition.localPosition;
+        leverBase.localRotation = zeroPosition.localRotation;
     }
 
-    public void GetTaskButtonPushed(int currentTask)
+    public void SetToOnePosition()
+    {
+        transform.localPosition = onePosition.localPosition;
+        leverBase.localRotation = onePosition.localRotation;
+    }
+
+    public void Activate()
     {
         isActive = true;
-        GetComponent<Collider>().enabled = true;
+        levelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = true;
+        GetComponent<Collider>().enabled = true;
         GetComponent<Renderer>().material.SetColor("_Color", levelManager.activeColor);
+        if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(numberWheelMax, 0f, 0f);
     }
 
-    public void RunOutputButtonPushed()
+    public void Deactivate()
     {
         isActive = false;
         levelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = false;
         GetComponent<Collider>().enabled = false;
         GetComponent<Renderer>().material.SetColor("_Color", levelManager.disabledColor);
+        if (numberWheel != null) numberWheel.rotation = numberWheelStartRotation;
+    }
+
+
+    public void SetTask() //Refactor to DisableLever method
+    {
+        if(transform.parent.name == "leverGetTask")
+        {
+            Activate();
+            SetToZeroPosition();
+        }
+        else
+        {
+            Deactivate();
+            SetToZeroPosition();
+        }
+    }
+
+    public void GetTaskButtonPushed(int currentTask) //Refactor to EnableLever method
+    {
+        Activate();
+    }
+
+    public void RunOutputButtonPushed()
+    {
+        Deactivate();
     }
 
     // Update is called once per frame
@@ -87,7 +99,7 @@ public class LeverPulled : MonoBehaviour
             if (transform.localPosition.z > zeroPosition.localPosition.z)
             {//went past zero position, set to zero position
                 transform.localPosition = zeroPosition.localPosition;
-                //update board total
+                
                 if (transform.parent.name == "lever0001") levelManager.SetNumber(1, 0); //number bit 1 = 0
                 if (transform.parent.name == "lever0010") levelManager.SetNumber(2, 0); //number bit 2 = 0
                 if (transform.parent.name == "lever0100") levelManager.SetNumber(3, 0); //number bit 3 = 0
@@ -105,6 +117,9 @@ public class LeverPulled : MonoBehaviour
                 //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 1); //bit 4 = 1
                 if (transform.parent.name == "lever01") levelManager.SetSize(4, 1); //size bit 1 = 1
                 if (transform.parent.name == "lever10") levelManager.SetSize(5, 1); //size bit 2 = 1
+                if (transform.parent.name == "leverGetTask") GetTaskLeverPulled();
+                if (transform.parent.name == "leverRunOutput") RunOutputLeverPulled();
+                if (transform.parent.name == "leverSendOutput") SendOutputLeverPulled();
             }
             else transform.localPosition = new Vector3(startPosition.x, leverTopYLocalPosition.localPosition.y, transform.localPosition.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
             transform.localRotation = Quaternion.identity;
@@ -117,9 +132,27 @@ public class LeverPulled : MonoBehaviour
 
             //update number wheel rotation based on user grabbing top of lever
             localRotationX = Scale(leverTopMin, leverTopMax, numberWheelMin, numberWheelMax, transform.localPosition.z);
-            numberWheel.localRotation = Quaternion.Euler(localRotationX, numberWheel.localRotation.y, numberWheel.localRotation.z);
+            if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(localRotationX, numberWheel.localRotation.y, numberWheel.localRotation.z);
         }
 	}
+
+    private void SendOutputLeverPulled()
+    {
+        Deactivate();
+        levelManager.OutputSent();
+    }
+
+    private void RunOutputLeverPulled()
+    {
+        Deactivate();
+        levelManager.RunOutputButtonPushed();
+    }
+
+    private void GetTaskLeverPulled()
+    {
+        Deactivate();
+        levelManager.GetTaskLeverPulled();
+    }
 
     public float Scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
     {

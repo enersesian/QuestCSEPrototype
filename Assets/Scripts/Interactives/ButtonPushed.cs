@@ -53,7 +53,7 @@ public class ButtonPushed : MonoBehaviour
             {
                 if(gameObject.name == "buttonGetTask")
                 {
-                    transform.root.GetComponent<LevelManager>().GetTaskButtonPushed();
+                    transform.root.GetComponent<LevelManager>().GetTaskLeverPulled();
                 }
                 if (gameObject.name == "buttonRunOutput")
                 {

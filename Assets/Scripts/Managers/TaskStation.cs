@@ -7,10 +7,11 @@ public class TaskStation : MonoBehaviour
 {
     public Text taskText;
     public ButtonPushed getButton, sendOutputButton;
+    public LeverPulled leverGetTask, leverSendOutput;
 
     private void Start()
     {
-        if (Application.isEditor) transform.position = new Vector3(-0.6f, 0.2f, 0.0f); //Sitting Rift position
+        if (Application.isEditor) transform.position = new Vector3(0f, 0.2f, 0.6f); //Sitting Rift position
     }
 
     public void SetTask(string condition)
@@ -22,7 +23,9 @@ public class TaskStation : MonoBehaviour
         }
         if(condition == "success") taskText.text = "You performed the task perfectly! \nPress Get Task button to receive next task.";
         if(condition == "failure") taskText.text = "You did not performed the task correctly. \nPress Get Task button to try the task again.";
-        getButton.ResetButton(true);
+        //getButton.ResetButton(true);
+        leverGetTask.SetTask();
+        //leverSendOutput.SetTask();
     }
 
     public void LevelComplete()
@@ -30,9 +33,10 @@ public class TaskStation : MonoBehaviour
         taskText.text = "You win! Awesome Job! Now get out of here!";
     }
 
-    public void GetTaskButtonPushed(int currentTask)
+    public void GetTaskLeverPulled(int currentTask)
     {
-        sendOutputButton.ResetButton(false);
+        //sendOutputButton.ResetButton(false);
+        //leverSendOutput.SetTask();
 
         if (currentTask == 1)
         {
@@ -70,13 +74,21 @@ public class TaskStation : MonoBehaviour
         }
     }
 
+    public void RunOutput()
+    {
+        //sendOutputButton.ResetButton(true);
+        leverSendOutput.SetToZeroPosition();
+    }
+
     public void PlacedOutput()
     {
-        sendOutputButton.ResetButton(true);
+        //sendOutputButton.ResetButton(true);
+        leverSendOutput.Activate();
     }
 
     public void RemovedOutput()
     {
-        sendOutputButton.ResetButton(false);
+        //sendOutputButton.ResetButton(false);
+        leverSendOutput.Deactivate();
     }
 }

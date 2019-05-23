@@ -10,7 +10,7 @@ public class SizeStation : MonoBehaviour
 
     private void Start()
     {
-        if (Application.isEditor) transform.position = new Vector3(0.5f, 0.35f, -1.0f); //Sitting Rift position
+        if (Application.isEditor) transform.position = new Vector3(0.5f, 0.35f, -0.5f); //Sitting Rift position
     }
 
     public void SetTask()
@@ -19,7 +19,7 @@ public class SizeStation : MonoBehaviour
         stationText.text = "Small";
     }
 
-    public void GetTaskButtonPushed(int currentTask)
+    public void GetTaskLeverPulled(int currentTask)
     {
         switch(currentTask)
         {

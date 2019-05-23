@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OutputSent : MonoBehaviour
+public class PlaceOutput : MonoBehaviour
 {
     public Text taskText;
 

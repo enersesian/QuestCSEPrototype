@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ColorStation : MonoBehaviour
 {
-    public LeverColors[] levers;
+    public LeverPulled[] levers;
     public Image finalColor; 
     private int totalCount;
     private LevelManager LevelManager;
@@ -17,11 +17,11 @@ public class ColorStation : MonoBehaviour
 
     public void SetTask()
     {
-        foreach(LeverColors lever in levers) lever.SetTask();
+        foreach(LeverPulled lever in levers) lever.SetTask();
         finalColor.color = new Color(1f, 0.33f, 0.33f);
     }
 
-    public void GetTaskButtonPushed(int currentTask)
+    public void GetTaskLeverPulled(int currentTask)
     {
         switch(currentTask)
         {
@@ -44,7 +44,7 @@ public class ColorStation : MonoBehaviour
 
     public void RunOutputButtonPushed()
     {
-        foreach (LeverColors lever in levers) lever.RunOutputButtonPushed();
+        foreach (LeverPulled lever in levers) lever.RunOutputButtonPushed();
     }
 
 }
