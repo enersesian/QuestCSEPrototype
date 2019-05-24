@@ -7,9 +7,9 @@ public class LevelManager : MonoBehaviour
 {
     public TaskStation taskStation;
     public NumberStation numberStation;
-    public OutputStation outputStation;
-    public SizeStation sizeStation;
     public ColorStation colorStation;
+    public ShapeStation shapeStation;
+    public OutputStation outputStation;
 
     public Color activeColor, disabledColor, hitColor, red, green, blue;
     public OVRGrabber leftHandGrabber, rightHandGrabber;
@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     private int[] currentTaskStatus = new int[9]; 
     private int[] currentTaskRequirements = new int[9];
     private Color currentColor;
-    private string size;
+    private string shape;
 
     void Start ()
     {
@@ -29,18 +29,20 @@ public class LevelManager : MonoBehaviour
 
     public void SetTask(string condition, int taskIterator)
     {
+        currentColor = new Color(0f, 0f, 0f);
+        shape = "cube";
+
         currentTask = taskIterator;
         for (int i = 0; i < currentTaskStatus.Length; i++)
         {
             currentTaskStatus[i] = 0;
             currentTaskRequirements[i] = 0;
         }
-        currentColor = new Color(1f, 0f, 0f);
 
         taskStation.SetTask(condition);
         numberStation.SetTask();
-        sizeStation.SetTask();
         colorStation.SetTask();
+        shapeStation.SetTask();
         outputStation.SetTask();
     }
 
@@ -78,10 +80,10 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[1] = 1; //number = 1
                 currentTaskRequirements[2] = 0;
                 currentTaskRequirements[3] = 0;
-                currentTaskRequirements[4] = 0; //size = small
+                currentTaskRequirements[4] = 1; //color = red
                 currentTaskRequirements[5] = 0; 
-                currentTaskRequirements[6] = 1; //color = red
-                currentTaskRequirements[7] = 0;
+                currentTaskRequirements[6] = 0; 
+                currentTaskRequirements[7] = 1; //shape = sphere
                 currentTaskRequirements[8] = 0;
                 break;
 
@@ -90,10 +92,10 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[1] = 0; //number = 2
                 currentTaskRequirements[2] = 1;
                 currentTaskRequirements[3] = 0;
-                currentTaskRequirements[4] = 0; //size = small
+                currentTaskRequirements[4] = 1; //color = red
                 currentTaskRequirements[5] = 0;
-                currentTaskRequirements[6] = 1; //color = red
-                currentTaskRequirements[7] = 0;
+                currentTaskRequirements[6] = 0;
+                currentTaskRequirements[7] = 1; //shape = sphere
                 currentTaskRequirements[8] = 0;
                 break;
 
@@ -102,10 +104,10 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[1] = 0; //number = 4
                 currentTaskRequirements[2] = 0;
                 currentTaskRequirements[3] = 1;
-                currentTaskRequirements[4] = 0; //size = medium
-                currentTaskRequirements[5] = 1;
-                currentTaskRequirements[6] = 1; //color = red
-                currentTaskRequirements[7] = 0;
+                currentTaskRequirements[4] = 0; //color = green
+                currentTaskRequirements[5] = 0;
+                currentTaskRequirements[6] = 0;
+                currentTaskRequirements[7] = 0; //shape = cube
                 currentTaskRequirements[8] = 0;
                 break;
 
@@ -114,11 +116,11 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[1] = 1; //number = 3
                 currentTaskRequirements[2] = 1;
                 currentTaskRequirements[3] = 0;
-                currentTaskRequirements[4] = 0; //size = medium
-                currentTaskRequirements[5] = 1;
-                currentTaskRequirements[6] = 0; //color = green
-                currentTaskRequirements[7] = 1;
-                currentTaskRequirements[8] = 0;
+                currentTaskRequirements[4] = 0; //color = blue
+                currentTaskRequirements[5] = 0;
+                currentTaskRequirements[6] = 1;
+                currentTaskRequirements[7] = 0; //shape = cone
+                currentTaskRequirements[8] = 1;
                 break;
 
             case 5:
@@ -126,10 +128,10 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[1] = 1; //number = 5
                 currentTaskRequirements[2] = 0;
                 currentTaskRequirements[3] = 1;
-                currentTaskRequirements[4] = 1; //size = large
-                currentTaskRequirements[5] = 0;
-                currentTaskRequirements[6] = 0; //color = blue
-                currentTaskRequirements[7] = 0;
+                currentTaskRequirements[4] = 1; //color = yellow
+                currentTaskRequirements[5] = 1;
+                currentTaskRequirements[6] = 0;
+                currentTaskRequirements[7] = 1; //shape = diamond
                 currentTaskRequirements[8] = 1;
                 break;
 
@@ -138,11 +140,11 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[1] = 1; //number = 7
                 currentTaskRequirements[2] = 1;
                 currentTaskRequirements[3] = 1;
-                currentTaskRequirements[4] = 0; //size = large
+                currentTaskRequirements[4] = 0; //color = cyan
                 currentTaskRequirements[5] = 1;
-                currentTaskRequirements[6] = 1; //color = yellow
-                currentTaskRequirements[7] = 1;
-                currentTaskRequirements[8] = 0;
+                currentTaskRequirements[6] = 1;
+                currentTaskRequirements[7] = 0; //shape = cone
+                currentTaskRequirements[8] = 1;
                 break;
 
             case 7:
@@ -150,10 +152,10 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[1] = 0; //number = 6
                 currentTaskRequirements[2] = 1;
                 currentTaskRequirements[3] = 1;
-                currentTaskRequirements[4] = 0; //size = x-large
-                currentTaskRequirements[5] = 1;
-                currentTaskRequirements[6] = 0; //color = purple
-                currentTaskRequirements[7] = 1;
+                currentTaskRequirements[4] = 1; //color = purple
+                currentTaskRequirements[5] = 0;
+                currentTaskRequirements[6] = 1;
+                currentTaskRequirements[7] = 1; //shape = diamond
                 currentTaskRequirements[8] = 1;
                 break;
 
@@ -163,7 +165,8 @@ public class LevelManager : MonoBehaviour
 
         taskStation.GetTaskLeverPulled(currentTask);
         numberStation.GetTaskLeverPulled(currentTask);
-        sizeStation.GetTaskLeverPulled(currentTask);
+        colorStation.GetTaskLeverPulled(currentTask);
+        shapeStation.GetTaskLeverPulled(currentTask);
         colorStation.GetTaskLeverPulled(currentTask);
         outputStation.GetTaskLeverPulled(currentTask);
     }
@@ -171,8 +174,9 @@ public class LevelManager : MonoBehaviour
     public void RunOutputButtonPushed()
     {
         numberStation.RunOutputButtonPushed();
-        sizeStation.RunOutputButtonPushed();
-        outputStation.RunOutputButtonPushed(GetNumber(), currentColor, size);
+        colorStation.RunOutputButtonPushed();
+        shapeStation.RunOutputButtonPushed();
+        outputStation.RunOutputButtonPushed(GetNumber(), currentColor, shape);
     }
 
     public void RunOutput()
@@ -194,7 +198,20 @@ public class LevelManager : MonoBehaviour
     {
         int number = GetNumber();
         outputStation.OutputSent(number);
-        switch (currentTask)
+        if(currentTaskStatus[1] == currentTaskRequirements[1] && currentTaskStatus[2] == currentTaskRequirements[2] && 
+            currentTaskStatus[3] == currentTaskRequirements[3] && currentTaskStatus[4] == currentTaskRequirements[4] && 
+            currentTaskStatus[5] == currentTaskRequirements[5] && currentTaskStatus[6] == currentTaskRequirements[6] &&
+            currentTaskStatus[7] == currentTaskRequirements[7] && currentTaskStatus[8] == currentTaskRequirements[8])
+        {
+            if(currentTask == 7) LevelComplete();
+            else SetTask("success", currentTask + 1);
+        }
+        else
+        {
+            SetTask("failure", currentTask);
+        }
+
+        /*switch (currentTask)
         {
             case 1:
                 if (number == 1) SetTask("success", 2); //user successful, iterate currentTask
@@ -218,7 +235,7 @@ public class LevelManager : MonoBehaviour
 
             default:
                 break;
-        }
+        }*/
     }
 
     public void LevelComplete()
@@ -234,21 +251,29 @@ public class LevelManager : MonoBehaviour
         outputStation.UpdateNumText(GetNumber());
     }
 
-    public void SetSize(int bit, int bitStatus)
+    public void SetColor(int bit, int bitStatus)
     {
         currentTaskStatus[bit] = bitStatus;
-        if (currentTaskStatus[4] == 0)
-        {
-            if (currentTaskStatus[5] == 0) size = "Small";//small
-            else size = "Large";//large
-        }
-        else
-        {
-            if (currentTaskStatus[5] == 1) size = "X-Large";//x-large
-            else size = "Medium";//medium
-        }
-        sizeStation.UpdateSizeText(size);
-        outputStation.UpdateSizeText(size);
+        currentColor = new Color(currentTaskStatus[4], currentTaskStatus[5], currentTaskStatus[6]);
+        colorStation.UpdateColorText(currentColor);
+        outputStation.UpdateColorText(currentColor);
+    }
+
+    public Color GetColor()
+    {
+        return currentColor;
+    }
+
+    public void SetShape(int bit, int bitStatus)
+    {
+        currentTaskStatus[bit] = bitStatus;
+        if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 0) shape = "Cube";
+        if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 1) shape = "Cone";
+        if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 0) shape = "Sphere";
+        if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 1) shape = "Torus";
+
+        shapeStation.UpdateShapeText(shape);
+        outputStation.UpdateShapeText(shape);
     }
 
     public int GetNumber()

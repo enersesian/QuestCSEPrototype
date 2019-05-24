@@ -11,8 +11,9 @@ public class OutputStation : MonoBehaviour
     public ButtonPushed runButton;
     public LeverPulled leverRunOutput;
     private LevelManager levelManager;
-    public GameObject cube;
-    private GameObject cubeSpawn;
+    public GameObject cube, sphere, cone, diamond;
+    private GameObject objectSpawn;
+    private Vector3 objectPosition;
 
     private void Start()
     {
@@ -26,8 +27,8 @@ public class OutputStation : MonoBehaviour
         leverRunOutput.SetTask();
         stationText.text = "No output currently available...";
         numberItem.text = "0";
-        sizeItem.text = "Small";
-        colorItem.text = "Red";
+        //sizeItem.text = "Small";
+        colorItem.text = "Black";
         shapeItem.text = "Cubes";
         //ResetCubeGrabbable(); //only useful for user resetting level with A button
     }
@@ -39,26 +40,25 @@ public class OutputStation : MonoBehaviour
         ResetCubeGrabbable();
     }
 
-    public void RunOutputButtonPushed(int number, Color currentColor, string size)
+    public void RunOutputButtonPushed(int number, Color currentColor, string shape)
     {
         levelManager.RunOutput(); //to reset the sendOutputLever
 
         stationText.text = "Output generated\nPlease take output to task station";
         cubeGrabbable.GetComponent<Collider>().enabled = true;
         cubeGrabbable.GetComponent<OVRGrabbable>().enabled = true;
-
-        Vector3 cubePosition;
+        
         for (int i = 0; i < number; i++)
         {
-            cubePosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.05f, 0.05f), cubeGrabbable.position.y + Random.Range(-0.2f, 0.2f), cubeGrabbable.position.z + Random.Range(-0.05f, 0.05f));
-            cubeSpawn = Instantiate(cube, cubePosition, Quaternion.identity);
-            cubeSpawn.transform.parent = cubeGrabbable;
-            cubeSpawn.GetComponent<RandomMovement>().isSent = false;
-            cubeSpawn.GetComponent<Renderer>().material.color = currentColor;
-            if (size == "small") cubeSpawn.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            if (size == "medium") cubeSpawn.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
-            if (size == "large") cubeSpawn.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-            else cubeSpawn.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+            if (shape == "Cube") objectSpawn = Instantiate(cube);
+            if (shape == "Sphere") objectSpawn = Instantiate(sphere);
+            if (shape == "Cone") objectSpawn = Instantiate(cone);
+            if (shape == "Torus") objectSpawn = Instantiate(diamond);
+            objectPosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.05f, 0.05f), cubeGrabbable.position.y + Random.Range(-0.2f, 0.2f), cubeGrabbable.position.z + Random.Range(-0.05f, 0.05f));
+            objectSpawn.transform.position = objectPosition;
+            objectSpawn.transform.parent = cubeGrabbable;
+            objectSpawn.GetComponent<RandomMovement>().isSent = false;
+            objectSpawn.GetComponent<Renderer>().material.color = currentColor;
         }
     }
 
@@ -98,9 +98,21 @@ public class OutputStation : MonoBehaviour
         }
     }
 
-    public void UpdateSizeText(string size)
+    public void UpdateShapeText(string shape)
     {
-        sizeItem.text = size;
+        shapeItem.text = shape;
+    }
+
+    public void UpdateColorText(Color color)
+    {
+        if (color.r == 1 && color.b == 1 && color.g == 1) colorItem.text = "White";
+        if (color.r == 1 && color.b == 1 && color.g == 0) colorItem.text = "Purple";
+        if (color.r == 1 && color.b == 0 && color.g == 0) colorItem.text = "Red";
+        if (color.r == 1 && color.b == 0 && color.g == 1) colorItem.text = "Yellow";
+        if (color.r == 0 && color.b == 1 && color.g == 1) colorItem.text = "Cyan";
+        if (color.r == 0 && color.b == 0 && color.g == 1) colorItem.text = "Green";
+        if (color.r == 0 && color.b == 1 && color.g == 0) colorItem.text = "Blue";
+        if (color.r == 0 && color.b == 0 && color.g == 0) colorItem.text = "Black";
     }
 
     private void ResetCubeGrabbable()
