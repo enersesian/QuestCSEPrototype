@@ -14,6 +14,7 @@ public class OutputStation : MonoBehaviour
     public GameObject cube, sphere, cone, diamond;
     private GameObject objectSpawn;
     private Vector3 objectPosition;
+    private int spawnedObjects;
 
     private void Start()
     {
@@ -47,7 +48,7 @@ public class OutputStation : MonoBehaviour
         stationText.text = "Output generated\nPlease take output to task station";
         cubeGrabbable.GetComponent<Collider>().enabled = true;
         cubeGrabbable.GetComponent<OVRGrabbable>().enabled = true;
-        
+        Debug.Log(number.ToString() + currentColor.ToString() + shape.ToString());
         for (int i = 0; i < number; i++)
         {
             if (shape == "Cube") objectSpawn = Instantiate(cube);
@@ -64,11 +65,17 @@ public class OutputStation : MonoBehaviour
 
     public void OutputSent(int number)
     {
+        foreach(Transform child in cubeGrabbable)
+        {
+            child.GetComponent<RandomMovement>().isSent = true;
+        }
+        /*
         for (int i = 0; i < number; i++)
         {
             cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent = true;
             //Debug.Log(cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent.ToString());
         }
+        */
     }
 
     public void UpdateNumText(int number)
@@ -123,9 +130,24 @@ public class OutputStation : MonoBehaviour
         cubeGrabbable.position = cubeGrabbleStartPosition.position;
         cubeGrabbable.rotation = cubeGrabbleStartPosition.rotation;
 
-        for (int i = 0; i < cubeGrabbable.childCount; i++)
+        foreach (Transform child in cubeGrabbable)
+        {
+            Destroy(child.gameObject);
+        }
+        /*
+        for (int i = 0; i < spawnedObjects; i++)
         {
             Destroy(cubeGrabbable.GetChild(i).gameObject);
-        }
+        }*/
+        /*
+        spawnedObjects = cubeGrabbable.childCount;
+        if(spawnedObjects > 0)
+        {
+            for (int i = 0; i < spawnedObjects; i++)
+            {
+                Destroy(cubeGrabbable.GetChild(i).gameObject);
+            }
+        }*/
+        
     }
 }

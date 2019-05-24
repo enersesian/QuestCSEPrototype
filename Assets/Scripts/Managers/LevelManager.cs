@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
     public void SetTask(string condition, int taskIterator)
     {
         currentColor = new Color(0f, 0f, 0f);
-        shape = "cube";
+        shape = "Cube";
 
         currentTask = taskIterator;
         for (int i = 0; i < currentTaskStatus.Length; i++)
@@ -105,7 +105,7 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[2] = 0;
                 currentTaskRequirements[3] = 1;
                 currentTaskRequirements[4] = 0; //color = green
-                currentTaskRequirements[5] = 0;
+                currentTaskRequirements[5] = 1;
                 currentTaskRequirements[6] = 0;
                 currentTaskRequirements[7] = 0; //shape = cube
                 currentTaskRequirements[8] = 0;
@@ -198,7 +198,7 @@ public class LevelManager : MonoBehaviour
     {
         int number = GetNumber();
         outputStation.OutputSent(number);
-        if(currentTaskStatus[1] == currentTaskRequirements[1] && currentTaskStatus[2] == currentTaskRequirements[2] && 
+        if (currentTaskStatus[1] == currentTaskRequirements[1] && currentTaskStatus[2] == currentTaskRequirements[2] && 
             currentTaskStatus[3] == currentTaskRequirements[3] && currentTaskStatus[4] == currentTaskRequirements[4] && 
             currentTaskStatus[5] == currentTaskRequirements[5] && currentTaskStatus[6] == currentTaskRequirements[6] &&
             currentTaskStatus[7] == currentTaskRequirements[7] && currentTaskStatus[8] == currentTaskRequirements[8])

@@ -60,7 +60,7 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 5)
         {
-            taskText.text = "Welcome to task five \nPlease bring back five yellow diamonds. \nUse the number, size, and color stations.";
+            taskText.text = "Welcome to task five \nPlease bring back five yellow torus. \nUse the number, size, and color stations.";
         }
 
         if (currentTask == 6)
@@ -70,7 +70,7 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 7)
         {
-            taskText.text = "Welcome to task seven \nPlease bring back six purple diamonds. \nUse the number, size, and color stations.";
+            taskText.text = "Welcome to task seven \nPlease bring back six purple torus. \nUse the number, size, and color stations.";
         }
     }
 

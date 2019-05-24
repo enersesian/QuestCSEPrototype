@@ -109,9 +109,9 @@ public class LeverPulled : MonoBehaviour
                 if (transform.parent.name == "leverGreen") levelManager.SetColor(5, 0); //color bit 2 = 0
                 if (transform.parent.name == "leverBlue") levelManager.SetColor(6, 0); //color bit 3 = 0
 
-                if (transform.parent.name == "lever01") levelManager.SetShape(7, 0); //size bit 1 = 0
-                if (transform.parent.name == "lever10") levelManager.SetShape(8, 0); //size bit 2 = 0
-                
+                if (transform.parent.name == "lever01") levelManager.SetShape(7, 0); //shape bit 1 = 0
+                if (transform.parent.name == "lever10") levelManager.SetShape(8, 0); //shape bit 2 = 0
+
             }
             else if (transform.localPosition.z < onePosition.localPosition.z)
             {//went past one position, set to one position
@@ -126,8 +126,8 @@ public class LeverPulled : MonoBehaviour
                 if (transform.parent.name == "leverGreen") levelManager.SetColor(5, 1); //color bit 2 = 1
                 if (transform.parent.name == "leverBlue") levelManager.SetColor(6, 1); //color bit 3 = 1
 
-                if (transform.parent.name == "lever01") levelManager.SetShape(7, 1); //size bit 1 = 1
-                if (transform.parent.name == "lever10") levelManager.SetShape(8, 1); //size bit 2 = 1
+                if (transform.parent.name == "lever01") levelManager.SetShape(7, 1); //shape bit 1 = 1
+                if (transform.parent.name == "lever10") levelManager.SetShape(8, 1); //shape bit 2 = 1
 
                 if (transform.parent.name == "leverGetTask") GetTaskLeverPulled();
                 if (transform.parent.name == "leverRunOutput") RunOutputLeverPulled();
