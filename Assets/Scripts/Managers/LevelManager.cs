@@ -19,8 +19,10 @@ public class LevelManager : MonoBehaviour
     //6 = color red bit, 7 = color green bit, 8 = color blue bit, possibly add shape later
     private int[] currentTaskStatus = new int[9]; 
     private int[] currentTaskRequirements = new int[9];
+    private int currentNumber;
     private Color currentColor;
-    private string shape;
+    private string currentColorText;
+    private string currentShape;
 
     void Start ()
     {
@@ -29,8 +31,10 @@ public class LevelManager : MonoBehaviour
 
     public void SetTask(string condition, int taskIterator)
     {
+        currentNumber = 0;
         currentColor = new Color(0f, 0f, 0f);
-        shape = "Cube";
+        currentColorText = "Black";
+        currentShape = "Cube";
 
         currentTask = taskIterator;
         for (int i = 0; i < currentTaskStatus.Length; i++)
@@ -176,7 +180,7 @@ public class LevelManager : MonoBehaviour
         numberStation.RunOutputButtonPushed();
         colorStation.RunOutputButtonPushed();
         shapeStation.RunOutputButtonPushed();
-        outputStation.RunOutputButtonPushed(GetNumber(), currentColor, shape);
+        outputStation.RunOutputButtonPushed(GetNumber(), currentColor, currentShape);
     }
 
     public void RunOutput()
@@ -246,17 +250,56 @@ public class LevelManager : MonoBehaviour
 
     public void SetNumber(int bit, int bitStatus)
     {
-        currentTaskStatus[bit] = bitStatus;
-        numberStation.UpdateBitText(bit, bitStatus);
-        outputStation.UpdateNumText(GetNumber());
+        if(currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        {
+            currentTaskStatus[bit] = bitStatus;
+            currentNumber = currentTaskStatus[1] + (2 * currentTaskStatus[2]) + (4 * currentTaskStatus[3]);
+
+            numberStation.UpdateBitText(bit, bitStatus);
+            outputStation.UpdateNumText(GetNumber());
+        }
+        
     }
 
     public void SetColor(int bit, int bitStatus)
     {
-        currentTaskStatus[bit] = bitStatus;
-        currentColor = new Color(currentTaskStatus[4], currentTaskStatus[5], currentTaskStatus[6]);
-        colorStation.UpdateColorText(currentColor);
-        outputStation.UpdateColorText(currentColor);
+        if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        {
+            currentTaskStatus[bit] = bitStatus;
+            currentColor = new Color(currentTaskStatus[4], currentTaskStatus[5], currentTaskStatus[6]);
+
+            if (currentColor.r == 1 && currentColor.b == 1 && currentColor.g == 1) currentColorText = "White";
+            if (currentColor.r == 1 && currentColor.b == 1 && currentColor.g == 0) currentColorText = "Purple";
+            if (currentColor.r == 1 && currentColor.b == 0 && currentColor.g == 0) currentColorText = "Red";
+            if (currentColor.r == 1 && currentColor.b == 0 && currentColor.g == 1) currentColorText = "Yellow";
+            if (currentColor.r == 0 && currentColor.b == 1 && currentColor.g == 1) currentColorText = "Cyan";
+            if (currentColor.r == 0 && currentColor.b == 0 && currentColor.g == 1) currentColorText = "Green";
+            if (currentColor.r == 0 && currentColor.b == 1 && currentColor.g == 0) currentColorText = "Blue";
+            if (currentColor.r == 0 && currentColor.b == 0 && currentColor.g == 0) currentColorText = "Black";
+
+            colorStation.UpdateColorText(currentColor, currentColorText);
+            outputStation.UpdateColorText(currentColor, currentColorText);
+        }
+    }
+
+    public void SetShape(int bit, int bitStatus)
+    {
+        if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        {
+            currentTaskStatus[bit] = bitStatus;
+            if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 0) currentShape = "Cube";
+            if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 1) currentShape = "Cone";
+            if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 0) currentShape = "Sphere";
+            if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 1) currentShape = "Torus";
+
+            shapeStation.UpdateShapeText(currentShape);
+            outputStation.UpdateShapeText(currentShape);
+        }
+    }
+
+    public int GetNumber()
+    {
+        return currentNumber;
     }
 
     public Color GetColor()
@@ -264,20 +307,13 @@ public class LevelManager : MonoBehaviour
         return currentColor;
     }
 
-    public void SetShape(int bit, int bitStatus)
+    public string GetColorText()
     {
-        currentTaskStatus[bit] = bitStatus;
-        if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 0) shape = "Cube";
-        if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 1) shape = "Cone";
-        if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 0) shape = "Sphere";
-        if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 1) shape = "Torus";
-
-        shapeStation.UpdateShapeText(shape);
-        outputStation.UpdateShapeText(shape);
+        return currentColorText;
     }
 
-    public int GetNumber()
+    public string GetShape()
     {
-        return (currentTaskStatus[1] + (2 * currentTaskStatus[2]) + (4 * currentTaskStatus[3]));
+        return currentShape;
     }
 }
