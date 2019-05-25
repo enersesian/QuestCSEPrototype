@@ -15,7 +15,7 @@ public class TaskStation : MonoBehaviour
 
     private void Start()
     {
-        if (Application.isEditor) transform.position = new Vector3(0f, 0.2f, 0.6f); //Sitting Rift position
+        //if (Application.isEditor) transform.position = new Vector3(0f, 0.2f, 0.6f); //Sitting Rift position
         levelManager = transform.root.GetComponent<LevelManager>();
     }
 

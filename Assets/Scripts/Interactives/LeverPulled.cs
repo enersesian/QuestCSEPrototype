@@ -24,7 +24,7 @@ public class LeverPulled : MonoBehaviour
         //leverBaseMin = zeroPosition.localRotation.x;
         //leverBaseMax = onePosition.localRotation.x;
         
-        if (transform.parent.name == "lever01" || transform.parent.name == "lever10")
+        if (transform.parent.name == "lever01" || transform.parent.name == "lever10" || transform.parent.name == "leverTutorial")
         {
             leverBaseMin = -70f;
             leverBaseMax = -110f;
@@ -117,6 +117,9 @@ public class LeverPulled : MonoBehaviour
 
                     if (transform.parent.name == "lever01") levelManager.SetShape(7, 0); //shape bit 1 = 0
                     if (transform.parent.name == "lever10") levelManager.SetShape(8, 0); //shape bit 2 = 0
+
+                    if (transform.parent.name == "leverTutorial") levelManager.TutorialLeverPulled(false);
+
                 }
                 isOnePosition = false;
             }
@@ -141,6 +144,8 @@ public class LeverPulled : MonoBehaviour
                     if (transform.parent.name == "leverGetTask") GetTaskLeverPulled();
                     if (transform.parent.name == "leverRunOutput") RunOutputLeverPulled();
                     if (transform.parent.name == "leverSendOutput") SendOutputLeverPulled();
+
+                    if (transform.parent.name == "leverTutorial") levelManager.TutorialLeverPulled(true);
                 }
                 isOnePosition = true;
             }

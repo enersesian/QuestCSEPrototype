@@ -10,9 +10,11 @@ public class LevelManager : MonoBehaviour
     public ColorStation colorStation;
     public ShapeStation shapeStation;
     public OutputStation outputStation;
+    public TutorialStation tutorialStation;
 
     public Color activeColor, disabledColor, hitColor, red, green, blue;
     public OVRGrabber leftHandGrabber, rightHandGrabber;
+    public Transform headsetCenterAnchor;
 
     private int currentTask;
     //0 = task, 1 = number bit 1, 2 = number bit 2, 3 = number bit 3, 4 = size bit 1, 5 = size bit 2
@@ -26,8 +28,19 @@ public class LevelManager : MonoBehaviour
 
     void Start ()
     {
-        SetTask("start", 1);
+        Invoke("SetUserHeight", 0.3f);
+        tutorialStation.StartTutorial();
 	}
+
+    private void SetUserHeight()
+    {
+        transform.position = new Vector3(transform.position.x, headsetCenterAnchor.position.y, transform.position.z);
+    }
+
+    public void StartLevel()
+    {
+        SetTask("start", 1);
+    }
 
     public void SetTask(string condition, int taskIterator)
     {
@@ -173,6 +186,7 @@ public class LevelManager : MonoBehaviour
         shapeStation.GetTaskLeverPulled(currentTask);
         colorStation.GetTaskLeverPulled(currentTask);
         outputStation.GetTaskLeverPulled(currentTask);
+        tutorialStation.GetTaskLeverPulled(currentTask);
     }
 
     public void RunOutputButtonPushed()
@@ -240,6 +254,11 @@ public class LevelManager : MonoBehaviour
             default:
                 break;
         }*/
+    }
+
+    public void TutorialLeverPulled(bool isTutorialLeverOn)
+    {
+        tutorialStation.SetTutorialLeverBool(isTutorialLeverOn);
     }
 
     public void LevelComplete()

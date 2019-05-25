@@ -19,7 +19,7 @@ public class OutputStation : MonoBehaviour
     private void Start()
     {
         levelManager = transform.root.GetComponent<LevelManager>();
-        if (Application.isEditor) transform.position = new Vector3(-2f, 0.2f, 0.0f); //Sitting Rift position
+        //if (Application.isEditor) transform.position = new Vector3(-2f, 0.2f, 0.0f); //Sitting Rift position
     }
 
     public void SetTask()
@@ -338,7 +338,7 @@ public class OutputStation : MonoBehaviour
 
                 objectSpawn = Instantiate(currentShapeSelection);
                 objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.2f);
+                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.3f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
                 objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
@@ -346,7 +346,7 @@ public class OutputStation : MonoBehaviour
 
                 objectSpawn = Instantiate(currentShapeSelection);
                 objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.2f);
+                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.3f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
                 objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
