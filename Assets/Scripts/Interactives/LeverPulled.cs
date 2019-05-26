@@ -14,6 +14,8 @@ public class LeverPulled : MonoBehaviour
 
     private void Awake()
     {
+        GetComponent<OVRGrabbable>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         levelManager = transform.root.GetComponent<LevelManager>();
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
         startPosition = transform.localPosition;

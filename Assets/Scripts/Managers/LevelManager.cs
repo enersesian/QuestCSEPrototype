@@ -25,10 +25,11 @@ public class LevelManager : MonoBehaviour
     private Color currentColor;
     private string currentColorText;
     private string currentShape;
+    private bool isTutorialNumberLeverPulled, isTutorialColorLeverPulled, isTutorialShapeLeverPulled, isTutorialRunOutputLeverPulled, isTutorialOutputSent;
 
     void Start ()
     {
-        Invoke("SetUserHeight", 0.3f);
+        Invoke("SetUserHeight", 5f); //5 seconds to take off researcher head and onto subject head
         tutorialStation.StartTutorial();
 	}
 
@@ -195,6 +196,11 @@ public class LevelManager : MonoBehaviour
         colorStation.RunOutputButtonPushed();
         shapeStation.RunOutputButtonPushed();
         outputStation.RunOutputButtonPushed(GetNumber(), currentColor, currentShape);
+        if (!isTutorialRunOutputLeverPulled)
+        {
+            isTutorialRunOutputLeverPulled = true;
+            tutorialStation.TutorialRunOutputLeverIsPulled();
+        }
     }
 
     public void RunOutput()
@@ -205,11 +211,17 @@ public class LevelManager : MonoBehaviour
     public void PlacedOutput()
     {
         taskStation.PlacedOutput();
+        tutorialStation.TutorialContainerPlacedOutput();
     }
 
     public void RemovedOutput()
     {
         taskStation.RemovedOutput();
+    }
+
+    public void OutputContainerGrabbed()
+    {
+        tutorialStation.TutorialContainerPickedUp();
     }
 
     public void OutputSent()
@@ -227,6 +239,11 @@ public class LevelManager : MonoBehaviour
         else
         {
             SetTask("failure", currentTask);
+        }
+        if (!isTutorialOutputSent)
+        {
+            isTutorialOutputSent = true;
+            tutorialStation.TutorialOutputSent();
         }
 
         /*switch (currentTask)
@@ -276,6 +293,12 @@ public class LevelManager : MonoBehaviour
 
             numberStation.UpdateBitText(bit, bitStatus);
             outputStation.UpdateNumText(GetNumber());
+            if(!isTutorialNumberLeverPulled)
+            {
+                isTutorialNumberLeverPulled = true;
+                tutorialStation.TutorialNumberLeverIsPulled();
+            }
+
         }
         
     }
@@ -298,6 +321,11 @@ public class LevelManager : MonoBehaviour
 
             colorStation.UpdateColorText(currentColor, currentColorText);
             outputStation.UpdateColorText(currentColor, currentColorText);
+            if (!isTutorialColorLeverPulled)
+            {
+                isTutorialColorLeverPulled = true;
+                tutorialStation.TutorialColorLeverIsPulled();
+            }
         }
     }
 
@@ -313,6 +341,11 @@ public class LevelManager : MonoBehaviour
 
             shapeStation.UpdateShapeText(currentShape);
             outputStation.UpdateShapeText(currentShape);
+            if (!isTutorialShapeLeverPulled)
+            {
+                isTutorialShapeLeverPulled = true;
+                tutorialStation.TutorialShapeLeverIsPulled();
+            }
         }
     }
 

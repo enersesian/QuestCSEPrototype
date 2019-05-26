@@ -16,7 +16,7 @@ public class UserInput : MonoBehaviour
     //to remove chance of superuser accidently interacting with a station's controls while moving
     private void Start()
     {
-        levelManager.transform.position = new Vector3(levelManager.transform.position.x, levelManager.transform.position.y + 0.02f, levelManager.transform.position.z);
+        //levelManager.transform.position = new Vector3(levelManager.transform.position.x, levelManager.transform.position.y + 0.02f, levelManager.transform.position.z);
     }
     void Update ()
     {
