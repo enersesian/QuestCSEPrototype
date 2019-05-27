@@ -11,7 +11,7 @@ public class OutputStation : MonoBehaviour
     public ButtonPushed runButton;
     public LeverPulled leverRunOutput;
     private LevelManager levelManager;
-    public GameObject cube, sphere, cone, diamond, currentShapeSelection;
+    public GameObject cube, sphere, cone, ring, currentShapeSelection;
     private GameObject objectSpawn;
     private Vector3 objectPosition;
     private int spawnedObjects;
@@ -64,7 +64,7 @@ public class OutputStation : MonoBehaviour
         if (shape == "Cube") currentShapeSelection = cube;
         if (shape == "Sphere") currentShapeSelection = sphere;
         if (shape == "Cone") currentShapeSelection = cone;
-        if (shape == "Torus") currentShapeSelection = diamond;
+        if (shape == "Ring") currentShapeSelection = ring;
         for (int i = 0; i < number; i++)
         {
             objectSpawn = Instantiate(currentShapeSelection);
@@ -111,7 +111,7 @@ public class OutputStation : MonoBehaviour
             if (levelManager.GetShape() == "Cube") currentShapeSelection = cube;
             if (levelManager.GetShape() == "Sphere") currentShapeSelection = sphere;
             if (levelManager.GetShape() == "Cone") currentShapeSelection = cone;
-            if (levelManager.GetShape() == "Torus") currentShapeSelection = diamond;
+            if (levelManager.GetShape() == "Ring") currentShapeSelection = ring;
             //build new objects
             if (number == 1)
             {
@@ -386,7 +386,7 @@ public class OutputStation : MonoBehaviour
             if (shape == "Cube") currentShapeSelection = cube;
             if (shape == "Sphere") currentShapeSelection = sphere;
             if (shape == "Cone") currentShapeSelection = cone;
-            if (shape == "Torus") currentShapeSelection = diamond;
+            if (shape == "Ring") currentShapeSelection = ring;
 
             for (int i = 0; i < levelManager.GetNumber(); i++)
             {
@@ -394,7 +394,7 @@ public class OutputStation : MonoBehaviour
                 if (shape == "Cube") child.GetComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().mesh;
                 if (shape == "Sphere") child.GetComponent<MeshFilter>().mesh = sphere.GetComponent<MeshFilter>().mesh;
                 if (shape == "Cone") child.GetComponent<MeshFilter>().mesh = cone.GetComponent<MeshFilter>().mesh;
-                if (shape == "Torus") child.GetComponent<MeshFilter>().mesh = diamond.GetComponent<MeshFilter>().mesh;
+                if (shape == "Ring") child.GetComponent<MeshFilter>().mesh = ring.GetComponent<MeshFilter>().mesh;
                 */
                 Debug.Log("Went through spawnLocation "+ i.ToString());
                 objectSpawn = Instantiate(currentShapeSelection);

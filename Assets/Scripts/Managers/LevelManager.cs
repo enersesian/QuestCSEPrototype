@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
 
     void Start ()
     {
-        Invoke("SetUserHeight", 5f); //5 seconds to take off researcher head and onto subject head
+        Invoke("SetUserHeight", 5f); //5 seconds to take off researcher head and onto subject head for height adjustment
         tutorialStation.StartTutorial();
 	}
 
@@ -159,7 +159,7 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[4] = 1; //color = yellow
                 currentTaskRequirements[5] = 1;
                 currentTaskRequirements[6] = 0;
-                currentTaskRequirements[7] = 1; //shape = diamond
+                currentTaskRequirements[7] = 1; //shape = ring
                 currentTaskRequirements[8] = 1;
                 break;
 
@@ -183,7 +183,7 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[4] = 1; //color = purple
                 currentTaskRequirements[5] = 0;
                 currentTaskRequirements[6] = 1;
-                currentTaskRequirements[7] = 1; //shape = diamond
+                currentTaskRequirements[7] = 1; //shape = ring
                 currentTaskRequirements[8] = 1;
                 break;
 
@@ -347,7 +347,7 @@ public class LevelManager : MonoBehaviour
             if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 0) currentShape = "Cube";
             if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 1) currentShape = "Cone";
             if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 0) currentShape = "Sphere";
-            if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 1) currentShape = "Torus";
+            if (currentTaskStatus[7] == 1 && currentTaskStatus[8] == 1) currentShape = "Ring";
 
             shapeStation.UpdateShapeText(currentShape);
             outputStation.UpdateShapeText(currentShape);

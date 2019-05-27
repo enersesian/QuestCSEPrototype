@@ -16,7 +16,7 @@ public class ColorStation : MonoBehaviour
     {
         LevelManager = transform.root.GetComponent<LevelManager>();
         //if (Application.isEditor) transform.position = new Vector3(0.4f, 0.2f, -0.4f); //Sitting Rift position
-        colorText.text = "black";
+        colorText.text = "Black";
     }
 
     public void SetLevelDistance(bool isNear)

@@ -9,6 +9,7 @@ public class TaskStation : MonoBehaviour
     public ButtonPushed getButton, sendOutputButton;
     public LeverPulled leverGetTask, leverSendOutput;
     public Transform spawnLocation, miniSpawnLocation, farLocation, nearLocation;
+    public GameObject cubeIcon, sphereIcon, coneIcon, ringIcon;
     private GameObject objectSpawn;
     private Vector3 objectPosition;
     private LevelManager levelManager;
@@ -74,13 +75,11 @@ public class TaskStation : MonoBehaviour
 
             //mini
 
-            objectSpawn = Instantiate(levelManager.outputStation.sphere);
+            objectSpawn = Instantiate(sphereIcon);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x, miniSpawnLocation.position.y, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
-            objectSpawn.GetComponent<RandomMovement>().enabled = false;
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 0f, 0f);
-            objectSpawn.transform.localScale *= 2f;
         }
 
         if (currentTask == 2)
@@ -253,10 +252,10 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 5)
         {
-            taskText.text = "Welcome to Task 5.\nBring back 5 Yellow Torus.";
-            //taskTextLarge.text = "Task One \n 5 Yellow Torus.";
+            taskText.text = "Welcome to Task 5.\nBring back 5 Yellow Ring.";
+            //taskTextLarge.text = "Task One \n 5 Yellow Ring.";
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -265,7 +264,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -276,7 +275,7 @@ public class TaskStation : MonoBehaviour
 
             //second row
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -285,7 +284,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -294,7 +293,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -305,7 +304,7 @@ public class TaskStation : MonoBehaviour
 
             //mini
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x - 0.05f, miniSpawnLocation.position.y, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -314,7 +313,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 2f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x + 0.05f, miniSpawnLocation.position.y, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -325,7 +324,7 @@ public class TaskStation : MonoBehaviour
 
             //second row
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x, miniSpawnLocation.position.y - 0.06f, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -334,7 +333,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 2f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x + 0.1f, miniSpawnLocation.position.y - 0.06f, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -343,7 +342,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 2f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x - 0.1f, miniSpawnLocation.position.y - 0.06f, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -479,10 +478,10 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 7)
         {
-            taskText.text = "Welcome to Task 7.\nBring back 6 Purple Torus.";
-            //taskTextLarge.text = "Task One \n 6 Purple Torus.";
+            taskText.text = "Welcome to Task 7.\nBring back 6 Purple Ring.";
+            //taskTextLarge.text = "Task One \n 6 Purple Ring.";
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -491,7 +490,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.2f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -500,7 +499,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.2f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -511,7 +510,7 @@ public class TaskStation : MonoBehaviour
 
             //second row
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -520,7 +519,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -529,7 +528,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -540,7 +539,7 @@ public class TaskStation : MonoBehaviour
 
             //mini
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x, miniSpawnLocation.position.y, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -549,7 +548,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 2f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x + 0.1f, miniSpawnLocation.position.y, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -558,7 +557,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 2f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x - 0.1f, miniSpawnLocation.position.y, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -569,7 +568,7 @@ public class TaskStation : MonoBehaviour
 
             //second row
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x, miniSpawnLocation.position.y - 0.06f, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -578,7 +577,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 2f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x + 0.1f, miniSpawnLocation.position.y - 0.06f, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -587,7 +586,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 2f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.diamond);
+            objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = miniSpawnLocation;
             objectPosition = new Vector3(miniSpawnLocation.position.x - 0.1f, miniSpawnLocation.position.y - 0.06f, miniSpawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;

@@ -10,7 +10,7 @@ public class TutorialStation : MonoBehaviour
     public Movement tutorialDisplay;
     public Dissolve tutorialWalls;
     public Transform[] movementTransforms;
-    private float interactiveWaitTime = 5f;
+    private float interactiveWaitTime = 4f;
     private int tutorialNumber;
     private LevelManager levelManager;
     private bool isInteractable, isTutorialLeverOn, isGetTaskLeverPulled, isTutorialAtNumberStation, isTutorialNumberLeverPulled, 
@@ -80,6 +80,11 @@ public class TutorialStation : MonoBehaviour
     public void TutorialOutputSent()
     {
         isTutorialOutputSent = true;
+    }
+
+    private void StartLevel()
+    {
+        levelManager.StartLevel();
     }
 
     private void TutorialAtNumberStation()
@@ -160,8 +165,8 @@ public class TutorialStation : MonoBehaviour
                         //walls go up, revealing the stations 
                         //tutorialWalls.Move(movementTransforms[0], movementTransforms[1], 8f, 0f);
                         tutorialWalls.DissolveWalls();
-                        //move tutorial to task station
                         tutorialDisplay.Move(movementTransforms[2], movementTransforms[3], 6f, 4f);
+                        Invoke("StartLevel", 10f);
                         StartTutorialNonInteractive();
                     }
                     break;
@@ -173,8 +178,7 @@ public class TutorialStation : MonoBehaviour
                         tutorialWalls.gameObject.SetActive(false);
                         leverTutorial.transform.parent.parent.parent.gameObject.SetActive(false);
 
-
-                        //move tutorial sign to number station
+                        
                         StartTutorialNonInteractive();
                     }
                     break;
@@ -238,7 +242,7 @@ public class TutorialStation : MonoBehaviour
                 case 16:
                     if (isTutorialContainerPickedUp)
                     {
-                        StartTutorialNonInteractive();
+                        Invoke("StartTutorialNonInteractive", 1f); //wait one second as a triggerEnter event sets this off not a grab event
                     }
                     break;
 
@@ -286,27 +290,31 @@ public class TutorialStation : MonoBehaviour
 
         if (tutorialNumber == 1) instructionsTop.text = "Welcome to C-Spresso! Our ship got damaged in a storm. Could you help us fix our ship? ";
         if (tutorialNumber == 2) instructionsTop.text = "Great! First, let me get you familiar with the ship’s features. Look at your hands. See how you have fingers that you can wiggle around?";
-        if (tutorialNumber == 3) instructionsTop.text = "Squeeze your middle finger button to close your hand.This is how you will pull levers and grab things.";
+        if (tutorialNumber == 3) instructionsTop.text = "Squeeze your middle finger button to close your hand. This is how you will pull levers and grab objects.";
         if (tutorialNumber == 4) instructionsTop.text = "When the ball on the lever is red, it means it's locked. Since the storm, many of the levers are locked and I need help to unlock them.";
         if (tutorialNumber == 5) instructionsTop.text = "Notice the ball on the lever is green now. This means it is unlocked and you can pull it into its on position.";
         if (tutorialNumber == 6) instructionsTop.text = "Great! Let's return the lever back to its off position so that we can enter the main chamber.";
-
-        if (tutorialNumber == 7) instructionsTop.text = "Great! Follow me! I’ll guide you around the station. Let's go to the task station, where you start and end tasks.";
-        if (tutorialNumber == 8) instructionsTop.text = "You must return to the task station with 1 Red Sphere.";
+        if (tutorialNumber == 7) instructionsTop.text = "You're doing great! Follow me! I’ll guide you around the station. Let's go to the task station, where you start and end tasks.";
+        if (tutorialNumber == 8) instructionsTop.text = "You have been given your first task to get one red sphere!";
         if (tutorialNumber == 9) instructionsTop.text = "This is the number station, where you set the number of objects.";
-        if (tutorialNumber == 10) instructionsTop.text = "Follow me to the color station to set the color of objects.";
+        if (tutorialNumber == 10) instructionsTop.text = "Great job! Now follow me to the color station to set the color of objects.";
         if (tutorialNumber == 11) instructionsTop.text = "This is the color station, where you set the color of objects.";
-        if (tutorialNumber == 12) instructionsTop.text = "Follow me to the shape station  to set the shape of objects.";
+        if (tutorialNumber == 12) instructionsTop.text = "Great job! Now follow me to the shape station  to set the shape of objects.";
         if (tutorialNumber == 13) instructionsTop.text = "This is the shape station, where you set the shape of objects.";
-        if (tutorialNumber == 14) instructionsTop.text = "Follow me to the output station to generate output for the task.";
+        if (tutorialNumber == 14) instructionsTop.text = "Great job! Now follow me to the output station to generate output for the task.";
         if (tutorialNumber == 15) instructionsTop.text = "This is the output station, where you generate output for the task.";
         if (tutorialNumber == 16) instructionsTop.text = "Grab the output container and carry it to the task station.";
-        if (tutorialNumber == 17) instructionsTop.text = "Follow me to the task station to send output for the task.";
+        if (tutorialNumber == 17) instructionsTop.text = "Great job! Now follow to the task station to send output for the task.";
         if (tutorialNumber == 18) instructionsTop.text = "Place the output container on the Place Output location.";
-        if (tutorialNumber == 19) instructionsTop.text = "Pull the Send Output lever to finish the task.";
-        if (tutorialNumber == 20) instructionsTop.text = "Congrats! Now proceed with task 2 by yourself.";
+        if (tutorialNumber == 19) instructionsTop.text = "Great job! Now pull the Send Output lever to finish the task.";
+        if (tutorialNumber == 20) instructionsTop.text = "Congratulations! Now proceed with task 2 by yourself.";
 
         instructionsBottom.text = "";
+        if(tutorialNumber < 7) interactiveWaitTime = 1f;
+        else if (tutorialNumber == 7) interactiveWaitTime = 10f;
+        else if (tutorialNumber == 8) interactiveWaitTime = 4f;
+        else interactiveWaitTime = 3f;
+
         Invoke("StartTutorialInteractive", interactiveWaitTime);
     }
 
@@ -326,47 +334,47 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 6)
         {
             //user pulled lever down to on position
-            instructionsBottom.text = "Pull lever up into its off position to continue...";
+            instructionsBottom.text = "Pull lever back into its off position to continue...";
         }
         if (tutorialNumber == 7)
         {
+            //move tutorial to task station
             
             //activate Get Task button on task station
-            instructionsBottom.text = "Walk to the task station and press the Get Task button.";
+            instructionsBottom.text = "Press the Get Task button to get your first task.";
             
-            levelManager.StartLevel();
+            //levelManager.StartLevel();
         }
         if (tutorialNumber == 8)
         {
-            instructionsBottom.text = "Follow me to the number station to start your task.";
-            tutorialDisplay.Move(movementTransforms[3], movementTransforms[4], 8f, 4f);
-            Invoke("TutorialAtNumberStation", 13f);
+            instructionsBottom.text = "Now follow me to the number station to start your task.";
+            tutorialDisplay.Move(movementTransforms[3], movementTransforms[4], 6f, 2f);
+            Invoke("TutorialAtNumberStation", 8f);
         }
         if (tutorialNumber == 9) instructionsBottom.text = "Pull lever labeled \"1\" down to its on position to set output to 1.";
         if (tutorialNumber == 10)
         {
-            tutorialDisplay.Move(movementTransforms[4], movementTransforms[5], 8f, 0f);
-            Invoke("TutorialAtColorStation", 9f);
+            tutorialDisplay.Move(movementTransforms[4], movementTransforms[5], 6f, 2f);
+            Invoke("TutorialAtColorStation", 8f);
         }
         if (tutorialNumber == 11) instructionsBottom.text = "Pull lever labeled \"Red\" down to its on position to set output to Red.";
         if (tutorialNumber == 12)
         {
-            tutorialDisplay.Move(movementTransforms[5], movementTransforms[6], 8f, 0f);
-            Invoke("TutorialAtShapeStation", 9f);
+            tutorialDisplay.Move(movementTransforms[5], movementTransforms[6], 6f, 2f);
+            Invoke("TutorialAtShapeStation", 8f);
         }
         if (tutorialNumber == 13) instructionsBottom.text = "Pull the right lever down to its on position to set output to Sphere.";
         if (tutorialNumber == 14)
         {
-            tutorialDisplay.Move(movementTransforms[6], movementTransforms[7], 8f, 0f);
-            Invoke("TutorialAtOutputStation", 9f);
+            tutorialDisplay.Move(movementTransforms[6], movementTransforms[7], 6f, 2f);
+            Invoke("TutorialAtOutputStation", 8f);
         }
         if (tutorialNumber == 15) instructionsBottom.text = "Pull the Run Output lever to generate output.";
         if (tutorialNumber == 16) instructionsBottom.text = "Close your hand on container and keep hand closed to carry container.";
         if (tutorialNumber == 17)
         {
-            tutorialDisplay.Move(movementTransforms[7], movementTransforms[8], 4f, 0f);
-            tutorialDisplay.Move(movementTransforms[8], movementTransforms[9], 4f, 5f);
-            Invoke("TutorialAtTaskStation", 9f);
+            tutorialDisplay.Move(movementTransforms[7], movementTransforms[3], 6f, 0f);
+            Invoke("TutorialAtTaskStation", 7f);
         }
         if (tutorialNumber == 20) EndTutorial();
     }
