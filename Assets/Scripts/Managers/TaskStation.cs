@@ -86,7 +86,7 @@ public class TaskStation : MonoBehaviour
 
             objectIcons[0].SetActive(true);
             objectIcons[0].transform.position = new Vector3(
-                miniSpawnLocation.position.x, miniSpawnLocation.position.y, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x, miniSpawnLocation.position.y , miniSpawnLocation.position.z);
             objectIcons[0].GetComponent<Image>().sprite = sphereIcon;
             objectIcons[0].GetComponent<Image>().color = new Color(1f, 0f, 0f);
         }
@@ -365,19 +365,19 @@ public class TaskStation : MonoBehaviour
 
             objectIconsLarge[0].SetActive(true);
             objectIconsLarge[0].transform.position = new Vector3(
-                spawnLocation.position.x + 0.2f, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x + 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[0].GetComponent<Image>().sprite = ringIcon;
             objectIconsLarge[0].GetComponent<Image>().color = new Color(1f, 1f, 0f);
 
             objectIconsLarge[1].SetActive(true);
             objectIconsLarge[1].transform.position = new Vector3(
-                spawnLocation.position.x - 0.2f, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x - 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[1].GetComponent<Image>().sprite = ringIcon;
             objectIconsLarge[1].GetComponent<Image>().color = new Color(1f, 1f, 0f);
 
             objectIconsLarge[2].SetActive(true);
             objectIconsLarge[2].transform.position = new Vector3(
-                spawnLocation.position.x, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[2].GetComponent<Image>().sprite = ringIcon;
             objectIconsLarge[2].GetComponent<Image>().color = new Color(1f, 1f, 0f);
 
@@ -399,19 +399,19 @@ public class TaskStation : MonoBehaviour
 
             objectIcons[0].SetActive(true);
             objectIcons[0].transform.position = new Vector3(
-                miniSpawnLocation.position.x + 0.1f, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x + 0.1f, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[0].GetComponent<Image>().sprite = ringIcon;
             objectIcons[0].GetComponent<Image>().color = new Color(1f, 1f, 0f);
 
             objectIcons[1].SetActive(true);
             objectIcons[1].transform.position = new Vector3(
-                miniSpawnLocation.position.x - 0.1f, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x - 0.1f, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[1].GetComponent<Image>().sprite = ringIcon;
             objectIcons[1].GetComponent<Image>().color = new Color(1f, 1f, 0f);
 
             objectIcons[2].SetActive(true);
             objectIcons[2].transform.position = new Vector3(
-                miniSpawnLocation.position.x, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[2].GetComponent<Image>().sprite = ringIcon;
             objectIcons[2].GetComponent<Image>().color = new Color(1f, 1f, 0f);
         }
@@ -502,25 +502,25 @@ public class TaskStation : MonoBehaviour
 
             objectIconsLarge[3].SetActive(true);
             objectIconsLarge[3].transform.position = new Vector3(
-                spawnLocation.position.x + 0.24f, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x + 0.24f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[3].GetComponent<Image>().sprite = coneIcon;
             objectIconsLarge[3].GetComponent<Image>().color = new Color(0f, 1f, 1f);
 
             objectIconsLarge[4].SetActive(true);
             objectIconsLarge[4].transform.position = new Vector3(
-                spawnLocation.position.x - 0.24f, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x - 0.24f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[4].GetComponent<Image>().sprite = coneIcon;
             objectIconsLarge[4].GetComponent<Image>().color = new Color(0f, 1f, 1f);
 
             objectIconsLarge[5].SetActive(true);
             objectIconsLarge[5].transform.position = new Vector3(
-                spawnLocation.position.x + 0.08f, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x + 0.08f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[5].GetComponent<Image>().sprite = coneIcon;
             objectIconsLarge[5].GetComponent<Image>().color = new Color(0f, 1f, 1f);
 
             objectIconsLarge[6].SetActive(true);
             objectIconsLarge[6].transform.position = new Vector3(
-                spawnLocation.position.x - 0.08f, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x - 0.08f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[6].GetComponent<Image>().sprite = coneIcon;
             objectIconsLarge[6].GetComponent<Image>().color = new Color(0f, 1f, 1f);
 
@@ -548,25 +548,25 @@ public class TaskStation : MonoBehaviour
 
             objectIcons[3].SetActive(true);
             objectIcons[3].transform.position = new Vector3(
-                miniSpawnLocation.position.x + 0.12f, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x + 0.12f, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[3].GetComponent<Image>().sprite = coneIcon;
             objectIcons[3].GetComponent<Image>().color = new Color(0f, 1f, 1f);
 
             objectIcons[4].SetActive(true);
             objectIcons[4].transform.position = new Vector3(
-                miniSpawnLocation.position.x - 0.12f, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x - 0.12f, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[4].GetComponent<Image>().sprite = coneIcon;
             objectIcons[4].GetComponent<Image>().color = new Color(0f, 1f, 1f);
 
             objectIcons[5].SetActive(true);
             objectIcons[5].transform.position = new Vector3(
-                miniSpawnLocation.position.x + 0.04f, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x + 0.04f, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[5].GetComponent<Image>().sprite = coneIcon;
             objectIcons[5].GetComponent<Image>().color = new Color(0f, 1f, 1f);
 
             objectIcons[6].SetActive(true);
             objectIcons[6].transform.position = new Vector3(
-                miniSpawnLocation.position.x - 0.04f, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x - 0.04f, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[6].GetComponent<Image>().sprite = coneIcon;
             objectIcons[6].GetComponent<Image>().color = new Color(0f, 1f, 1f);
         }
@@ -655,19 +655,19 @@ public class TaskStation : MonoBehaviour
 
             objectIconsLarge[3].SetActive(true);
             objectIconsLarge[3].transform.position = new Vector3(
-                spawnLocation.position.x + 0.2f, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x + 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[3].GetComponent<Image>().sprite = ringIcon;
             objectIconsLarge[3].GetComponent<Image>().color = new Color(1f, 0f, 1f);
 
             objectIconsLarge[4].SetActive(true);
             objectIconsLarge[4].transform.position = new Vector3(
-                spawnLocation.position.x - 0.2f, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x - 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[4].GetComponent<Image>().sprite = ringIcon;
             objectIconsLarge[4].GetComponent<Image>().color = new Color(1f, 0f, 1f);
 
             objectIconsLarge[5].SetActive(true);
             objectIconsLarge[5].transform.position = new Vector3(
-                spawnLocation.position.x, spawnLocation.position.y - 0.7f, spawnLocation.position.z);
+                spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[5].GetComponent<Image>().sprite = ringIcon;
             objectIconsLarge[5].GetComponent<Image>().color = new Color(1f, 0f, 1f);
 
@@ -695,19 +695,19 @@ public class TaskStation : MonoBehaviour
 
             objectIcons[3].SetActive(true);
             objectIcons[3].transform.position = new Vector3(
-                miniSpawnLocation.position.x + 0.1f, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x + 0.1f, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[3].GetComponent<Image>().sprite = ringIcon;
             objectIcons[3].GetComponent<Image>().color = new Color(1f, 0f, 1f);
 
             objectIcons[4].SetActive(true);
             objectIcons[4].transform.position = new Vector3(
-                miniSpawnLocation.position.x - 0.1f, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x - 0.1f, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[4].GetComponent<Image>().sprite = ringIcon;
             objectIcons[4].GetComponent<Image>().color = new Color(1f, 0f, 1f);
 
             objectIcons[5].SetActive(true);
             objectIcons[5].transform.position = new Vector3(
-                miniSpawnLocation.position.x, miniSpawnLocation.position.y - 0.7f, miniSpawnLocation.position.z);
+                miniSpawnLocation.position.x, miniSpawnLocation.position.y - 0.07f, miniSpawnLocation.position.z);
             objectIcons[5].GetComponent<Image>().sprite = ringIcon;
             objectIcons[5].GetComponent<Image>().color = new Color(1f, 0f, 1f);
         }
