@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
 
     void Start ()
     {
-        Invoke("SetUserHeight", 5f); //5 seconds to take off researcher head and onto subject head for height adjustment
+        Invoke("SetUserHeight", 0.5f); //set back to 5 seconds to take off researcher head and onto subject head for height adjustment
         tutorialStation.StartTutorial();
 	}
 

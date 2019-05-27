@@ -243,6 +243,7 @@ public class TutorialStation : MonoBehaviour
                     if (isTutorialContainerPickedUp)
                     {
                         Invoke("StartTutorialNonInteractive", 1f); //wait one second as a triggerEnter event sets this off not a grab event
+                        isTutorialContainerPickedUp = false; //to stop repeat executions and breaking tutorial
                     }
                     break;
 
@@ -304,15 +305,15 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 14) instructionsTop.text = "Great job! Now follow me to the output station to generate output for the task.";
         if (tutorialNumber == 15) instructionsTop.text = "This is the output station, where you generate output for the task.";
         if (tutorialNumber == 16) instructionsTop.text = "Grab the output container and carry it to the task station.";
-        if (tutorialNumber == 17) instructionsTop.text = "Great job! Now follow to the task station to send output for the task.";
+        if (tutorialNumber == 17) instructionsTop.text = "Great job! Now follow me to the task station to send output for the task.";
         if (tutorialNumber == 18) instructionsTop.text = "Place the output container on the Place Output location.";
         if (tutorialNumber == 19) instructionsTop.text = "Great job! Now pull the Send Output lever to finish the task.";
         if (tutorialNumber == 20) instructionsTop.text = "Congratulations! Now proceed with task 2 by yourself.";
 
         instructionsBottom.text = "";
-        if(tutorialNumber < 7) interactiveWaitTime = 1f;
+        if(tutorialNumber < 7) interactiveWaitTime = 4f;
         else if (tutorialNumber == 7) interactiveWaitTime = 10f;
-        else if (tutorialNumber == 8) interactiveWaitTime = 4f;
+        else if (tutorialNumber == 8) interactiveWaitTime = 2f;
         else interactiveWaitTime = 3f;
 
         Invoke("StartTutorialInteractive", interactiveWaitTime);

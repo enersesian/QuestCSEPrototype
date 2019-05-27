@@ -12,6 +12,7 @@ public class OutputStation : MonoBehaviour
     public LeverPulled leverRunOutput;
     private LevelManager levelManager;
     public GameObject cube, sphere, cone, ring, currentShapeSelection;
+    public GameObject[] objectIconsLarge;
     private GameObject objectSpawn;
     private Vector3 objectPosition;
     private int spawnedObjects;
@@ -122,6 +123,7 @@ public class OutputStation : MonoBehaviour
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
                 objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
                 objectSpawn.transform.localScale *= 5f;
+
             }
             if(number == 2)
             {
