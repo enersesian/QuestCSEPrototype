@@ -7,7 +7,7 @@ public class OutputStation : MonoBehaviour
 {
     public Color activeColor;
     public Text stationText, numberItem, colorItem, shapeItem, sizeItem;
-    public Transform cubeGrabbable, cubeGrabbleStartPosition, spawnLocation, tempSpawnLocation;
+    public Transform cubeGrabbable, cubeGrabbleStartPosition, spawnLocation, tempSpawnLocation, farLocation, nearLocation;
     public ButtonPushed runButton;
     public LeverPulled leverRunOutput;
     private LevelManager levelManager;
@@ -20,6 +20,12 @@ public class OutputStation : MonoBehaviour
     {
         levelManager = transform.root.GetComponent<LevelManager>();
         //if (Application.isEditor) transform.position = new Vector3(-2f, 0.2f, 0.0f); //Sitting Rift position
+    }
+
+    public void SetLevelDistance(bool isNear)
+    {
+        if (isNear) transform.position = farLocation.position;
+        else transform.position = nearLocation.position;
     }
 
     public void SetTask()

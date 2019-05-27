@@ -10,6 +10,7 @@ public class UserInput : MonoBehaviour
 
     private Vector2 rightThumbAxis;
     private float heightChange = 0f;
+    private bool isNear;
 
     // Update is called once per frame
     //Possible feature: disable hand colliders when moving avatar around level 
@@ -20,8 +21,9 @@ public class UserInput : MonoBehaviour
     }
     void Update ()
     {
+        
         rightThumbAxis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) * movementSpeed; //position control
-
+        /*
         if (OVRInput.Get(OVRInput.Button.One)) //Right-hand A button
         {
             heightChange = -1f * movementSpeed;
@@ -33,7 +35,7 @@ public class UserInput : MonoBehaviour
         }
 
         else heightChange = 0f;
-
+        */
         levelManager.transform.position = new Vector3(levelManager.transform.position.x + rightThumbAxis.x, levelManager.transform.position.y + heightChange, levelManager.transform.position.z + rightThumbAxis.y);
         //levelManager.transform.position = new Vector3(levelManager.transform.position.x, levelManager.transform.position.y + heightChange, levelManager.transform.position.z);
 
@@ -41,6 +43,12 @@ public class UserInput : MonoBehaviour
         {
             levelManager.SetTask("start", 1); //task one
             levelManager.outputStation.GetTaskLeverPulled(1); //need to resetCubeGrabbable if manually resetting level
+        }
+        
+        if (OVRInput.Get(OVRInput.Button.One) && OVRInput.Get(OVRInput.Button.Two) && OVRInput.GetDown(OVRInput.Button.Three))
+        {
+            levelManager.SetLevelDistance(isNear);
+            isNear = !isNear;
         }
 
     }

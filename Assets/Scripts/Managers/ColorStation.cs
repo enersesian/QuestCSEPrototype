@@ -8,6 +8,7 @@ public class ColorStation : MonoBehaviour
     public LeverPulled[] levers;
     public Image finalColor;
     public Text colorText;
+    public Transform farLocation, nearLocation;
     private int totalCount;
     private LevelManager LevelManager;
 
@@ -16,6 +17,12 @@ public class ColorStation : MonoBehaviour
         LevelManager = transform.root.GetComponent<LevelManager>();
         //if (Application.isEditor) transform.position = new Vector3(0.4f, 0.2f, -0.4f); //Sitting Rift position
         colorText.text = "black";
+    }
+
+    public void SetLevelDistance(bool isNear)
+    {
+        if (isNear) transform.position = farLocation.position;
+        else transform.position = nearLocation.position;
     }
 
     public void SetTask()

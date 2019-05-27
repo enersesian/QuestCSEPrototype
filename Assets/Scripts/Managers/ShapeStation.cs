@@ -7,11 +7,19 @@ public class ShapeStation : MonoBehaviour
 {
     public LeverPulled[] levers;
     public Text stationText;
+    public Transform farLocation, nearLocation;
 
     private void Start()
     {
         //if (Application.isEditor) transform.position = new Vector3(-0.2f, 0.35f, -0.6f); //Sitting Rift position
     }
+
+    public void SetLevelDistance(bool isNear)
+    {
+        if (isNear) transform.position = farLocation.position;
+        else transform.position = nearLocation.position;
+    }
+
 
     public void SetTask()
     {

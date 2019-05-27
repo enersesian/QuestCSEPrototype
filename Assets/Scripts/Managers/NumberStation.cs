@@ -7,13 +7,21 @@ public class NumberStation : MonoBehaviour
 {
     public LeverPulled[] levers;
     public Text stationText, bit01, bit02, bit03, bit04;
+    public Transform farLocation, nearLocation;
     private int totalCount;
     private LevelManager levelManager;
+
 
     private void Start()
     {
         levelManager = transform.root.GetComponent<LevelManager>();
         //if (Application.isEditor) transform.position = new Vector3(0.5f, 0.2f, 0.2f); //Sitting Rift position
+    }
+
+    public void SetLevelDistance(bool isNear)
+    {
+        if (isNear) transform.position = farLocation.position;
+        else transform.position = nearLocation.position;
     }
 
     public void SetTask()

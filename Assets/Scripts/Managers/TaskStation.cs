@@ -8,7 +8,7 @@ public class TaskStation : MonoBehaviour
     public Text taskText, taskTextLarge;
     public ButtonPushed getButton, sendOutputButton;
     public LeverPulled leverGetTask, leverSendOutput;
-    public Transform spawnLocation, miniSpawnLocation;
+    public Transform spawnLocation, miniSpawnLocation, farLocation, nearLocation;
     private GameObject objectSpawn;
     private Vector3 objectPosition;
     private LevelManager levelManager;
@@ -17,6 +17,12 @@ public class TaskStation : MonoBehaviour
     {
         //if (Application.isEditor) transform.position = new Vector3(0f, 0.2f, 0.6f); //Sitting Rift position
         levelManager = transform.root.GetComponent<LevelManager>();
+    }
+
+    public void SetLevelDistance(bool isNear)
+    {
+        if (isNear) transform.position = farLocation.position;  //near to far
+        else transform.position = nearLocation.position;
     }
 
     public void SetTask(string condition)

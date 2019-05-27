@@ -7,7 +7,8 @@ public class TutorialStation : MonoBehaviour
 {
     public LeverPulled leverTutorial;
     public Text instructionsTop, instructionsBottom, leverStatus;
-    public Movement tutorialWalls, tutorialDisplay;
+    public Movement tutorialDisplay;
+    public Dissolve tutorialWalls;
     public Transform[] movementTransforms;
     private float interactiveWaitTime = 5f;
     private int tutorialNumber;
@@ -21,6 +22,20 @@ public class TutorialStation : MonoBehaviour
     {
         levelManager = transform.root.GetComponent<LevelManager>();
 	}
+
+    public void SetLevelDistance(bool isNear)
+    {
+        if(isNear) //near to far
+        {
+            tutorialWalls.transform.GetChild(0).gameObject.SetActive(true); //far
+            tutorialWalls.transform.GetChild(1).gameObject.SetActive(false); //near
+        }
+        else //far to near
+        {
+            tutorialWalls.transform.GetChild(0).gameObject.SetActive(false); //far
+            tutorialWalls.transform.GetChild(1).gameObject.SetActive(true); //near
+        }
+    }
 
     public void SetTutorialLeverBool(bool leverState)
     {
@@ -109,9 +124,17 @@ public class TutorialStation : MonoBehaviour
                     break;
 
                 case 3:
+                    if (OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
+                    {
+                        StartTutorialNonInteractive();
+                    }
+                    break;
+
                 case 4:
                     if (OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
                     {
+                        //activate lever
+                        leverTutorial.Activate();
                         StartTutorialNonInteractive();
                     }
                     break;
@@ -120,6 +143,7 @@ public class TutorialStation : MonoBehaviour
                     if(isTutorialLeverOn) //lever pulled to on
                     {
                         leverStatus.text = "ON";
+                        
                         StartTutorialNonInteractive();
                     }
                     break;
@@ -128,6 +152,16 @@ public class TutorialStation : MonoBehaviour
                     if (!isTutorialLeverOn) //lever pulled to off
                     {
                         leverStatus.text = "OFF";
+
+                        //user pulled lever up to off position
+                        //deactive Lever
+                        leverTutorial.Deactivate();
+
+                        //walls go up, revealing the stations 
+                        //tutorialWalls.Move(movementTransforms[0], movementTransforms[1], 8f, 0f);
+                        tutorialWalls.DissolveWalls();
+                        //move tutorial to task station
+                        tutorialDisplay.Move(movementTransforms[2], movementTransforms[3], 6f, 4f);
                         StartTutorialNonInteractive();
                     }
                     break;
@@ -138,6 +172,8 @@ public class TutorialStation : MonoBehaviour
                         //remove tutorial walls and lever
                         tutorialWalls.gameObject.SetActive(false);
                         leverTutorial.transform.parent.parent.parent.gameObject.SetActive(false);
+
+
                         //move tutorial sign to number station
                         StartTutorialNonInteractive();
                     }
@@ -250,11 +286,12 @@ public class TutorialStation : MonoBehaviour
 
         if (tutorialNumber == 1) instructionsTop.text = "Welcome to C-Spresso! Our ship got damaged in a storm. Could you help us fix our ship? ";
         if (tutorialNumber == 2) instructionsTop.text = "Great! First, let me get you familiar with the ship’s features. Look at your hands. See how you have fingers that you can wiggle around?";
-        if (tutorialNumber == 3) instructionsTop.text = "You need to close your hand into a fist to pull a lever.";
-        if (tutorialNumber == 4) instructionsTop.text = "You cannot pull a red lever because it is inactive."; 
-        if (tutorialNumber == 5) instructionsTop.text = "You can pull a green lever because it is active.";
-        if (tutorialNumber == 6) instructionsTop.text = "In binary, 0 means off and 1 means on.";
-        if (tutorialNumber == 7) instructionsTop.text = "In front of you is the task station, where you start and end tasks.";
+        if (tutorialNumber == 3) instructionsTop.text = "Squeeze your middle finger button to close your hand.This is how you will pull levers and grab things.";
+        if (tutorialNumber == 4) instructionsTop.text = "When the ball on the lever is red, it means it's locked. Since the storm, many of the levers are locked and I need help to unlock them.";
+        if (tutorialNumber == 5) instructionsTop.text = "Notice the ball on the lever is green now. This means it is unlocked and you can pull it into its on position.";
+        if (tutorialNumber == 6) instructionsTop.text = "Great! Let's return the lever back to its off position so that we can enter the main chamber.";
+
+        if (tutorialNumber == 7) instructionsTop.text = "Great! Follow me! I’ll guide you around the station. Let's go to the task station, where you start and end tasks.";
         if (tutorialNumber == 8) instructionsTop.text = "You must return to the task station with 1 Red Sphere.";
         if (tutorialNumber == 9) instructionsTop.text = "This is the number station, where you set the number of objects.";
         if (tutorialNumber == 10) instructionsTop.text = "Follow me to the color station to set the color of objects.";
@@ -283,8 +320,7 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 4) instructionsBottom.text = "Close either hand to continue...";
         if (tutorialNumber == 5)
         {
-            //activate lever
-            leverTutorial.Activate();
+            
             instructionsBottom.text = "Pull lever down into its on position to continue...";
         }
         if (tutorialNumber == 6)
@@ -294,14 +330,10 @@ public class TutorialStation : MonoBehaviour
         }
         if (tutorialNumber == 7)
         {
-            //user pulled lever up to off position
-            //deactive Lever
-            leverTutorial.Deactivate();
-            //walls go up, revealing the stations
-            tutorialWalls.Move(movementTransforms[0], movementTransforms[1], 8f, 0f);
+            
             //activate Get Task button on task station
             instructionsBottom.text = "Walk to the task station and press the Get Task button.";
-            tutorialDisplay.Move(movementTransforms[2], movementTransforms[3], 8f, 4f);
+            
             levelManager.StartLevel();
         }
         if (tutorialNumber == 8)

@@ -33,6 +33,16 @@ public class LevelManager : MonoBehaviour
         tutorialStation.StartTutorial();
 	}
 
+    public void SetLevelDistance(bool isNear)
+    {
+        tutorialStation.SetLevelDistance(isNear);
+        taskStation.SetLevelDistance(isNear);
+        numberStation.SetLevelDistance(isNear);
+        colorStation.SetLevelDistance(isNear);
+        shapeStation.SetLevelDistance(isNear);
+        outputStation.SetLevelDistance(isNear);
+    }
+
     private void SetUserHeight()
     {
         transform.position = new Vector3(transform.position.x, headsetCenterAnchor.position.y, transform.position.z);
