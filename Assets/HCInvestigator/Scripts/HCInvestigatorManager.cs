@@ -140,7 +140,7 @@ public class HCInvestigatorManager : MonoBehaviour
     {
         if (instance.m_recordingAudio)
         {
-           instance.m_recordingAudio = false;
+            instance.m_recordingAudio = false;
             Microphone.End(null);
             SavWav.Save(instance.audioFolderName +
             " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss") + "/" + DateTime.Now.ToString("hh_mm_ss"), instance.AudioSource.clip);
@@ -148,7 +148,7 @@ public class HCInvestigatorManager : MonoBehaviour
         }
 
         instance.m_recordingAudio = true;
-       instance.AudioSource.clip = Microphone.Start(null, true, instance.audioRecordDuration, 44100);
+        instance.AudioSource.clip = Microphone.Start(null, true, instance.audioRecordDuration, 44100);
         while (!(Microphone.GetPosition(null) > 0)) { }
     }
 
@@ -161,25 +161,39 @@ public class HCInvestigatorManager : MonoBehaviour
         {
             instance.m_recordingTextData = true;
         }
-        else
-        {
-            instance.m_recordingTextData = false;
-            string path = Application.persistentDataPath + "/" + instance.textFolderName + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss");
-            string fileName = DateTime.Now.ToString("hh_mm_ss");
-            StreamWriter writer = null;
-            if (System.IO.File.Exists(path + "/" + fileName))
-            {
-                writer = System.IO.File.AppendText(path);
-            }
-            else
-            {
-                writer = System.IO.File.CreateText(path + "/" + fileName);
-            }
-            writer.WriteLine(instance.TextData);
-            writer.Close();
-        }
+
     }
 
+    /// <summary>
+    /// Stops recording analytics as text data
+    /// </summary>
+    public void StopRecordingText()
+    {
+        if (!m_recordingTextData)
+        {
+            return;
+        }
+
+        instance.m_recordingTextData = false;
+        string path = Application.persistentDataPath + "/" + instance.textFolderName + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss");
+        string fileName = DateTime.Now.ToString("hh_mm_ss") + ".txt";
+        StreamWriter writer = null;
+        if (System.IO.File.Exists(path + "/" + fileName))
+        {
+            writer = System.IO.File.AppendText(path + "/" + fileName);
+        }
+        else
+        {
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+            writer = System.IO.File.CreateText(path + "/" + fileName);
+        }
+
+        writer.WriteLine(TextData);
+        writer.Close();
+    }
 
 
     /// <summary>
@@ -192,7 +206,7 @@ public class HCInvestigatorManager : MonoBehaviour
         {
             return;
         }
-        TextData += data + "\n";
+        TextData += data + Environment.NewLine;
     }
 
     /// <summary>

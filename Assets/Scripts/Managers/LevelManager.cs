@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,11 @@ public class LevelManager : MonoBehaviour
     {
         Invoke("SetUserHeight", 0.5f); //set back to 5 seconds to take off researcher head and onto subject head for height adjustment
         tutorialStation.StartTutorial();
-	}
+
+        //Start recording text data
+        HCInvestigatorManager.instance.StartRecordingText();
+        HCInvestigatorManager.instance.WriteTextData("-----------Text recording started at " + DateTime.Now.ToString("hh_mm_ss") + "------------");
+    }
 
     public void SetLevelDistance(bool isNear)
     {
@@ -243,8 +248,20 @@ public class LevelManager : MonoBehaviour
             currentTaskStatus[5] == currentTaskRequirements[5] && currentTaskStatus[6] == currentTaskRequirements[6] &&
             currentTaskStatus[7] == currentTaskRequirements[7] && currentTaskStatus[8] == currentTaskRequirements[8])
         {
-            if(currentTask == 7) LevelComplete();
-            else SetTask("success", currentTask + 1);
+            if (currentTask == 7)
+            {
+                //Write level complete message to file
+                HCInvestigatorManager.instance.WriteTextData("Level complete - " + DateTime.Now.ToString("hh_mm_ss"));
+
+                LevelComplete();
+            }
+            else
+            {
+                //Write task complete message to file
+                HCInvestigatorManager.instance.WriteTextData("Task " + currentTask + " complete - " + DateTime.Now.ToString("hh_mm_ss"));
+
+                SetTask("success", currentTask + 1);
+            }
         }
         else
         {
@@ -296,7 +313,9 @@ public class LevelManager : MonoBehaviour
 
     public void SetNumber(int bit, int bitStatus)
     {
-        if(currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        HCInvestigatorManager.instance.WriteTextData("Number set - " + DateTime.Now.ToString("hh_mm_ss"));
+
+        if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
         {
             currentTaskStatus[bit] = bitStatus;
             currentNumber = currentTaskStatus[1] + (2 * currentTaskStatus[2]) + (4 * currentTaskStatus[3]);
@@ -315,6 +334,8 @@ public class LevelManager : MonoBehaviour
 
     public void SetColor(int bit, int bitStatus)
     {
+        HCInvestigatorManager.instance.WriteTextData("Color set - " + DateTime.Now.ToString("hh_mm_ss"));
+
         if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
         {
             currentTaskStatus[bit] = bitStatus;
@@ -341,6 +362,8 @@ public class LevelManager : MonoBehaviour
 
     public void SetShape(int bit, int bitStatus)
     {
+        HCInvestigatorManager.instance.WriteTextData("Shape set - " + DateTime.Now.ToString("hh_mm_ss"));
+
         if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
         {
             currentTaskStatus[bit] = bitStatus;
@@ -377,5 +400,11 @@ public class LevelManager : MonoBehaviour
     public string GetShape()
     {
         return currentShape;
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        //Stops recording text data
+        HCInvestigatorManager.instance.StopRecordingText();
     }
 }

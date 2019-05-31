@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,6 +41,11 @@ public class TutorialStation : MonoBehaviour
     public void SetTutorialLeverBool(bool leverState)
     {
         isTutorialLeverOn = leverState;
+
+        if (leverState)
+        {
+            HCInvestigatorManager.instance.WriteTextData("Tutorial lever pulled - " + DateTime.Now.ToString("hh_mm_ss"));
+        }
     }
 
     public void GetTaskLeverPulled(int currentTask)
