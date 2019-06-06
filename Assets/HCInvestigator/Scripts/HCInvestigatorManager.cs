@@ -14,22 +14,16 @@ public class HCInvestigatorManager : MonoBehaviour
     /// Singleton variable
     /// </summary>
     public static HCInvestigatorManager instance;
-    /// <summary>
-    /// Folder name for audio recordings
-    /// </summary>
-    public string audioFolderName;
+
     /// <summary>
     /// Max duration to record audio 
     /// </summary>
     public int audioRecordDuration;
+
     /// <summary>
     /// Folder name for screenshots which can be used to create a video
     /// </summary>
-    public string videoFolderName;
-    /// <summary>
-    /// Folder name for text data recordings
-    /// </summary>
-    public string textFolderName;
+    public string folderName;
 
     /// <summary>
     /// Holds references to events made with HCInvestigatorEvent
@@ -67,12 +61,18 @@ public class HCInvestigatorManager : MonoBehaviour
     /// <summary>
     /// The text data to write to a file
     /// </summary>
-    public string TextData { get; private set; }
+    //public string TextData { get; private set; }
+
+    private List<string> TextData = new List<string>();
 
     /// <summary>
     /// Audio source used to record voice
     /// </summary>
     public AudioSource AudioSource { get; private set; }
+
+    private string m_finalFolderName;
+    private string textFileName;
+    private List<bool> recordingText = new List<bool>();
 
     /// <summary>
     /// Used for initialization before the game starts
@@ -84,6 +84,10 @@ public class HCInvestigatorManager : MonoBehaviour
             instance = this;
             m_eventDict = new Dictionary<string, UnityEvent>();
             AudioSource = GetComponent<AudioSource>();
+            m_javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            m_ScreenRecorder = m_javaClass.GetStatic<AndroidJavaObject>("currentActivity");
+            m_ScreenRecorder.Call("setupVideo", 2000000, 30);
+            m_finalFolderName = Application.persistentDataPath + "/" + folderName + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss");
             DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
@@ -97,9 +101,7 @@ public class HCInvestigatorManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        m_javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        m_ScreenRecorder = m_javaClass.GetStatic<AndroidJavaObject>("currentActivity");
-        m_ScreenRecorder.Call("setupVideo", 2000000, 30);
+
     }
 
     /// <summary>
@@ -107,20 +109,16 @@ public class HCInvestigatorManager : MonoBehaviour
     /// </summary>
     public void StartRecordingVideo()
     {
-        if (!m_recordingVideo)
+        if (m_recordingVideo)
         {
-            m_recordingVideo = true;
-            string folderName = Application.persistentDataPath + "/" + videoFolderName + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss");
-            string fileName = DateTime.Now.ToString("hh_mm_ss");
+            return;
+        }
 
-            m_ScreenRecorder.Call("setFileName", folderName, fileName);
-            m_ScreenRecorder.Call("startRecording");
-        }
-        else
-        {
-            m_recordingVideo = false;
-            StopRecordingVideo();
-        }
+        m_recordingVideo = true;
+        string fileName = "Video";
+
+        m_ScreenRecorder.Call("setFileName", m_finalFolderName, fileName);
+        m_ScreenRecorder.Call("startRecording");
     }
 
     /// <summary>
@@ -128,6 +126,12 @@ public class HCInvestigatorManager : MonoBehaviour
     /// </summary>
     public void StopRecordingVideo()
     {
+        if (!m_recordingVideo)
+        {
+            return;
+        }
+
+        m_recordingVideo = false;
         m_ScreenRecorder.Call("stopRecording");
     }
 
@@ -138,60 +142,80 @@ public class HCInvestigatorManager : MonoBehaviour
     /// </summary>
     public void StartRecordingAudio()
     {
-        if (instance.m_recordingAudio)
+        if (m_recordingAudio)
         {
-            instance.m_recordingAudio = false;
-            Microphone.End(null);
-            SavWav.Save(instance.audioFolderName +
-            " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss") + "/" + DateTime.Now.ToString("hh_mm_ss"), instance.AudioSource.clip);
             return;
         }
-
         instance.m_recordingAudio = true;
         instance.AudioSource.clip = Microphone.Start(null, true, instance.audioRecordDuration, 44100);
         while (!(Microphone.GetPosition(null) > 0)) { }
     }
 
     /// <summary>
-    /// Begins recording analytics as text data
+    /// Stops recording audio
     /// </summary>
-    public void StartRecordingText()
+    public void StopRecordingAudio()
     {
-        if (!instance.m_recordingTextData)
+        if (!instance.m_recordingAudio)
         {
-            instance.m_recordingTextData = true;
+            return;
         }
 
+        instance.m_recordingAudio = false;
+        Microphone.End(null);
+        SavWav.Save(m_finalFolderName + "/" + DateTime.Now.ToString("hh_mm_ss"), instance.AudioSource.clip);
+    }
+
+    /// <summary>
+    /// Begins recording analytics as text data
+    /// </summary>
+    public void StartRecordingText(int index)
+    {
+        if (index == TextData.Count)
+        {
+            TextData.Add("");
+            recordingText.Add(true);
+        }
+
+        if (index < recordingText.Count && !recordingText[index])
+        {
+            recordingText[index] = true;
+
+            for (int i = 0; i < TextData.Count; i++)
+            {
+                TextData[i] = "";
+            }
+        }
     }
 
     /// <summary>
     /// Stops recording analytics as text data
     /// </summary>
-    public void StopRecordingText()
+    public void StopRecordingText(int index, string fileName)
     {
-        if (!m_recordingTextData)
+        if (index < recordingText.Count && !recordingText[index])
         {
             return;
         }
 
-        instance.m_recordingTextData = false;
-        string path = Application.persistentDataPath + "/" + instance.textFolderName + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss");
-        string fileName = DateTime.Now.ToString("hh_mm_ss") + ".txt";
+        recordingText[index] = false;
         StreamWriter writer = null;
-        if (System.IO.File.Exists(path + "/" + fileName))
+
+        if (!System.IO.Directory.Exists(m_finalFolderName))
         {
-            writer = System.IO.File.AppendText(path + "/" + fileName);
+            System.IO.Directory.CreateDirectory(m_finalFolderName);
+        }
+
+        if (System.IO.File.Exists(m_finalFolderName + "/" + fileName))
+        {
+            writer = System.IO.File.AppendText(m_finalFolderName + "/" + fileName);
         }
         else
         {
-            if (!System.IO.Directory.Exists(path))
-            {
-                System.IO.Directory.CreateDirectory(path);
-            }
-            writer = System.IO.File.CreateText(path + "/" + fileName);
+            writer = System.IO.File.CreateText(m_finalFolderName + "/" + fileName);
         }
 
-        writer.WriteLine(TextData);
+        writer.WriteLine(TextData[index]);
         writer.Close();
     }
 
@@ -200,13 +224,17 @@ public class HCInvestigatorManager : MonoBehaviour
     /// Appends additional text to the current text data
     /// </summary>
     /// <param name="data">The text to append</param>
-    public void WriteTextData(string data)
+    public void WriteTextData(int index, string data)
     {
-        if (!m_recordingTextData)
+        if (index < recordingText.Count && !recordingText[index])
         {
             return;
         }
-        TextData += data + Environment.NewLine;
+
+        if (index < TextData.Count && index > -1)
+        {
+            TextData[index] += data + Environment.NewLine;
+        }
     }
 
     /// <summary>

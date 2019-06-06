@@ -53,15 +53,15 @@ public class ButtonPushed : MonoBehaviour
             {
                 if(gameObject.name == "buttonGetTask")
                 {
-                    transform.root.GetComponent<LevelManager>().GetTaskLeverPulled();
+                    transform.root.GetComponent<LevelManager>().GetTaskLeverPulled("test");
                 }
                 if (gameObject.name == "buttonRunOutput")
                 {
-                    transform.root.GetComponent<LevelManager>().RunOutputButtonPushed();
+                    transform.root.GetComponent<LevelManager>().RunOutputButtonPushed("test");
                 }
                 if (gameObject.name == "buttonSendOutput")
                 {
-                    transform.root.GetComponent<LevelManager>().OutputSent();
+                    transform.root.GetComponent<LevelManager>().OutputSent("test");
                 }
                 this.GetComponent<Renderer>().material.color = transform.root.GetComponent<LevelManager>().hitColor;
                 transform.localPosition = buttonDownPosition.localPosition;

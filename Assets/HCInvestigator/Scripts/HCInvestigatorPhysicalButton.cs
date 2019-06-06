@@ -68,7 +68,7 @@ public class HCInvestigatorPhysicalButton : MonoBehaviour , HCInvestigatorInterf
     /// </summary>
     public void RecordTextData()
     {
-        HCInvestigatorManager.instance.StartRecordingText();
+        HCInvestigatorManager.instance.StartRecordingText(0);
     }
     
     /// <summary>

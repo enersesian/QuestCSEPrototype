@@ -44,7 +44,7 @@ public class TutorialStation : MonoBehaviour
 
         if (leverState)
         {
-            HCInvestigatorManager.instance.WriteTextData("Tutorial lever pulled - " + DateTime.Now.ToString("hh_mm_ss"));
+            HCInvestigatorManager.instance.WriteTextData(0, "User pulled tutorial lever at " + DateTime.Now.ToString("hh:mm:ss"));
         }
     }
 

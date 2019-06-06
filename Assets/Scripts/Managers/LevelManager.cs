@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     private int currentTask;
     //0 = task, 1 = number bit 1, 2 = number bit 2, 3 = number bit 3, 4 = size bit 1, 5 = size bit 2
     //6 = color red bit, 7 = color green bit, 8 = color blue bit, possibly add shape later
-    private int[] currentTaskStatus = new int[9]; 
+    private int[] currentTaskStatus = new int[9];
     private int[] currentTaskRequirements = new int[9];
     private int currentNumber;
     private Color currentColor;
@@ -28,14 +28,47 @@ public class LevelManager : MonoBehaviour
     private string currentShape;
     private bool isTutorialNumberLeverPulled, isTutorialColorLeverPulled, isTutorialShapeLeverPulled, isTutorialRunOutputLeverPulled, isTutorialOutputSent;
 
-    void Start ()
+    private float textRecordTimer;
+
+    void Start()
     {
         Invoke("SetUserHeight", 0.5f); //set back to 5 seconds to take off researcher head and onto subject head for height adjustment
         tutorialStation.StartTutorial();
 
-        //Start recording text data
-        HCInvestigatorManager.instance.StartRecordingText();
-        HCInvestigatorManager.instance.WriteTextData("-----------Text recording started at " + DateTime.Now.ToString("hh_mm_ss") + "------------");
+
+        //Start recording text data, user started level and tutorial task 00
+        HCInvestigatorManager.instance.StartRecordingText(0);
+        HCInvestigatorManager.instance.StartRecordingText(1);
+        HCInvestigatorManager.instance.WriteTextData(0, "-----------User started level and tutorial task 00 at " + DateTime.Now.ToString("hh:mm:ss") + "------------");
+        HCInvestigatorManager.instance.WriteTextData(1, "-----------User started level and tutorial task 00 at " + DateTime.Now.ToString("hh:mm:ss") + "------------");
+        HCInvestigatorManager.instance.WriteTextData(1, ",Position,,,Rotation");
+        HCInvestigatorManager.instance.WriteTextData(1, "Time, X, Y, Z, X, Y, Z");
+
+        //Starts recording video
+        HCInvestigatorManager.instance.StartRecordingVideo();
+
+        textRecordTimer = Time.time;
+    }
+
+    private void Update()
+    {
+        if (Time.time - textRecordTimer >= 0.5f)
+        {
+            string posX = Camera.main.transform.position.x.ToString("F3");
+            string posY = Camera.main.transform.position.y.ToString("F3");
+            string posZ = Camera.main.transform.position.z.ToString("F3");
+
+            Vector3 rot = Camera.main.transform.rotation.eulerAngles;
+            string rotX = rot.x.ToString("F3");
+            string rotY = rot.y.ToString("F3");
+            string rotZ = rot.z.ToString("F3");
+
+            string values = DateTime.Now.ToString("hh:mm:ss:ff") + "," + posX + "," + posY + "," + posZ + "," + rotX + "," + rotY + "," + rotZ;
+
+            HCInvestigatorManager.instance.WriteTextData(1, values);
+
+            textRecordTimer = Time.time;
+        }
     }
 
     public void SetLevelDistance(bool isNear)
@@ -104,9 +137,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void GetTaskLeverPulled()
+    public void GetTaskLeverPulled(string inputText) // start task message
     {
-        switch(currentTask)
+        HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
+
+        switch (currentTask)
         {
             case 1:
                 currentTaskRequirements[0] = 1; //task is active
@@ -114,8 +149,8 @@ public class LevelManager : MonoBehaviour
                 currentTaskRequirements[2] = 0;
                 currentTaskRequirements[3] = 0;
                 currentTaskRequirements[4] = 1; //color = red
-                currentTaskRequirements[5] = 0; 
-                currentTaskRequirements[6] = 0; 
+                currentTaskRequirements[5] = 0;
+                currentTaskRequirements[6] = 0;
                 currentTaskRequirements[7] = 1; //shape = sphere
                 currentTaskRequirements[8] = 0;
                 break;
@@ -205,8 +240,10 @@ public class LevelManager : MonoBehaviour
         tutorialStation.GetTaskLeverPulled(currentTask);
     }
 
-    public void RunOutputButtonPushed()
+    public void RunOutputButtonPushed(string inputText)
     {
+        HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
+
         numberStation.RunOutputButtonPushed();
         colorStation.RunOutputButtonPushed();
         shapeStation.RunOutputButtonPushed();
@@ -239,32 +276,35 @@ public class LevelManager : MonoBehaviour
         tutorialStation.TutorialContainerPickedUp();
     }
 
-    public void OutputSent()
+    public void OutputSent(string inputText) //end of a task
     {
+        HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
+
         int number = GetNumber();
         outputStation.OutputSent(number);
-        if (currentTaskStatus[1] == currentTaskRequirements[1] && currentTaskStatus[2] == currentTaskRequirements[2] && 
-            currentTaskStatus[3] == currentTaskRequirements[3] && currentTaskStatus[4] == currentTaskRequirements[4] && 
+        if (currentTaskStatus[1] == currentTaskRequirements[1] && currentTaskStatus[2] == currentTaskRequirements[2] &&
+            currentTaskStatus[3] == currentTaskRequirements[3] && currentTaskStatus[4] == currentTaskRequirements[4] &&
             currentTaskStatus[5] == currentTaskRequirements[5] && currentTaskStatus[6] == currentTaskRequirements[6] &&
             currentTaskStatus[7] == currentTaskRequirements[7] && currentTaskStatus[8] == currentTaskRequirements[8])
         {
             if (currentTask == 7)
             {
-                //Write level complete message to file
-                HCInvestigatorManager.instance.WriteTextData("Level complete - " + DateTime.Now.ToString("hh_mm_ss"));
+
+                HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " successful - " + DateTime.Now.ToString("hh:mm:ss"));
+                HCInvestigatorManager.instance.WriteTextData(0, "Level complete - " + DateTime.Now.ToString("hh:mm:ss"));
 
                 LevelComplete();
             }
             else
             {
-                //Write task complete message to file
-                HCInvestigatorManager.instance.WriteTextData("Task " + currentTask + " complete - " + DateTime.Now.ToString("hh_mm_ss"));
+                HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " successful - " + DateTime.Now.ToString("hh:mm:ss"));
 
                 SetTask("success", currentTask + 1);
             }
         }
         else
         {
+            HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " failed - " + DateTime.Now.ToString("hh:mm:ss"));
             SetTask("failure", currentTask);
         }
         if (!isTutorialOutputSent)
@@ -302,6 +342,15 @@ public class LevelManager : MonoBehaviour
 
     public void TutorialLeverPulled(bool isTutorialLeverOn)
     {
+        if (isTutorialLeverOn)
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set tutorial lever to one at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
+        else
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set tutorial lever to zero at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
+
         tutorialStation.SetTutorialLeverBool(isTutorialLeverOn);
     }
 
@@ -313,7 +362,19 @@ public class LevelManager : MonoBehaviour
 
     public void SetNumber(int bit, int bitStatus)
     {
-        HCInvestigatorManager.instance.WriteTextData("Number set - " + DateTime.Now.ToString("hh_mm_ss"));
+        if (bit == 1)
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set number lever 001 to " + bitStatus.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
+        else if (bit == 2)
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set number lever 010 to " + bitStatus.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
+        else
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set number lever 100 to " + bitStatus.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
+
 
         if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
         {
@@ -322,19 +383,28 @@ public class LevelManager : MonoBehaviour
 
             numberStation.UpdateBitText(bit, bitStatus);
             outputStation.UpdateNumText(GetNumber());
-            if(!isTutorialNumberLeverPulled)
+            if (!isTutorialNumberLeverPulled)
             {
                 isTutorialNumberLeverPulled = true;
                 tutorialStation.TutorialNumberLeverIsPulled();
             }
-
         }
-        
     }
 
     public void SetColor(int bit, int bitStatus)
     {
-        HCInvestigatorManager.instance.WriteTextData("Color set - " + DateTime.Now.ToString("hh_mm_ss"));
+        if (bit == 4)
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set color lever 100 red to " + bitStatus.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
+        else if (bit == 5)
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set color lever 010 green to " + bitStatus.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
+        else
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set color lever 001 blue to " + bitStatus.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
 
         if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
         {
@@ -362,7 +432,14 @@ public class LevelManager : MonoBehaviour
 
     public void SetShape(int bit, int bitStatus)
     {
-        HCInvestigatorManager.instance.WriteTextData("Shape set - " + DateTime.Now.ToString("hh_mm_ss"));
+        if (bit == 7)
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set shape lever 01 to " + bitStatus.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
+        else
+        {
+            HCInvestigatorManager.instance.WriteTextData(0, "User set shape lever 10 to " + bitStatus.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        }
 
         if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
         {
@@ -404,7 +481,15 @@ public class LevelManager : MonoBehaviour
 
     private void OnApplicationPause(bool pause)
     {
-        //Stops recording text data
-        HCInvestigatorManager.instance.StopRecordingText();
+        if (pause)
+        {
+            HCInvestigatorManager.instance.StopRecordingText(0, "TextLog.txt");
+            HCInvestigatorManager.instance.StopRecordingText(1, "PositionAndRotationLog.csv");
+        }
+        else
+        {
+            HCInvestigatorManager.instance.StartRecordingText(0);
+            HCInvestigatorManager.instance.StartRecordingText(1);
+        }
     }
 }

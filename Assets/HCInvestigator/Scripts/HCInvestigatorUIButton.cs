@@ -51,7 +51,7 @@ public class HCInvestigatorUIButton : Button, HCInvestigatorInterface
     /// </summary>
     public  void RecordTextData()
     {
-        HCInvestigatorManager.instance.StartRecordingText();
+        HCInvestigatorManager.instance.StartRecordingText(0);
     }
     /// <summary>
     /// Called whenever the button is clicked

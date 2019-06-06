@@ -27,7 +27,7 @@ public class LevelLoadEvent : HCInvestigatorEvent
 
     void LoadNextLevel()
     {
-        HCInvestigatorManager.instance.WriteTextData(SceneManager.GetActiveScene().name + " completed" + " at" + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss"));
+        HCInvestigatorManager.instance.WriteTextData(0, SceneManager.GetActiveScene().name + " completed" + " at" + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss"));
         asyncLoad.allowSceneActivation = false;
         
     }

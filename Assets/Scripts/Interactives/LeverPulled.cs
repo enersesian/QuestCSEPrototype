@@ -169,19 +169,19 @@ public class LeverPulled : MonoBehaviour
     private void SendOutputLeverPulled()
     {
         Deactivate();
-        levelManager.OutputSent();
+        levelManager.OutputSent("User pulled leverSendOutput to one position at ");
     }
 
     private void RunOutputLeverPulled()
     {
         Deactivate();
-        levelManager.RunOutputButtonPushed();
+        levelManager.RunOutputButtonPushed("User pulled leverRunOutput to one position at ");
     }
 
     private void GetTaskLeverPulled()
     {
         Deactivate();
-        levelManager.GetTaskLeverPulled();
+        levelManager.GetTaskLeverPulled("User pulled leverGetTask to one position at ");
     }
 
     public float Scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)

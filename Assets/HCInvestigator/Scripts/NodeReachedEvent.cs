@@ -19,6 +19,6 @@ public class NodeReachedEvent : HCInvestigatorEvent {
 
     void NodeReached()
     {
-        HCInvestigatorManager.instance.WriteTextData("A node has been hit at" + DateTime.Now.ToString("MM-dd-yy hh_mm_ss"));
+        HCInvestigatorManager.instance.WriteTextData(0, "A node has been hit at" + DateTime.Now.ToString("MM-dd-yy hh_mm_ss"));
     }
 }
