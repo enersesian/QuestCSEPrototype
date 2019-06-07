@@ -64,7 +64,8 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 1)
         {
-            taskText.text = "Welcome to Task 1.\nBring back 1 Red Sphere.";
+            //taskText.text = "Welcome to Task 1.\nBring back 1 Red Sphere.";
+            taskText.text = "";
             //taskTextLarge.text = "Task One \n 1 Red Sphere.";
             /*
             objectSpawn = Instantiate(levelManager.outputStation.sphere);
@@ -83,12 +84,13 @@ public class TaskStation : MonoBehaviour
             objectIconsLarge[0].GetComponent<Image>().color = new Color(1f, 0f, 0f);
 
             //mini
-
+            /* deactiving mini icons for first task as its distracting with the tutorial
             objectIcons[0].SetActive(true);
             objectIcons[0].transform.position = new Vector3(
                 miniSpawnLocation.position.x, miniSpawnLocation.position.y , miniSpawnLocation.position.z);
             objectIcons[0].GetComponent<Image>().sprite = sphereIcon;
             objectIcons[0].GetComponent<Image>().color = new Color(1f, 0f, 0f);
+            */
         }
 
         if (currentTask == 2)

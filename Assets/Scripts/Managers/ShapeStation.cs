@@ -8,6 +8,8 @@ public class ShapeStation : MonoBehaviour
     public LeverPulled[] levers;
     public Text stationText;
     public Transform farLocation, nearLocation;
+    public Sprite[] shapes;
+    public Image shapeImage;
 
     private void Start()
     {
@@ -25,6 +27,7 @@ public class ShapeStation : MonoBehaviour
     {
         foreach(LeverPulled lever in levers) lever.SetTask();
         stationText.text = "Cube";
+        shapeImage.sprite = shapes[0];
     }
 
     public void GetTaskLeverPulled(int currentTask)
@@ -54,5 +57,21 @@ public class ShapeStation : MonoBehaviour
     public void UpdateShapeText(string shape)
     {
         stationText.text = shape;
+        if(shape == "Cube")
+        {
+            shapeImage.sprite = shapes[0];
+        }
+        else if (shape == "Sphere")
+        {
+            shapeImage.sprite = shapes[1];
+        }
+        else if (shape == "Cone")
+        {
+            shapeImage.sprite = shapes[2];
+        }
+        else
+        {
+            shapeImage.sprite = shapes[3];
+        }
     }
 }
