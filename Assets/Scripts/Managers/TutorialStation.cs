@@ -320,7 +320,7 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 20) instructionsTop.text = "Congratulations! Now proceed through the rest of the tasks by yourself.";
 
         instructionsBottom.text = "";
-        if(tutorialNumber < 7) interactiveWaitTime = 3f;
+        if(tutorialNumber < 7) interactiveWaitTime = 1f;
         else if (tutorialNumber == 7) interactiveWaitTime = 4f;
         else if (tutorialNumber == 8) interactiveWaitTime = 3f;
         else if(tutorialNumber == 10 || tutorialNumber == 12 || tutorialNumber == 14 || tutorialNumber == 17) interactiveWaitTime = 1f;

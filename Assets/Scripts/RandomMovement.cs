@@ -17,6 +17,7 @@ public class RandomMovement : MonoBehaviour {
     public bool isSent = false;
 
     private float height;
+    private Vector3 position;
 
     private void Start()
     {
@@ -25,12 +26,19 @@ public class RandomMovement : MonoBehaviour {
 
     void Update()
     {
-        if (!isSent) height = (heightScale * Mathf.PerlinNoise(Time.time * xScale, 0.0f) - 1f) / 2f;
-        else height = transform.localPosition.y + 0.01f;
-
-        Vector3 pos = transform.localPosition;
-        pos.y = height;
-        transform.localPosition = pos;
-
+        if (!isSent)
+        {
+            height = (heightScale * Mathf.PerlinNoise(Time.time * xScale, 0.0f) - 1f) / 2f;
+            position = transform.localPosition;
+            position.y = height;
+            transform.localPosition = position;
+        }
+        else //sending particles up the pipe on task station so needs global movement
+        {
+            height = transform.position.y + 0.001f;
+            position = transform.position;
+            position.y = height;
+            transform.position = position;
+        }
     }
 }

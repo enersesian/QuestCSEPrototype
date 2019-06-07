@@ -41,9 +41,16 @@ public class TaskStation : MonoBehaviour
         //getButton.ResetButton(true);
         leverGetTask.SetTask();
         //leverSendOutput.SetTask();
+
+        /*
         foreach (GameObject objectIcon in objectIconsLarge)
         {
             objectIcon.SetActive(false);
+        }
+        */
+        foreach (Transform child in spawnLocation)
+        {
+            Destroy(child.gameObject);
         }
         foreach (GameObject objectIcon in objectIcons)
         {
@@ -67,7 +74,7 @@ public class TaskStation : MonoBehaviour
             //taskText.text = "Welcome to Task 1.\nBring back 1 Red Sphere.";
             taskText.text = "";
             //taskTextLarge.text = "Task One \n 1 Red Sphere.";
-            /*
+            
             objectSpawn = Instantiate(levelManager.outputStation.sphere);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
@@ -75,13 +82,14 @@ public class TaskStation : MonoBehaviour
             objectSpawn.GetComponent<RandomMovement>().enabled = false;
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 0f, 0f);
             objectSpawn.transform.localScale *= 5f;
-            */
-
+            
+            /*
             objectIconsLarge[0].SetActive(true);
             objectIconsLarge[0].transform.position = new Vector3(
                 spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
             objectIconsLarge[0].GetComponent<Image>().sprite = sphereIcon;
             objectIconsLarge[0].GetComponent<Image>().color = new Color(1f, 0f, 0f);
+            */
 
             //mini
             /* deactiving mini icons for first task as its distracting with the tutorial
@@ -97,7 +105,7 @@ public class TaskStation : MonoBehaviour
         {
             taskText.text = "Welcome to Task 2.\nBring back 2 Red Spheres.";
             //taskTextLarge.text = "Task One \n 2 Red Spheres.";
-            /*
+            
             objectSpawn = Instantiate(levelManager.outputStation.sphere);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x -0.1f, spawnLocation.position.y, spawnLocation.position.z);
@@ -113,7 +121,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.GetComponent<RandomMovement>().enabled = false;
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 0f, 0f);
             objectSpawn.transform.localScale *= 5f;
-            */
+            /*
             objectIconsLarge[0].SetActive(true);
             objectIconsLarge[0].transform.position = new Vector3(
                 spawnLocation.position.x + 0.1f, spawnLocation.position.y, spawnLocation.position.z);
@@ -125,7 +133,7 @@ public class TaskStation : MonoBehaviour
                 spawnLocation.position.x - 0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectIconsLarge[1].GetComponent<Image>().sprite = sphereIcon;
             objectIconsLarge[1].GetComponent<Image>().color = new Color(1f, 0f, 0f);
-
+            */
             //mini
 
             objectIcons[0].SetActive(true);
@@ -145,7 +153,7 @@ public class TaskStation : MonoBehaviour
         {
             taskText.text = "Welcome to Task 3.\nBring back 4 Green Cubes.";
             //taskTextLarge.text = "Task One \n 4 Green Cubes.";
-            /*
+            
             objectSpawn = Instantiate(levelManager.outputStation.cube);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.1f, spawnLocation.position.y, spawnLocation.position.z);
@@ -177,8 +185,8 @@ public class TaskStation : MonoBehaviour
             objectSpawn.GetComponent<RandomMovement>().enabled = false;
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 0f);
             objectSpawn.transform.localScale *= 5f;
-            */
-
+            
+            /*
             objectIconsLarge[0].SetActive(true);
             objectIconsLarge[0].transform.position = new Vector3(
                 spawnLocation.position.x + 0.24f, spawnLocation.position.y, spawnLocation.position.z);
@@ -202,7 +210,7 @@ public class TaskStation : MonoBehaviour
                 spawnLocation.position.x - 0.08f, spawnLocation.position.y, spawnLocation.position.z);
             objectIconsLarge[3].GetComponent<Image>().sprite = cubeIcon;
             objectIconsLarge[3].GetComponent<Image>().color = new Color(0f, 1f, 0f);
-
+            */
             //mini
 
             objectIcons[0].SetActive(true);
@@ -234,7 +242,7 @@ public class TaskStation : MonoBehaviour
         {
             taskText.text = "Welcome to Task 4.\nBring back 3 Blue Cones.";
             //taskTextLarge.text = "Task One \n 3 Blue Cones.";
-            /*
+            
             objectSpawn = Instantiate(levelManager.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
@@ -258,7 +266,8 @@ public class TaskStation : MonoBehaviour
             objectSpawn.GetComponent<RandomMovement>().enabled = false;
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 0f, 1f);
             objectSpawn.transform.localScale *= 5f;
-            */
+
+            /*
             objectIconsLarge[0].SetActive(true);
             objectIconsLarge[0].transform.position = new Vector3(
                 spawnLocation.position.x + 0.2f, spawnLocation.position.y, spawnLocation.position.z);
@@ -276,7 +285,7 @@ public class TaskStation : MonoBehaviour
                 spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
             objectIconsLarge[2].GetComponent<Image>().sprite = coneIcon;
             objectIconsLarge[2].GetComponent<Image>().color = new Color(0f, 0f, 1f);
-
+            */
             //mini
 
             objectIcons[0].SetActive(true);
@@ -302,7 +311,7 @@ public class TaskStation : MonoBehaviour
         {
             taskText.text = "Welcome to Task 5.\nBring back 5 Yellow Ring.";
             //taskTextLarge.text = "Task One \n 5 Yellow Ring.";
-            /*
+            
             objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.1f, spawnLocation.position.y, spawnLocation.position.z);
@@ -349,8 +358,8 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 1f, 0f);
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
-            */
-
+            
+            /*
             objectIconsLarge[3].SetActive(true);
             objectIconsLarge[3].transform.position = new Vector3(
                 spawnLocation.position.x + 0.1f, spawnLocation.position.y, spawnLocation.position.z);
@@ -382,7 +391,7 @@ public class TaskStation : MonoBehaviour
                 spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[2].GetComponent<Image>().sprite = ringIcon;
             objectIconsLarge[2].GetComponent<Image>().color = new Color(1f, 1f, 0f);
-
+            */
             //mini
 
             objectIcons[3].SetActive(true);
@@ -422,7 +431,7 @@ public class TaskStation : MonoBehaviour
         {
             taskText.text = "Welcome to Task 6.\nBring back 7 Cyan Cones.";
             //taskTextLarge.text = "Task One \n 7 Cyan Cones.";
-            /*
+            
             objectSpawn = Instantiate(levelManager.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
@@ -480,8 +489,8 @@ public class TaskStation : MonoBehaviour
             objectSpawn.GetComponent<RandomMovement>().enabled = false;
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 1f);
             objectSpawn.transform.localScale *= 5f;
-            */
-
+            
+            /*
             objectIconsLarge[0].SetActive(true);
             objectIconsLarge[0].transform.position = new Vector3(
                 spawnLocation.position.x + 0.2f, spawnLocation.position.y, spawnLocation.position.z);
@@ -525,7 +534,7 @@ public class TaskStation : MonoBehaviour
                 spawnLocation.position.x - 0.08f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[6].GetComponent<Image>().sprite = coneIcon;
             objectIconsLarge[6].GetComponent<Image>().color = new Color(0f, 1f, 1f);
-
+            */
             //mini
 
             objectIcons[0].SetActive(true);
@@ -577,7 +586,7 @@ public class TaskStation : MonoBehaviour
         {
             taskText.text = "Welcome to Task 7.\nBring back 6 Purple Ring.";
             //taskTextLarge.text = "Task One \n 6 Purple Ring.";
-            /*
+            
             objectSpawn = Instantiate(levelManager.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
@@ -633,8 +642,8 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 0f, 1f);
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
-            */
-
+            
+            /*
             objectIconsLarge[0].SetActive(true);
             objectIconsLarge[0].transform.position = new Vector3(
                 spawnLocation.position.x + 0.2f, spawnLocation.position.y, spawnLocation.position.z);
@@ -672,7 +681,7 @@ public class TaskStation : MonoBehaviour
                 spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectIconsLarge[5].GetComponent<Image>().sprite = ringIcon;
             objectIconsLarge[5].GetComponent<Image>().color = new Color(1f, 0f, 1f);
-
+            */
             //mini
 
             objectIcons[0].SetActive(true);
