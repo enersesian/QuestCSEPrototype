@@ -5,6 +5,7 @@ using UnityEngine;
 public class LeverPulled : MonoBehaviour
 {
     public Transform leverBase, numberWheel,leverTopYLocalPosition, zeroPosition, onePosition;
+    public GameObject[] lockedElements, unlockedElements;
     private float localRotationX, distanceToLeverBase;
     private float leverTopMin, leverTopMax, leverBaseMin, leverBaseMax, numberWheelMin = -150f, numberWheelMax = -240f;
     private Vector3 startPosition;
@@ -61,6 +62,14 @@ public class LeverPulled : MonoBehaviour
         GetComponent<OVRGrabbable>().enabled = true;
         GetComponent<Collider>().enabled = true;
         GetComponent<Renderer>().material.SetColor("_Color", levelManager.activeColor);
+        foreach(GameObject element in unlockedElements)
+        {
+            element.SetActive(true);
+        }
+        foreach (GameObject element in lockedElements)
+        {
+            element.SetActive(false);
+        }
     }
 
     public void Deactivate()
@@ -70,6 +79,14 @@ public class LeverPulled : MonoBehaviour
         GetComponent<OVRGrabbable>().enabled = false;
         GetComponent<Collider>().enabled = false;
         GetComponent<Renderer>().material.SetColor("_Color", levelManager.disabledColor);
+        foreach (GameObject element in unlockedElements)
+        {
+            element.SetActive(false);
+        }
+        foreach (GameObject element in lockedElements)
+        {
+            element.SetActive(true);
+        }
     }
 
 

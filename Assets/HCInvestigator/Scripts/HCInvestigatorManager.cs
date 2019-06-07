@@ -79,21 +79,26 @@ public class HCInvestigatorManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        if (instance == null)
+        if (!Application.isEditor)
         {
-            instance = this;
-            m_eventDict = new Dictionary<string, UnityEvent>();
-            AudioSource = GetComponent<AudioSource>();
-            m_javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            m_ScreenRecorder = m_javaClass.GetStatic<AndroidJavaObject>("currentActivity");
-            m_ScreenRecorder.Call("setupVideo", 2000000, 30);
-            m_finalFolderName = Application.persistentDataPath + "/" + folderName + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss");
-            DontDestroyOnLoad(gameObject);
+            if (instance == null)
+            {
+                instance = this;
+                m_eventDict = new Dictionary<string, UnityEvent>();
+                AudioSource = GetComponent<AudioSource>();
+                m_javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                m_ScreenRecorder = m_javaClass.GetStatic<AndroidJavaObject>("currentActivity");
+                m_ScreenRecorder.Call("setupVideo", 2000000, 30);
+                m_finalFolderName = Application.persistentDataPath + "/" + folderName + " " + DateTime.Now.ToString("MM-dd-yy hh_mm_ss");
+                DontDestroyOnLoad(gameObject);
+            }
+            else if (instance != this)
+            {
+                Destroy(gameObject);
+            }
         }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+        else gameObject.SetActive(false); //running in editor, turn off to stop errors as currently only works on android devices
+        
     }
 
     /// <summary>

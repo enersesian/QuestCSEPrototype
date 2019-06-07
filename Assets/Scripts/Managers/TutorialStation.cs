@@ -22,6 +22,7 @@ public class TutorialStation : MonoBehaviour
     void Start ()
     {
         levelManager = transform.root.GetComponent<LevelManager>();
+        leverTutorial.Deactivate();
 	}
 
     public void SetLevelDistance(bool isNear)
@@ -42,7 +43,7 @@ public class TutorialStation : MonoBehaviour
     {
         isTutorialLeverOn = leverState;
 
-        if (leverState)
+        if (leverState && !Application.isEditor)
         {
             HCInvestigatorManager.instance.WriteTextData(0, "User pulled tutorial lever at " + DateTime.Now.ToString("hh:mm:ss"));
         }
@@ -131,6 +132,7 @@ public class TutorialStation : MonoBehaviour
                         OVRInput.Get(OVRInput.RawButton.LIndexTrigger) || OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
                     {
                         StartTutorialNonInteractive();
+                        levelManager.SetUserHeight();
                     }
                     break;
 
@@ -318,7 +320,7 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 20) instructionsTop.text = "Congratulations! Now proceed through the rest of the tasks by yourself.";
 
         instructionsBottom.text = "";
-        if(tutorialNumber < 7) interactiveWaitTime = 1f;
+        if(tutorialNumber < 7) interactiveWaitTime = 3f;
         else if (tutorialNumber == 7) interactiveWaitTime = 4f;
         else if (tutorialNumber == 8) interactiveWaitTime = 3f;
         else if(tutorialNumber == 10 || tutorialNumber == 12 || tutorialNumber == 14 || tutorialNumber == 17) interactiveWaitTime = 1f;

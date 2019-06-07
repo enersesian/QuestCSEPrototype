@@ -12,7 +12,7 @@ public class Dissolve : MonoBehaviour
 
     public void DissolveWalls()
     {
-        animTime = 4f;
+        animTime = 3f;
         waitTime = 0f;
         if (transform.GetChild(0).gameObject.activeSelf) wallMaterial = transform.GetChild(0).GetComponent<Renderer>();
         else wallMaterial = transform.GetChild(1).GetComponent<Renderer>();
