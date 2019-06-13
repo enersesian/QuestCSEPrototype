@@ -10,11 +10,9 @@ public class ColorStation : MonoBehaviour
     public Text colorText;
     public Transform farLocation, nearLocation;
     private int totalCount;
-    private LevelManager LevelManager;
 
     private void Start()
     {
-        LevelManager = transform.root.GetComponent<LevelManager>();
         //if (Application.isEditor) transform.position = new Vector3(0.4f, 0.2f, -0.4f); //Sitting Rift position
         colorText.text = "Black";
     }
@@ -28,7 +26,7 @@ public class ColorStation : MonoBehaviour
     public void SetTask()
     {
         foreach(LeverPulled lever in levers) lever.SetTask();
-        UpdateColorText(LevelManager.GetColor(), LevelManager.GetColorText());
+        UpdateColorText(LevelManager.instance.GetColor(), LevelManager.instance.GetColorText());
     }
 
     public void UpdateColorText(Color currentColor, string currentColorText)

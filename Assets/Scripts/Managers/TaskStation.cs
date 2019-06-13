@@ -14,13 +14,6 @@ public class TaskStation : MonoBehaviour
     public GameObject[] objectIconsLarge;
     private GameObject objectSpawn;
     private Vector3 objectPosition;
-    private LevelManager levelManager;
-
-    private void Start()
-    {
-        //if (Application.isEditor) transform.position = new Vector3(0f, 0.2f, 0.6f); //Sitting Rift position
-        levelManager = transform.root.GetComponent<LevelManager>();
-    }
 
     public void SetLevelDistance(bool isNear)
     {
@@ -75,7 +68,7 @@ public class TaskStation : MonoBehaviour
             taskText.text = "";
             //taskTextLarge.text = "Task One \n 1 Red Sphere.";
             
-            objectSpawn = Instantiate(levelManager.outputStation.sphere);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.sphere);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -106,7 +99,7 @@ public class TaskStation : MonoBehaviour
             taskText.text = "Welcome to Task 2.\nBring back 2 Red Spheres.";
             //taskTextLarge.text = "Task One \n 2 Red Spheres.";
             
-            objectSpawn = Instantiate(levelManager.outputStation.sphere);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.sphere);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x -0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -114,7 +107,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1f, 0f, 0f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.sphere);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.sphere);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -154,7 +147,7 @@ public class TaskStation : MonoBehaviour
             taskText.text = "Welcome to Task 3.\nBring back 4 Green Cubes.";
             //taskTextLarge.text = "Task One \n 4 Green Cubes.";
             
-            objectSpawn = Instantiate(levelManager.outputStation.cube);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cube);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -162,7 +155,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 0f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cube);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cube);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -170,7 +163,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 0f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cube);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cube);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.3f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -178,7 +171,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 0f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cube);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cube);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.3f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -243,7 +236,7 @@ public class TaskStation : MonoBehaviour
             taskText.text = "Welcome to Task 4.\nBring back 3 Blue Cones.";
             //taskTextLarge.text = "Task One \n 3 Blue Cones.";
             
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -251,7 +244,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 0f, 1f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.2f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -259,7 +252,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 0f, 1f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.2f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -312,7 +305,7 @@ public class TaskStation : MonoBehaviour
             taskText.text = "Welcome to Task 5.\nBring back 5 Yellow Ring.";
             //taskTextLarge.text = "Task One \n 5 Yellow Ring.";
             
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -321,7 +314,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.1f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -332,7 +325,7 @@ public class TaskStation : MonoBehaviour
 
             //second row
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -341,7 +334,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -350,7 +343,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -432,7 +425,7 @@ public class TaskStation : MonoBehaviour
             taskText.text = "Welcome to Task 6.\nBring back 7 Cyan Cones.";
             //taskTextLarge.text = "Task One \n 7 Cyan Cones.";
             
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -440,7 +433,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 1f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.2f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -448,7 +441,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 1f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.2f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -457,8 +450,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
 
             //second row
-
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.1f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -466,7 +458,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 1f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.1f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -474,7 +466,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 1f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.3f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -482,7 +474,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(0f, 1f, 1f);
             objectSpawn.transform.localScale *= 5f;
 
-            objectSpawn = Instantiate(levelManager.outputStation.cone);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.cone);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.3f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -587,7 +579,7 @@ public class TaskStation : MonoBehaviour
             taskText.text = "Welcome to Task 7.\nBring back 6 Purple Ring.";
             //taskTextLarge.text = "Task One \n 6 Purple Ring.";
             
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -596,7 +588,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.2f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -605,7 +597,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.2f, spawnLocation.position.y, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -616,7 +608,7 @@ public class TaskStation : MonoBehaviour
 
             //second row
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -625,7 +617,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x + 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;
@@ -634,7 +626,7 @@ public class TaskStation : MonoBehaviour
             objectSpawn.transform.localScale *= 5f;
             objectSpawn.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            objectSpawn = Instantiate(levelManager.outputStation.ring);
+            objectSpawn = Instantiate(LevelManager.instance.outputStation.ring);
             objectSpawn.transform.parent = spawnLocation;
             objectPosition = new Vector3(spawnLocation.position.x - 0.2f, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
             objectSpawn.transform.position = objectPosition;

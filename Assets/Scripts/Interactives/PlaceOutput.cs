@@ -11,7 +11,7 @@ public class PlaceOutput : MonoBehaviour
     {
         if (other.gameObject.layer == 10) //layer OutputSent, collider on cubeGrabbable
         {
-            transform.root.GetComponent<LevelManager>().PlacedOutput();
+            LevelManager.instance.PlacedOutput();
         }
     }
 
@@ -19,7 +19,7 @@ public class PlaceOutput : MonoBehaviour
     {
         if (other.gameObject.layer == 10) //layer OutputSent, collider on cubeGrabbable
         {
-            transform.root.GetComponent<LevelManager>().RemovedOutput();
+            LevelManager.instance.RemovedOutput();
         }
     }
 }

@@ -10,18 +10,11 @@ public class OutputStation : MonoBehaviour
     public Transform cubeGrabbable, cubeGrabbleStartPosition, spawnLocation, tempSpawnLocation, farLocation, nearLocation;
     public ButtonPushed runButton;
     public LeverPulled leverRunOutput;
-    private LevelManager levelManager;
     public GameObject cube, sphere, cone, ring, currentShapeSelection;
     public GameObject[] objectIconsLarge;
     private GameObject objectSpawn;
     private Vector3 objectPosition;
     private int spawnedObjects;
-
-    private void Start()
-    {
-        levelManager = transform.root.GetComponent<LevelManager>();
-        //if (Application.isEditor) transform.position = new Vector3(-2f, 0.2f, 0.0f); //Sitting Rift position
-    }
 
     public void SetLevelDistance(bool isNear)
     {
@@ -55,7 +48,7 @@ public class OutputStation : MonoBehaviour
 
     public void RunOutputButtonPushed(int number, Color currentColor, string shape)
     {
-        levelManager.RunOutput(); //to reset the sendOutputLever
+        LevelManager.instance.RunOutput(); //to reset the sendOutputLever
 
         stationText.text = "Output generated\nPlease take output to task station";
         cubeGrabbable.GetComponent<Collider>().enabled = true;
@@ -69,7 +62,8 @@ public class OutputStation : MonoBehaviour
         for (int i = 0; i < number; i++)
         {
             objectSpawn = Instantiate(currentShapeSelection);
-            objectPosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.05f, 0.05f), cubeGrabbable.position.y + Random.Range(-0.2f, 0.2f), cubeGrabbable.position.z + Random.Range(-0.05f, 0.05f));
+            objectPosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.05f, 0.05f), 
+                cubeGrabbable.position.y + Random.Range(-0.2f, 0.2f), cubeGrabbable.position.z + Random.Range(-0.05f, 0.05f));
             objectSpawn.transform.position = objectPosition;
             objectSpawn.transform.parent = cubeGrabbable;
             objectSpawn.GetComponent<RandomMovement>().isSent = false;
@@ -97,9 +91,9 @@ public class OutputStation : MonoBehaviour
         if (number > 0)
         {
             stationText.text = "Hit button to generate output:";
-            numberItem.text = levelManager.GetNumber().ToString();
-            colorItem.text = levelManager.GetColorText();
-            shapeItem.text = levelManager.GetShape();
+            numberItem.text = LevelManager.instance.GetNumber().ToString();
+            colorItem.text = LevelManager.instance.GetColorText();
+            shapeItem.text = LevelManager.instance.GetShape();
             if (number > 1) shapeItem.text += "s";
             //runButton.ResetButton(true);
             leverRunOutput.GetTaskButtonPushed(1);
@@ -109,10 +103,10 @@ public class OutputStation : MonoBehaviour
                 Destroy(child.gameObject);
             }
 
-            if (levelManager.GetShape() == "Cube") currentShapeSelection = cube;
-            if (levelManager.GetShape() == "Sphere") currentShapeSelection = sphere;
-            if (levelManager.GetShape() == "Cone") currentShapeSelection = cone;
-            if (levelManager.GetShape() == "Ring") currentShapeSelection = ring;
+            if (LevelManager.instance.GetShape() == "Cube") currentShapeSelection = cube;
+            if (LevelManager.instance.GetShape() == "Sphere") currentShapeSelection = sphere;
+            if (LevelManager.instance.GetShape() == "Cone") currentShapeSelection = cone;
+            if (LevelManager.instance.GetShape() == "Ring") currentShapeSelection = ring;
             //build new objects
             if (number == 1)
             {
@@ -121,7 +115,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
             }
@@ -132,7 +126,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.1f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -140,7 +134,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.1f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
             }
             if(number == 3)
@@ -150,7 +144,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -158,7 +152,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -166,7 +160,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
             }
             if (number == 4)
@@ -176,7 +170,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.1f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -184,7 +178,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.1f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -192,7 +186,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.3f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -200,7 +194,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.3f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
             }
 
@@ -211,7 +205,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.1f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -219,7 +213,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.1f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 //second row
@@ -229,7 +223,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -237,7 +231,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -245,7 +239,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
             }
             if (number == 6)
@@ -255,7 +249,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -263,7 +257,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -271,7 +265,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 //second row
@@ -281,7 +275,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -289,7 +283,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -297,7 +291,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
             }
             if (number == 7)
@@ -307,7 +301,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -315,7 +309,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -323,7 +317,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.2f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 //second row
@@ -333,7 +327,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.1f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -341,7 +335,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.1f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -349,7 +343,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.3f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
                 objectSpawn = Instantiate(currentShapeSelection);
@@ -357,7 +351,7 @@ public class OutputStation : MonoBehaviour
                 objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.3f);
                 objectSpawn.transform.position = objectPosition;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.localScale *= 5f;
 
             }
@@ -383,14 +377,14 @@ public class OutputStation : MonoBehaviour
         shapeItem.text = shape;
         //read in each child's information, destroy it and create new shape with color and location
         Debug.Log("UpdateShapeText method");
-        if (levelManager.GetNumber() > 0)
+        if (LevelManager.instance.GetNumber() > 0)
         {
             if (shape == "Cube") currentShapeSelection = cube;
             if (shape == "Sphere") currentShapeSelection = sphere;
             if (shape == "Cone") currentShapeSelection = cone;
             if (shape == "Ring") currentShapeSelection = ring;
 
-            for (int i = 0; i < levelManager.GetNumber(); i++)
+            for (int i = 0; i < LevelManager.instance.GetNumber(); i++)
             {
                 /*
                 if (shape == "Cube") child.GetComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().mesh;
@@ -402,18 +396,18 @@ public class OutputStation : MonoBehaviour
                 objectSpawn = Instantiate(currentShapeSelection);
                 objectSpawn.transform.position = spawnLocation.GetChild(i).position;
                 objectSpawn.transform.localScale = spawnLocation.GetChild(i).localScale;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = levelManager.GetColor();
+                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.parent = tempSpawnLocation;
                 objectSpawn.GetComponent<RandomMovement>().enabled = false;
             }
 
-            for (int i = 0; i < levelManager.GetNumber(); i++)
+            for (int i = 0; i < LevelManager.instance.GetNumber(); i++)
             {
                 Destroy(spawnLocation.GetChild(i).gameObject);
                 Debug.Log("Delete child of spawnLocation " + i.ToString());
             }
 
-            for (int i = 0; i < levelManager.GetNumber(); i++)
+            for (int i = 0; i < LevelManager.instance.GetNumber(); i++)
             {
                 Debug.Log("Move child of tempSpawnLocation " + i.ToString());
                 tempSpawnLocation.GetChild(0).parent = spawnLocation; //prevents infinite loop crash as I am adding elements to a list that I am deleting elements from as well
@@ -434,7 +428,7 @@ public class OutputStation : MonoBehaviour
 
     private void ResetCubeGrabbable()
     {
-        levelManager.ForceGrabberRelease(cubeGrabbable.GetComponent<OVRGrabbable>());
+        UserManager.instance.ForceGrabberRelease(cubeGrabbable.GetComponent<OVRGrabbable>());
         cubeGrabbable.GetComponent<Collider>().enabled = false;
         cubeGrabbable.GetComponent<OVRGrabbable>().enabled = false;
         cubeGrabbable.position = cubeGrabbleStartPosition.position;

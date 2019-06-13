@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
+    /// <summary>
+    /// Singleton variable
+    /// </summary>
+    public static LevelManager instance;
+
     public TaskStation taskStation;
     public NumberStation numberStation;
     public ColorStation colorStation;
@@ -13,9 +18,9 @@ public class LevelManager : MonoBehaviour
     public OutputStation outputStation;
     public TutorialStation tutorialStation;
 
-    public Color activeColor, disabledColor, hitColor, red, green, blue;
-    public OVRGrabber leftHandGrabber, rightHandGrabber;
-    public Transform centerEyeAnchor, leftHandAnchor, rightHandAnchor;
+    public Color activeColor, disabledColor, hitColor;
+    [SerializeField]
+    private Transform centerEyeAnchor, leftHandAnchor, rightHandAnchor;
 
     private int currentTask;
     //0 = task, 1 = number bit 1, 2 = number bit 2, 3 = number bit 3, 4 = size bit 1, 5 = size bit 2
@@ -30,12 +35,27 @@ public class LevelManager : MonoBehaviour
     private string recordingValues;
     private float textRecordTimer;
 
+    /// <summary>
+    /// Used for initialization before the game starts
+    /// </summary>
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         //Invoke("SetUserHeight", 0.5f); //set back to 5 seconds to take off researcher head and onto subject head for height adjustment
         tutorialStation.StartTutorial();
-        
-
+       
         if (!Application.isEditor)
         {
             //Start recording text data, user started level and tutorial task 00
@@ -46,37 +66,22 @@ public class LevelManager : MonoBehaviour
             HCInvestigatorManager.instance.WriteTextData(1, ",,Head Position,,,Head Rotation,,,Left Hand Position,,,Right Hand Position");
             HCInvestigatorManager.instance.WriteTextData(1, "Time, X, Y, Z, X, Y, Z, X, Y, Z, X, Y, Z, Task");
 
-            //Starts recording video
             HCInvestigatorManager.instance.StartRecordingVideo();
-
             textRecordTimer = Time.time;
         }
-            
     }
 
     private void Update()
     {
         if (Time.time - textRecordTimer >= 0.5f && !Application.isEditor)
         {
-            /*
-            string posX = Camera.main.transform.position.x.ToString("F3");
-            string posY = Camera.main.transform.position.y.ToString("F3");
-            string posZ = Camera.main.transform.position.z.ToString("F3");
-
-            Vector3 rot = Camera.main.transform.rotation.eulerAngles;
-            string rotX = rot.x.ToString("F3");
-            string rotY = rot.y.ToString("F3");
-            string rotZ = rot.z.ToString("F3");
-            */
-            //string values = DateTime.Now.ToString("hh:mm:ss:ff") + "," + posX + "," + posY + "," + posZ + "," + rotX + "," + rotY + "," + rotZ;
-            recordingValues = DateTime.Now.ToString("hh:mm:ss:ff") + "," + centerEyeAnchor.position.x.ToString("F3") + "," + centerEyeAnchor.position.y.ToString("F3") + "," + centerEyeAnchor.position.z.ToString("F3")
-                 + "," + centerEyeAnchor.rotation.eulerAngles.x.ToString("F3") + "," + centerEyeAnchor.rotation.eulerAngles.y.ToString("F3") + "," + centerEyeAnchor.rotation.eulerAngles.z.ToString("F3")
-                 + "," + leftHandAnchor.position.x.ToString("F3") + "," + leftHandAnchor.position.y.ToString("F3") + "," + leftHandAnchor.position.z.ToString("F3")
-                 + "," + rightHandAnchor.position.x.ToString("F3") + "," + rightHandAnchor.position.y.ToString("F3") + "," + rightHandAnchor.position.z.ToString("F3")
-                 + "," + currentTask.ToString();
+            recordingValues = DateTime.Now.ToString("hh:mm:ss:ff") + "," + 
+                centerEyeAnchor.position.x.ToString("F3") + "," + centerEyeAnchor.position.y.ToString("F3") + "," + centerEyeAnchor.position.z.ToString("F3") + "," +
+                centerEyeAnchor.rotation.eulerAngles.x.ToString("F3") + "," + centerEyeAnchor.rotation.eulerAngles.y.ToString("F3") + "," + centerEyeAnchor.rotation.eulerAngles.z.ToString("F3") + "," +
+                leftHandAnchor.position.x.ToString("F3") + "," + leftHandAnchor.position.y.ToString("F3") + "," + leftHandAnchor.position.z.ToString("F3") + "," +
+                rightHandAnchor.position.x.ToString("F3") + "," + rightHandAnchor.position.y.ToString("F3") + "," + rightHandAnchor.position.z.ToString("F3") + "," + currentTask.ToString();
 
             HCInvestigatorManager.instance.WriteTextData(1, recordingValues);
-
             textRecordTimer = Time.time;
         }
     }
@@ -91,7 +96,7 @@ public class LevelManager : MonoBehaviour
         outputStation.SetLevelDistance(isNear);
     }
 
-    public void SetUserHeight()
+    public void SetStationHeight()
     {
         transform.position = new Vector3(transform.position.x, centerEyeAnchor.position.y, transform.position.z);
     }
@@ -120,31 +125,6 @@ public class LevelManager : MonoBehaviour
         colorStation.SetTask();
         shapeStation.SetTask();
         outputStation.SetTask();
-    }
-
-    /*
-    public void InteractableActivacted(string name, int action)
-    {
-        if (name == "lever0001") SetNumber(1, action); //number bit 1 = action
-        if (name == "lever0010") SetNumber(2, action); //number bit 2 = action
-        if (name == "lever0100") SetNumber(3, action); //number bit 3 = action
-        //if (transform.parent.name == "lever1000") SetNumber(4, action); //if I return to 4 bit numbers
-        if (name == "lever01") SetSize(4, action); //size bit 1 = action
-        if (name == "lever10") SetSize(5, action); //size bit 2 = action
-
-        //lever pulled to up to onePosition
-        if (name == "leverGetTask") GetTaskLeverPulled();
-        if (name == "leverRunOutput") RunOutputLeverPulled();
-        if (name == "leverSendOutput") SendOutputLeverPulled();
-    }
-    */
-    public void ForceGrabberRelease(OVRGrabbable grabbable)
-    {
-        if (grabbable != null)
-        {
-            leftHandGrabber.ForceRelease(grabbable);
-            rightHandGrabber.ForceRelease(grabbable);
-        }
     }
 
     public void GetTaskLeverPulled(string inputText) // start task message

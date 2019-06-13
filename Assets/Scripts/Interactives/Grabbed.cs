@@ -7,6 +7,6 @@ public class Grabbed : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        transform.root.GetComponent<LevelManager>().OutputContainerGrabbed();
+        LevelManager.instance.OutputContainerGrabbed();
     }
 }

@@ -32680,6 +32680,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelManager: {fileID: 2076611825}
   movementSpeed: 0.01
+  leftHandGrabber: {fileID: 623864454}
+  rightHandGrabber: {fileID: 820753743}
 --- !u!1 &1626505664
 GameObject:
   m_ObjectHideFlags: 0
@@ -34801,7 +34803,7 @@ GameObject:
   - component: {fileID: 1696108928}
   - component: {fileID: 1696108927}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: Camera_InteractiveTestingOnMonitor
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43970,11 +43972,6 @@ MonoBehaviour:
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
   hitColor: {r: 1, g: 0.95925504, b: 0, a: 1}
-  red: {r: 0, g: 0, b: 0, a: 0}
-  green: {r: 0, g: 0, b: 0, a: 0}
-  blue: {r: 0, g: 0, b: 0, a: 0}
-  leftHandGrabber: {fileID: 623864454}
-  rightHandGrabber: {fileID: 820753743}
   centerEyeAnchor: {fileID: 1879997291}
   leftHandAnchor: {fileID: 415119545}
   rightHandAnchor: {fileID: 1924467001}

@@ -20,12 +20,12 @@ public class ButtonPushed : MonoBehaviour
 
         if (active)
         {
-            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<LevelManager>().activeColor;
+            this.GetComponent<Renderer>().material.color = LevelManager.instance.activeColor;
             isPushable = true;
         }
         else
         {
-            this.GetComponent<Renderer>().material.color = transform.root.GetComponent<LevelManager>().disabledColor;
+            this.GetComponent<Renderer>().material.color = LevelManager.instance.disabledColor;
             isPushable = false;
         }
     }
@@ -53,17 +53,17 @@ public class ButtonPushed : MonoBehaviour
             {
                 if(gameObject.name == "buttonGetTask")
                 {
-                    transform.root.GetComponent<LevelManager>().GetTaskLeverPulled("test");
+                    LevelManager.instance.GetTaskLeverPulled("test");
                 }
                 if (gameObject.name == "buttonRunOutput")
                 {
-                    transform.root.GetComponent<LevelManager>().RunOutputButtonPushed("test");
+                    LevelManager.instance.RunOutputButtonPushed("test");
                 }
                 if (gameObject.name == "buttonSendOutput")
                 {
-                    transform.root.GetComponent<LevelManager>().OutputSent("test");
+                    LevelManager.instance.OutputSent("test");
                 }
-                this.GetComponent<Renderer>().material.color = transform.root.GetComponent<LevelManager>().hitColor;
+                this.GetComponent<Renderer>().material.color = LevelManager.instance.hitColor;
                 transform.localPosition = buttonDownPosition.localPosition;
                 isTouched = false;
                 isPushable = false;

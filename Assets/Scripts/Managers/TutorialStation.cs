@@ -13,7 +13,6 @@ public class TutorialStation : MonoBehaviour
     public Transform[] movementTransforms;
     private float interactiveWaitTime = 4f;
     private int tutorialNumber;
-    private LevelManager levelManager;
     private bool isInteractable, isTutorialLeverOn, isGetTaskLeverPulled, isTutorialAtNumberStation, isTutorialNumberLeverPulled, 
         isTutorialColorLeverPulled, isTutorialAtColorStation, isTutorialAtShapeStation, isTutorialShapeLeverPulled, 
         isTutorialAtOutputStation, isTutorialOutputLeverPulled, isTutorialContainerPickedUp, isTutorialAtTaskStation, 
@@ -21,7 +20,6 @@ public class TutorialStation : MonoBehaviour
 
     void Start ()
     {
-        levelManager = transform.root.GetComponent<LevelManager>();
         leverTutorial.Deactivate();
 	}
 
@@ -91,7 +89,7 @@ public class TutorialStation : MonoBehaviour
 
     private void StartLevel()
     {
-        levelManager.StartLevel();
+        LevelManager.instance.StartLevel();
     }
 
     private void TutorialAtNumberStation()
@@ -132,7 +130,7 @@ public class TutorialStation : MonoBehaviour
                         OVRInput.Get(OVRInput.RawButton.LIndexTrigger) || OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
                     {
                         StartTutorialNonInteractive();
-                        levelManager.SetUserHeight();
+                        LevelManager.instance.SetStationHeight();
                     }
                     break;
 

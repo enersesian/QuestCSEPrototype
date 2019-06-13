@@ -10,14 +10,12 @@ public class LeverPulled : MonoBehaviour
     private float leverTopMin, leverTopMax, leverBaseMin, leverBaseMax, numberWheelMin = -150f, numberWheelMax = -240f;
     private Vector3 startPosition;
     private Quaternion leverBaseStartRotation, numberWheelStartRotation;
-    private LevelManager levelManager;
     private bool isActive, isOnePosition;
 
     private void Awake()
     {
         GetComponent<OVRGrabbable>().enabled = false;
         GetComponent<Collider>().enabled = false;
-        levelManager = transform.root.GetComponent<LevelManager>();
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
         startPosition = transform.localPosition;
         leverBaseStartRotation = leverBase.rotation;
@@ -58,10 +56,10 @@ public class LeverPulled : MonoBehaviour
     public void Activate()
     {
         isActive = true;
-        levelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
+        UserManager.instance.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = true;
         GetComponent<Collider>().enabled = true;
-        GetComponent<Renderer>().material.SetColor("_Color", levelManager.activeColor);
+        GetComponent<Renderer>().material.SetColor("_Color", LevelManager.instance.activeColor);
         foreach(GameObject element in unlockedElements)
         {
             element.SetActive(true);
@@ -75,10 +73,10 @@ public class LeverPulled : MonoBehaviour
     public void Deactivate()
     {
         isActive = false;
-        levelManager.ForceGrabberRelease(GetComponent<OVRGrabbable>());
+        UserManager.instance.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = false;
         GetComponent<Collider>().enabled = false;
-        GetComponent<Renderer>().material.SetColor("_Color", levelManager.disabledColor);
+        GetComponent<Renderer>().material.SetColor("_Color", LevelManager.instance.disabledColor);
         foreach (GameObject element in unlockedElements)
         {
             element.SetActive(false);
@@ -125,19 +123,19 @@ public class LeverPulled : MonoBehaviour
                 
                 if(isOnePosition)
                 {
-                    if (transform.parent.name == "lever0001") levelManager.SetNumber(1, 0); //number bit 1 = 0
-                    if (transform.parent.name == "lever0010") levelManager.SetNumber(2, 0); //number bit 2 = 0
-                    if (transform.parent.name == "lever0100") levelManager.SetNumber(3, 0); //number bit 3 = 0
+                    if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 0); //number bit 1 = 0
+                    if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 0); //number bit 2 = 0
+                    if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 0); //number bit 3 = 0
                                                                                             //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 0); //bit 4 = 0
 
-                    if (transform.parent.name == "leverRed") levelManager.SetColor(4, 0); //color bit 1 = 0
-                    if (transform.parent.name == "leverGreen") levelManager.SetColor(5, 0); //color bit 2 = 0
-                    if (transform.parent.name == "leverBlue") levelManager.SetColor(6, 0); //color bit 3 = 0
+                    if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 0); //color bit 1 = 0
+                    if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 0); //color bit 2 = 0
+                    if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 0); //color bit 3 = 0
 
-                    if (transform.parent.name == "lever01") levelManager.SetShape(7, 0); //shape bit 1 = 0
-                    if (transform.parent.name == "lever10") levelManager.SetShape(8, 0); //shape bit 2 = 0
+                    if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 0); //shape bit 1 = 0
+                    if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 0); //shape bit 2 = 0
 
-                    if (transform.parent.name == "leverTutorial") levelManager.TutorialLeverPulled(false);
+                    if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(false);
 
                 }
                 isOnePosition = false;
@@ -148,23 +146,23 @@ public class LeverPulled : MonoBehaviour
                 //update board total
                 if(!isOnePosition)
                 {
-                    if (transform.parent.name == "lever0001") levelManager.SetNumber(1, 1); //number bit 1 = 1
-                    if (transform.parent.name == "lever0010") levelManager.SetNumber(2, 1); //number bit 2 = 1
-                    if (transform.parent.name == "lever0100") levelManager.SetNumber(3, 1); //number bit 3 = 1
+                    if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 1); //number bit 1 = 1
+                    if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 1); //number bit 2 = 1
+                    if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 1); //number bit 3 = 1
                                                                                             //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 1); //bit 4 = 1
 
-                    if (transform.parent.name == "leverRed") levelManager.SetColor(4, 1); //color bit 1 = 1
-                    if (transform.parent.name == "leverGreen") levelManager.SetColor(5, 1); //color bit 2 = 1
-                    if (transform.parent.name == "leverBlue") levelManager.SetColor(6, 1); //color bit 3 = 1
+                    if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 1); //color bit 1 = 1
+                    if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 1); //color bit 2 = 1
+                    if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 1); //color bit 3 = 1
 
-                    if (transform.parent.name == "lever01") levelManager.SetShape(7, 1); //shape bit 1 = 1
-                    if (transform.parent.name == "lever10") levelManager.SetShape(8, 1); //shape bit 2 = 1
+                    if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 1); //shape bit 1 = 1
+                    if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 1); //shape bit 2 = 1
 
                     if (transform.parent.name == "leverGetTask") GetTaskLeverPulled();
                     if (transform.parent.name == "leverRunOutput") RunOutputLeverPulled();
                     if (transform.parent.name == "leverSendOutput") SendOutputLeverPulled();
 
-                    if (transform.parent.name == "leverTutorial") levelManager.TutorialLeverPulled(true);
+                    if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(true);
                 }
                 isOnePosition = true;
             }
@@ -186,19 +184,19 @@ public class LeverPulled : MonoBehaviour
     private void SendOutputLeverPulled()
     {
         Deactivate();
-        levelManager.OutputSent("User pulled leverSendOutput to one position at ");
+        LevelManager.instance.OutputSent("User pulled leverSendOutput to one position at ");
     }
 
     private void RunOutputLeverPulled()
     {
         Deactivate();
-        levelManager.RunOutputButtonPushed("User pulled leverRunOutput to one position at ");
+        LevelManager.instance.RunOutputButtonPushed("User pulled leverRunOutput to one position at ");
     }
 
     private void GetTaskLeverPulled()
     {
         Deactivate();
-        levelManager.GetTaskLeverPulled("User pulled leverGetTask to one position at ");
+        LevelManager.instance.GetTaskLeverPulled("User pulled leverGetTask to one position at ");
     }
 
     public float Scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
