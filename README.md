@@ -9,14 +9,14 @@ Oculus Quest prototype for a computer science educational experience. Current le
 
 PrototypeScene.unity is setup to play on Oculus Rift in editor and builds to Oculus Quest. Both use touch controllers. Standard grab input on levers and grabbables. Level is 20'x20'. Use thumbpad on left controller to move around scene if your physical layout is too small, especially for editor testing with Rift. Hold down A and B, and press X to reset level to task 1. Hold down A and B, and press Y to reset height of task stations to your current head height.
 
-PROGRAMMING CREDITS
-Programmer: Eric Nersesian
-Data Analytics Programmer: Shannon Hargrave
-DESIGN CREDITS
-UX Designers: Jessica Ross, Adam Spryszynski, Dr. Margarita Vinnikov, Eric Nersesian
-Visual and Narrative Development: Jessica Ross
-3D Modeling: Cris Guzman, Jessica Ross
-RESEARCH CREDITS
-VR UX Researchers: Dr. Margarita Vinnikov, Dr. Michael Lee, Eric Nersesian, Adam Spryszynski
-CS Education Researchers: Dr. Michael Lee, Dr. Margarita Vinnikov, Eric Nersesian, Adam Spryszynski
+PROGRAMMING CREDITS<br/>
+Programmer: Eric Nersesian<br/>
+Data Analytics Programmer: Shannon Hargrave<br/>
+DESIGN CREDITS<br/>
+UX Designers: Jessica Ross, Adam Spryszynski, Dr. Margarita Vinnikov, Eric Nersesian<br/>
+Visual and Narrative Development: Jessica Ross<br/>
+3D Modeling: Cris Guzman, Jessica Ross<br/>
+RESEARCH CREDITS<br/>
+VR UX Researchers: Dr. Margarita Vinnikov, Dr. Michael Lee, Eric Nersesian, Adam Spryszynski<br/>
+CS Education Researchers: Dr. Michael Lee, Dr. Margarita Vinnikov, Eric Nersesian, Adam Spryszynski<br/>
 Research Assistants: Namita Mahindru, Adam Spryszynski
