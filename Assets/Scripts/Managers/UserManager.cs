@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class UserManager : MonoBehaviour
 {
-    /// <summary>
-    /// Singleton variable
-    /// </summary>
     public static UserManager instance;
-
+    
     [SerializeField]
-    private float movementSpeed = 0.01f;
+    [Range(0.01f, 0.03f)]
+    [Tooltip("Move with right thumbstick")]
+    private float movementSpeed;
     [SerializeField]
     private OVRGrabber leftHandGrabber, rightHandGrabber;
 
-    private Vector2 leftThumbAxis;
+    private Vector2 thumbAxis;
     private float doubleTapTimer;
     private bool isNear;
 
-    /// <summary>
-    /// Used for initialization before the game starts
-    /// </summary>
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
@@ -34,13 +30,19 @@ public class UserManager : MonoBehaviour
         }
     }
 
-    void Update ()
+    private void Update ()
     {
         if(Application.isEditor) //quick move feature for in editor rift testing
         {
-            leftThumbAxis = OVRInput.Get(OVRInput.RawAxis2D.LThumbstick) * movementSpeed;
-            LevelManager.instance.transform.position = new Vector3(LevelManager.instance.transform.position.x + leftThumbAxis.x,
-                LevelManager.instance.transform.position.y, LevelManager.instance.transform.position.z + leftThumbAxis.y);
+            thumbAxis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) * movementSpeed;
+            thumbAxis.x = -thumbAxis.x * Mathf.Cos(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad) +
+                -thumbAxis.y * Mathf.Sin(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad);
+            //thumbAxis.y = -thumbAxis.y * Mathf.Cos(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad) 
+                 thumbAxis.y = thumbAxis.x * Mathf.Sin(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad);
+            Debug.Log("X part of front movement = " + (thumbAxis.x * Mathf.Sin(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad)).ToString());
+            Debug.Log("Y part of front movement = " + (thumbAxis.y * Mathf.Cos(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad)).ToString());
+            LevelManager.instance.transform.position = new Vector3(LevelManager.instance.transform.position.x + thumbAxis.x * 0f,
+                LevelManager.instance.transform.position.y, LevelManager.instance.transform.position.z + thumbAxis.y);
         }
         
         if (OVRInput.Get(OVRInput.Button.One) && OVRInput.Get(OVRInput.Button.Two))
@@ -71,6 +73,9 @@ public class UserManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when user releases a lever as found interactions got sticky without this forced release
+    /// </summary>
     public void ForceGrabberRelease(OVRGrabbable grabbable)
     {
         if (grabbable != null)

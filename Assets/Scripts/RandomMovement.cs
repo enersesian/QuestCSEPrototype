@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomMovement : MonoBehaviour {
+public class RandomMovement : MonoBehaviour
+{
 
     // "Bobbing" animation from 1D Perlin noise.
 
