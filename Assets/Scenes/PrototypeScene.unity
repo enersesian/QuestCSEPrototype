@@ -6334,7 +6334,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 336185666}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 46.327255, z: 18.8}
+  m_LocalPosition: {x: 0, y: 590, z: 1290}
   m_LocalScale: {x: 620.94696, y: 620.941, z: 1394.9602}
   m_Children:
   - {fileID: 2025484797}
@@ -24188,7 +24188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1220710428
 Transform:
   m_ObjectHideFlags: 0
@@ -29318,6 +29318,34 @@ Transform:
   m_Father: {fileID: 603825951}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 89.99999}
+--- !u!1 &1451300129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1451300130}
+  m_Layer: 0
+  m_Name: OutputObjectSpawnLocationOldLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1451300130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1451300129}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.10000455, y: 46.327255, z: 18.799494}
+  m_LocalScale: {x: 620.94696, y: 620.941, z: 1394.9602}
+  m_Children: []
+  m_Father: {fileID: 1545366774}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1451817351
 GameObject:
   m_ObjectHideFlags: 0
@@ -31400,6 +31428,7 @@ RectTransform:
   - {fileID: 1451817352}
   - {fileID: 1898825754}
   - {fileID: 1734664814}
+  - {fileID: 1451300130}
   m_Father: {fileID: 1233791851}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32719,6 +32748,7 @@ MonoBehaviour:
   movementSpeed: 0.02
   leftHandGrabber: {fileID: 623864454}
   rightHandGrabber: {fileID: 820753743}
+  rightHandAnchor: {fileID: 1924467001}
 --- !u!1 &1626505664
 GameObject:
   m_ObjectHideFlags: 0
@@ -37348,8 +37378,8 @@ MonoBehaviour:
   - {fileID: 1535049975}
   finalColor: {fileID: 248158832}
   colorText: {fileID: 1979904527}
-  farLocation: {fileID: 752824795}
-  nearLocation: {fileID: 1621523666}
+  farLocation: {fileID: 1282718096}
+  nearLocation: {fileID: 1013760397}
 --- !u!1 &1817461349
 GameObject:
   m_ObjectHideFlags: 0
@@ -40867,7 +40897,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4026207958311046, guid: efe266538a8dcda4dbd04fbff7997053, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4350366352329456, guid: efe266538a8dcda4dbd04fbff7997053, type: 2}
       propertyPath: m_RootOrder
@@ -44661,8 +44691,8 @@ MonoBehaviour:
   - {fileID: 2098021573}
   - {fileID: 27912463}
   stationText: {fileID: 1163714563}
-  farLocation: {fileID: 1282718096}
-  nearLocation: {fileID: 1013760397}
+  farLocation: {fileID: 752824795}
+  nearLocation: {fileID: 1621523666}
   shapes:
   - {fileID: 21300000, guid: d7c275bcdc9173547b0603dd622ff6b4, type: 3}
   - {fileID: 21300000, guid: 3ab2f491696219040b52d345a8a42094, type: 3}

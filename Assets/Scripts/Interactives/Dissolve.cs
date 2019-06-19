@@ -10,6 +10,11 @@ public class Dissolve : MonoBehaviour
     private Color startDiffuse, startSpec, endDiffuse, endSpec;
     private float valueChange;
 
+    private void Start() //wall is in the way so turned back on when starting
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+    }
+
     public void DissolveWalls()
     {
         animTime = 3f;

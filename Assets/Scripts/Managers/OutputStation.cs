@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class OutputStation : MonoBehaviour
 {
-    public Color activeColor;
     public Text stationText, numberItem, colorItem, shapeItem, sizeItem;
     public Transform cubeGrabbable, cubeGrabbleStartPosition, spawnLocation, tempSpawnLocation, farLocation, nearLocation;
     public ButtonPushed runButton;
@@ -16,7 +15,7 @@ public class OutputStation : MonoBehaviour
     private Vector3 objectPosition;
     private int spawnedObjects;
 
-    public void SetLevelDistance(bool isNear)
+    public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
     {
         if (isNear) transform.position = farLocation.position;
         else transform.position = nearLocation.position;
@@ -33,10 +32,6 @@ public class OutputStation : MonoBehaviour
         shapeItem.text = "-";
         currentShapeSelection = cube;
         //ResetCubeGrabbable(); //only useful for user resetting level with A button
-        foreach (Transform child in spawnLocation)
-        {
-            Destroy(child.gameObject);
-        }
     }
 
     public void GetTaskLeverPulled(int currentTask)
@@ -59,6 +54,12 @@ public class OutputStation : MonoBehaviour
         if (shape == "Sphere") currentShapeSelection = sphere;
         if (shape == "Cone") currentShapeSelection = cone;
         if (shape == "Ring") currentShapeSelection = ring;
+        //destroy objects floating in output station
+        foreach (Transform child in spawnLocation)
+        {
+            Destroy(child.gameObject);
+        }
+        //generate objects in carrying container
         for (int i = 0; i < number; i++)
         {
             objectSpawn = Instantiate(currentShapeSelection);
@@ -77,13 +78,16 @@ public class OutputStation : MonoBehaviour
         {
             child.GetComponent<RandomMovement>().isSent = true;
         }
-        /*
-        for (int i = 0; i < number; i++)
-        {
-            cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent = true;
-            //Debug.Log(cubeGrabbable.GetChild(i).GetComponent<RandomMovement>().isSent.ToString());
-        }
-        */
+    }
+
+    private void ObjectSpawner(float xOffset, float yOffset, float zOffset)
+    {
+        objectSpawn = Instantiate(currentShapeSelection);
+        objectSpawn.transform.parent = spawnLocation;
+        objectSpawn.transform.position = new Vector3(spawnLocation.position.x + xOffset, spawnLocation.position.y + yOffset, spawnLocation.position.z + zOffset);
+        objectSpawn.GetComponent<RandomMovement>().enabled = true;
+        objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
+        objectSpawn.transform.localScale *= 5f;
     }
 
     public void UpdateNumText(int number)
@@ -96,7 +100,7 @@ public class OutputStation : MonoBehaviour
             shapeItem.text = LevelManager.instance.GetShape();
             if (number > 1) shapeItem.text += "s";
             //runButton.ResetButton(true);
-            leverRunOutput.GetTaskButtonPushed(1);
+            leverRunOutput.Activate();
             //destroy current objects
             foreach (Transform child in spawnLocation)
             {
@@ -108,252 +112,59 @@ public class OutputStation : MonoBehaviour
             if (LevelManager.instance.GetShape() == "Cone") currentShapeSelection = cone;
             if (LevelManager.instance.GetShape() == "Ring") currentShapeSelection = ring;
             //build new objects
-            if (number == 1)
+            switch(number)
             {
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
+                case 1:
+                    ObjectSpawner(0f, 0f, 0f);
+                    break;
 
-            }
-            if(number == 2)
-            {
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.1f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
+                case 2:
+                    ObjectSpawner(0f, 0f, -0.1f);
+                    ObjectSpawner(0f, 0f, 0.1f);
+                    break;
 
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.1f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-            }
-            if(number == 3)
-            {
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
+                case 3:
+                    ObjectSpawner(0f, 0f, -0.2f);
+                    ObjectSpawner(0f, 0f, 0.2f);
+                    ObjectSpawner(0f, 0f, 0f);
+                    break;
 
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
+                case 4:
+                    ObjectSpawner(0f, 0f, -0.1f);
+                    ObjectSpawner(0f, 0f, 0.1f);
+                    ObjectSpawner(0f, 0f, -0.3f);
+                    ObjectSpawner(0f, 0f, 0.3f);
+                    break;
 
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-            }
-            if (number == 4)
-            {
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.1f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
+                case 5:
+                    ObjectSpawner(0f, 0f, -0.1f);
+                    ObjectSpawner(0f, 0f, 0.1f);
+                    ObjectSpawner(0f, -0.15f, -0.2f);
+                    ObjectSpawner(0f, -0.15f, 0.2f);
+                    ObjectSpawner(0f, -0.15f, 0f);
+                    break;
 
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.1f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
+                case 6:
+                    ObjectSpawner(0f, 0f, 0f);
+                    ObjectSpawner(0f, 0f, -0.2f);
+                    ObjectSpawner(0f, 0f, 0.2f);
+                    ObjectSpawner(0f, -0.15f, -0.2f);
+                    ObjectSpawner(0f, -0.15f, 0.2f);
+                    ObjectSpawner(0f, -0.15f, 0f);
+                    break;
 
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.3f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
+                case 7:
+                    ObjectSpawner(0f, 0f, 0f);
+                    ObjectSpawner(0f, 0f, -0.2f);
+                    ObjectSpawner(0f, 0f, 0.2f);
+                    ObjectSpawner(0f, -0.15f, -0.1f);
+                    ObjectSpawner(0f, -0.15f, 0.1f);
+                    ObjectSpawner(0f, -0.15f, -0.3f);
+                    ObjectSpawner(0f, -0.15f, 0.3f);
+                    break;
 
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.3f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-            }
-
-            if (number == 5)
-            {
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.1f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.1f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                //second row
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-            }
-            if (number == 6)
-            {
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                //second row
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-            }
-            if (number == 7)
-            {
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z - 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y, spawnLocation.position.z + 0.2f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                //second row
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.1f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.1f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z - 0.3f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
-                objectSpawn = Instantiate(currentShapeSelection);
-                objectSpawn.transform.parent = spawnLocation;
-                objectPosition = new Vector3(spawnLocation.position.x, spawnLocation.position.y - 0.15f, spawnLocation.position.z + 0.3f);
-                objectSpawn.transform.position = objectPosition;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
-                objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
-                objectSpawn.transform.localScale *= 5f;
-
+                default:
+                    break;
             }
         }
         else
@@ -398,7 +209,7 @@ public class OutputStation : MonoBehaviour
                 objectSpawn.transform.localScale = spawnLocation.GetChild(i).localScale;
                 objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = LevelManager.instance.GetColor();
                 objectSpawn.transform.parent = tempSpawnLocation;
-                objectSpawn.GetComponent<RandomMovement>().enabled = false;
+                objectSpawn.GetComponent<RandomMovement>().enabled = true;
             }
 
             for (int i = 0; i < LevelManager.instance.GetNumber(); i++)
@@ -419,14 +230,14 @@ public class OutputStation : MonoBehaviour
     public void UpdateColorText(Color currentColor, string currentColorText)
     {
         colorItem.text = currentColorText;
-        //change all child's color
+        //change color for all spawned 3D objects
         foreach (Transform child in spawnLocation)
         {
             child.GetChild(0).GetComponent<Renderer>().material.color = currentColor;
         }
     }
 
-    private void ResetCubeGrabbable()
+    private void ResetCubeGrabbable() //Place carrying container back to original location 
     {
         UserManager.instance.ForceGrabberRelease(cubeGrabbable.GetComponent<OVRGrabbable>());
         cubeGrabbable.GetComponent<Collider>().enabled = false;
@@ -438,20 +249,5 @@ public class OutputStation : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        /*
-        for (int i = 0; i < spawnedObjects; i++)
-        {
-            Destroy(cubeGrabbable.GetChild(i).gameObject);
-        }*/
-        /*
-        spawnedObjects = cubeGrabbable.childCount;
-        if(spawnedObjects > 0)
-        {
-            for (int i = 0; i < spawnedObjects; i++)
-            {
-                Destroy(cubeGrabbable.GetChild(i).gameObject);
-            }
-        }*/
-        
     }
 }

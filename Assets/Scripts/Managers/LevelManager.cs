@@ -17,7 +17,8 @@ public class LevelManager : MonoBehaviour
     public OutputStation outputStation;
     public TutorialStation tutorialStation;
 
-    public Transform centerEyeAnchor, leftHandAnchor, rightHandAnchor;
+    [SerializeField]
+    private Transform centerEyeAnchor, leftHandAnchor, rightHandAnchor;
 
     private int currentTask;
     //0 = task, 1 = number bit 1, 2 = number bit 2, 3 = number bit 3, 4 = size bit 1, 5 = size bit 2
@@ -99,7 +100,7 @@ public class LevelManager : MonoBehaviour
     //Setters
 
     /// <summary>
-    /// Set distance of stations if user is in a smaller space than 20'x20'
+    /// Set distance of play area, ie station distance, from 20'x20' to 12'x12' and vice versa
     /// </summary>
     public void SetLevelDistance(bool isNear)
     {
@@ -375,7 +376,7 @@ public class LevelManager : MonoBehaviour
         tutorialStation.GetTaskLeverPulled(currentTask);
     }
 
-    public void RunOutputButtonPushed(string inputText)
+    public void RunOutputLeverPulled(string inputText)
     {
         if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
 

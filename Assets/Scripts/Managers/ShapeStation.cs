@@ -16,7 +16,7 @@ public class ShapeStation : MonoBehaviour
         //if (Application.isEditor) transform.position = new Vector3(-0.2f, 0.35f, -0.6f); //Sitting Rift position
     }
 
-    public void SetLevelDistance(bool isNear)
+    public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
     {
         if (isNear) transform.position = farLocation.position;
         else transform.position = nearLocation.position;
@@ -35,23 +35,23 @@ public class ShapeStation : MonoBehaviour
         switch(currentTask)
         {
             case 1:
-                levers[0].GetTaskButtonPushed(currentTask);
+                levers[0].Activate();
                 break;
 
             case 2:
-                levers[0].GetTaskButtonPushed(currentTask);
+                levers[0].Activate();
                 break;
 
             default:
-                levers[0].GetTaskButtonPushed(currentTask);
-                levers[1].GetTaskButtonPushed(currentTask);
+                levers[0].Activate();
+                levers[1].Activate();
                 break;
         }
     }
 
     public void RunOutputButtonPushed()
     {
-        foreach (LeverPulled lever in levers) lever.RunOutputButtonPushed();
+        foreach (LeverPulled lever in levers) lever.Deactivate();
     }
 
     public void UpdateShapeText(string shape)

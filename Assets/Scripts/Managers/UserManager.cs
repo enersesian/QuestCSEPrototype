@@ -12,9 +12,10 @@ public class UserManager : MonoBehaviour
     private float movementSpeed;
     [SerializeField]
     private OVRGrabber leftHandGrabber, rightHandGrabber;
-
+    [SerializeField]
+    private Transform rightHandAnchor;
     private Vector2 thumbAxis;
-    private float doubleTapTimer;
+    private float doubleTapTimer, holdTriggerTimer;
     private bool isNear;
 
     private void Awake()
@@ -35,32 +36,24 @@ public class UserManager : MonoBehaviour
         if(Application.isEditor) //quick move feature for in editor rift testing
         {
             thumbAxis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) * movementSpeed;
-            thumbAxis.x = -thumbAxis.x * Mathf.Cos(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad) +
-                -thumbAxis.y * Mathf.Sin(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad);
-            //thumbAxis.y = -thumbAxis.y * Mathf.Cos(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad) 
-                 thumbAxis.y = thumbAxis.x * Mathf.Sin(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad);
-            Debug.Log("X part of front movement = " + (thumbAxis.x * Mathf.Sin(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad)).ToString());
-            Debug.Log("Y part of front movement = " + (thumbAxis.y * Mathf.Cos(LevelManager.instance.centerEyeAnchor.eulerAngles.y * Mathf.Deg2Rad)).ToString());
-            LevelManager.instance.transform.position = new Vector3(LevelManager.instance.transform.position.x + thumbAxis.x * 0f,
-                LevelManager.instance.transform.position.y, LevelManager.instance.transform.position.z + thumbAxis.y);
+            //Use the direction that the right hand is pointing to orient the direction to move the task stations around the user
+            thumbAxis.x = (thumbAxis.x * rightHandAnchor.forward.z) + (thumbAxis.y * rightHandAnchor.forward.x);
+            thumbAxis.y = (thumbAxis.x * rightHandAnchor.forward.x) + (thumbAxis.y * rightHandAnchor.forward.z);
+            LevelManager.instance.transform.position = new Vector3(LevelManager.instance.transform.position.x - thumbAxis.x,
+                LevelManager.instance.transform.position.y, LevelManager.instance.transform.position.z - thumbAxis.y);
         }
         
-        if (OVRInput.Get(OVRInput.Button.One) && OVRInput.Get(OVRInput.Button.Two))
+        if (OVRInput.Get(OVRInput.Button.One) && OVRInput.Get(OVRInput.Button.Two)) //user is holding down A and B on right controller
         {
-            if(OVRInput.GetDown(OVRInput.Button.Three)) //set user height manually
+            if(OVRInput.GetDown(OVRInput.Button.Three)) //User double tapped X on left controller to set user height manually
             {
-                /* Disabled feature to change play area from 20'x20' to 12'x'12'
-                levelManager.SetLevelDistance(isNear);
-                isNear = !isNear;
-                */
-
                 if (Time.time - doubleTapTimer < 0.3f)
                 {
                     LevelManager.instance.SetStationHeight();
                 }
                 doubleTapTimer = Time.time;
             }
-            else if(OVRInput.GetDown(OVRInput.Button.Four))
+            else if(OVRInput.GetDown(OVRInput.Button.Four)) //User doubled tapped Y on left controller to reset level to task 01
             {
                 if (Time.time - doubleTapTimer < 0.3f) //reset level to task 1
                 {
@@ -70,11 +63,22 @@ public class UserManager : MonoBehaviour
                 }
                 doubleTapTimer = Time.time;
             }
+            else if(OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, OVRInput.Controller.LTouch) > 0.8f)
+            {
+                holdTriggerTimer += Time.deltaTime;
+                if (holdTriggerTimer > 1.0f) //User holds down index trigger on left controller to change play area size
+                {
+                    //feature to change play area from 20'x20' to 12'x'12' and vice versa
+                    LevelManager.instance.SetLevelDistance(isNear);
+                    isNear = !isNear;
+                    holdTriggerTimer = 0f;
+                }
+            }
         }
     }
 
     /// <summary>
-    /// Called when user releases a lever as found interactions got sticky without this forced release
+    /// Call when user releases a lever as found interactions got sticky without this forced release
     /// </summary>
     public void ForceGrabberRelease(OVRGrabbable grabbable)
     {

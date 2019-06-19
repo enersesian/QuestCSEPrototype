@@ -15,7 +15,7 @@ public class TaskStation : MonoBehaviour
     private GameObject objectSpawn;
     private Vector3 objectPosition;
 
-    public void SetLevelDistance(bool isNear)
+    public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
     {
         if (isNear) transform.position = farLocation.position;  //near to far
         else transform.position = nearLocation.position;

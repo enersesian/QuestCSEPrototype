@@ -37,20 +37,98 @@ public class LeverPulled : MonoBehaviour
         }
     }
 
-    public void SetToZeroPosition()
+    private void Update()
     {
-        transform.localPosition = zeroPosition.localPosition;
-        leverBase.localRotation = zeroPosition.localRotation;
-        if (numberWheel != null) numberWheel.rotation = numberWheelStartRotation;
-        isOnePosition = false;
+        if (isActive)
+        {
+            if (transform.localPosition.z > zeroPosition.localPosition.z)
+            {//went past zero position, set to zero position
+                transform.localPosition = zeroPosition.localPosition;
+
+                if (isOnePosition)
+                {
+                    if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 0); //number bit 1 = 0
+                    if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 0); //number bit 2 = 0
+                    if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 0); //number bit 3 = 0
+                                                                                                     //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 0); //bit 4 = 0
+
+                    if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 0); //color bit 1 = 0
+                    if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 0); //color bit 2 = 0
+                    if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 0); //color bit 3 = 0
+
+                    if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 0); //shape bit 1 = 0
+                    if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 0); //shape bit 2 = 0
+
+                    if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(false);
+
+                }
+                isOnePosition = false;
+            }
+            else if (transform.localPosition.z < onePosition.localPosition.z)
+            {//went past one position, set to one position
+                transform.localPosition = onePosition.localPosition;
+                //update board total
+                if (!isOnePosition)
+                {
+                    if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 1); //number bit 1 = 1
+                    if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 1); //number bit 2 = 1
+                    if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 1); //number bit 3 = 1
+                                                                                                     //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 1); //bit 4 = 1
+
+                    if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 1); //color bit 1 = 1
+                    if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 1); //color bit 2 = 1
+                    if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 1); //color bit 3 = 1
+
+                    if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 1); //shape bit 1 = 1
+                    if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 1); //shape bit 2 = 1
+
+                    if (transform.parent.name == "leverGetTask")
+                    {
+                        Deactivate();
+                        LevelManager.instance.GetTaskLeverPulled("User pulled leverGetTask to one position at ");
+                    }
+                    if (transform.parent.name == "leverRunOutput")
+                    {
+                        Deactivate();
+                        LevelManager.instance.RunOutputLeverPulled("User pulled leverRunOutput to one position at ");
+                    }
+                    if (transform.parent.name == "leverSendOutput")
+                    {
+                        Deactivate();
+                        LevelManager.instance.OutputSent("User pulled leverSendOutput to one position at ");
+                    }
+
+                    if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(true);
+                }
+                isOnePosition = true;
+            }
+            else transform.localPosition = new Vector3(startPosition.x, leverTopYLocalPosition.localPosition.y, transform.localPosition.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
+            transform.localRotation = Quaternion.identity;
+
+            //rebuild lever system off center rotation of 0 so its easy to find angle hence use cosine to find where to fix y position of levelTop
+
+            //update lever shaft rotation based on user grabbing top of lever
+            localRotationX = Scale(leverTopMin, leverTopMax, leverBaseMin, leverBaseMax, transform.localPosition.z);
+            leverBase.localRotation = Quaternion.Euler(localRotationX, leverBase.localRotation.y, leverBase.localRotation.z);
+
+            //update number wheel rotation based on user grabbing top of lever
+            localRotationX = Scale(leverTopMin, leverTopMax, numberWheelMin, numberWheelMax, transform.localPosition.z);
+            if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(localRotationX, numberWheel.localRotation.y, numberWheel.localRotation.z);
+        }
     }
 
-    public void SetToOnePosition()
+    public void SetTask()
     {
-        transform.localPosition = onePosition.localPosition;
-        leverBase.localRotation = onePosition.localRotation;
-        if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(numberWheelMax, 0f, 0f);
-        isOnePosition = true;
+        if (transform.parent.name == "leverGetTask")
+        {
+            Activate();
+            SetToZeroPosition();
+        }
+        else
+        {
+            Deactivate();
+            SetToZeroPosition();
+        }
     }
 
     public void Activate()
@@ -60,7 +138,7 @@ public class LeverPulled : MonoBehaviour
         GetComponent<OVRGrabbable>().enabled = true;
         GetComponent<Collider>().enabled = true;
         GetComponent<Renderer>().material.SetColor("_Color", LevelManager.instance.activeColor);
-        foreach(GameObject element in unlockedElements)
+        foreach (GameObject element in unlockedElements)
         {
             element.SetActive(true);
         }
@@ -87,116 +165,20 @@ public class LeverPulled : MonoBehaviour
         }
     }
 
-
-    public void SetTask() //Refactor to DisableLever method
+    public void SetToZeroPosition()
     {
-        if(transform.parent.name == "leverGetTask")
-        {
-            Activate();
-            SetToZeroPosition();
-        }
-        else
-        {
-            Deactivate();
-            SetToZeroPosition();
-        }
+        transform.localPosition = zeroPosition.localPosition;
+        leverBase.localRotation = zeroPosition.localRotation;
+        if (numberWheel != null) numberWheel.rotation = numberWheelStartRotation;
+        isOnePosition = false;
     }
 
-    public void GetTaskButtonPushed(int currentTask) //Refactor to EnableLever method
+    public void SetToOnePosition()
     {
-        Activate();
-    }
-
-    public void RunOutputButtonPushed()
-    {
-        Deactivate();
-    }
-
-    // Update is called once per frame
-    void Update ()
-    {
-        if(isActive)
-        {
-            if (transform.localPosition.z > zeroPosition.localPosition.z)
-            {//went past zero position, set to zero position
-                transform.localPosition = zeroPosition.localPosition;
-                
-                if(isOnePosition)
-                {
-                    if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 0); //number bit 1 = 0
-                    if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 0); //number bit 2 = 0
-                    if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 0); //number bit 3 = 0
-                                                                                            //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 0); //bit 4 = 0
-
-                    if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 0); //color bit 1 = 0
-                    if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 0); //color bit 2 = 0
-                    if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 0); //color bit 3 = 0
-
-                    if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 0); //shape bit 1 = 0
-                    if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 0); //shape bit 2 = 0
-
-                    if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(false);
-
-                }
-                isOnePosition = false;
-            }
-            else if (transform.localPosition.z < onePosition.localPosition.z)
-            {//went past one position, set to one position
-                transform.localPosition = onePosition.localPosition;
-                //update board total
-                if(!isOnePosition)
-                {
-                    if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 1); //number bit 1 = 1
-                    if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 1); //number bit 2 = 1
-                    if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 1); //number bit 3 = 1
-                                                                                            //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 1); //bit 4 = 1
-
-                    if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 1); //color bit 1 = 1
-                    if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 1); //color bit 2 = 1
-                    if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 1); //color bit 3 = 1
-
-                    if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 1); //shape bit 1 = 1
-                    if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 1); //shape bit 2 = 1
-
-                    if (transform.parent.name == "leverGetTask") GetTaskLeverPulled();
-                    if (transform.parent.name == "leverRunOutput") RunOutputLeverPulled();
-                    if (transform.parent.name == "leverSendOutput") SendOutputLeverPulled();
-
-                    if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(true);
-                }
-                isOnePosition = true;
-            }
-            else transform.localPosition = new Vector3(startPosition.x, leverTopYLocalPosition.localPosition.y, transform.localPosition.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
-            transform.localRotation = Quaternion.identity;
-
-            //rebuild lever system off center rotation of 0 so its easy to find angle hence use cosine to find where to fix y position of levelTop
-
-            //update lever shaft rotation based on user grabbing top of lever
-            localRotationX = Scale(leverTopMin, leverTopMax, leverBaseMin, leverBaseMax, transform.localPosition.z);
-            leverBase.localRotation = Quaternion.Euler(localRotationX, leverBase.localRotation.y, leverBase.localRotation.z);
-
-            //update number wheel rotation based on user grabbing top of lever
-            localRotationX = Scale(leverTopMin, leverTopMax, numberWheelMin, numberWheelMax, transform.localPosition.z);
-            if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(localRotationX, numberWheel.localRotation.y, numberWheel.localRotation.z);
-        }
-	}
-
-    private void SendOutputLeverPulled()
-    {
-        Deactivate();
-        LevelManager.instance.OutputSent("User pulled leverSendOutput to one position at ");
-    }
-
-    private void RunOutputLeverPulled()
-    {
-        Deactivate();
-        LevelManager.instance.RunOutputButtonPushed("User pulled leverRunOutput to one position at ");
-    }
-
-    private void GetTaskLeverPulled()
-    {
-        Deactivate();
-        LevelManager.instance.GetTaskLeverPulled("User pulled leverGetTask to one position at ");
+        transform.localPosition = onePosition.localPosition;
+        leverBase.localRotation = onePosition.localRotation;
+        if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(numberWheelMax, 0f, 0f);
+        isOnePosition = true;
     }
 
     public float Scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)

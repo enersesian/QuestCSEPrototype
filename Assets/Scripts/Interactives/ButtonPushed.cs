@@ -57,7 +57,7 @@ public class ButtonPushed : MonoBehaviour
                 }
                 if (gameObject.name == "buttonRunOutput")
                 {
-                    LevelManager.instance.RunOutputButtonPushed("test");
+                    //LevelManager.instance.RunOutputButtonPushed("test");
                 }
                 if (gameObject.name == "buttonSendOutput")
                 {
