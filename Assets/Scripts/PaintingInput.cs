@@ -76,10 +76,10 @@ public class PaintingInput : MonoBehaviour
             lastClickPosition = Vector3.zero;
         }
 
-        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.RTouch) > 0.9f)
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.RTouch) > 0.9f || OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.LTouch) > 0.9f)
         {
 
-            clickPosition = rightHandAnchor.forward * (distance + Random.Range(-distanceChange, distanceChange));
+            clickPosition = rightHandAnchor.forward * (distance + Random.Range(-distanceChange, distanceChange)) + rightHandAnchor.transform.position;
 
             if(isSpawnTypeRandom)
             {
@@ -109,7 +109,7 @@ public class PaintingInput : MonoBehaviour
 
             //for the first paint drop as it doesnt have reference
             //primitive.transform.localScale = new Vector3(Random.Range(0.1f, 1f)* size, Random.Range(0.1f, 1f)*size, Random.Range(0.1f, 1f)*size);
-            if (lastClickPosition == Vector3.zero) primitive.transform.localScale = new Vector3(Random.Range(0.1f, 1f)*size, Random.Range(0.1f, 1f)*size, Random.Range(0.1f, 1f)*size);
+            if (lastClickPosition == Vector3.zero) primitive.transform.localScale = new Vector3(Random.Range(0.1f, 0.2f)*size, Random.Range(0.1f, 0.2f)*size, Random.Range(0.1f, 0.2f)*size);
             else
             {
                 float x = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPosition.x - clickPosition.x), .01f, size * 3f);

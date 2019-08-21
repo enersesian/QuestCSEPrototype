@@ -13,16 +13,18 @@ public class TutorialStation : MonoBehaviour
     [SerializeField]
     private Movement tutorialDisplay;
     [SerializeField]
-    private Dissolve tutorialWalls;
+    private Animator tutorialWalls;
     [SerializeField]
     private Transform[] movementTransforms;
 
     private float interactiveWaitTime;
-    private int tutorialNumber;
+    private int tutorialNumber = -1;
     private bool isInteractable, isTutorialLeverOn, isGetTaskLeverPulled, isTutorialAtNumberStation, isTutorialNumberLeverPulled, 
         isTutorialColorLeverPulled, isTutorialAtColorStation, isTutorialAtShapeStation, isTutorialShapeLeverPulled, 
         isTutorialAtOutputStation, isTutorialOutputLeverPulled, isTutorialContainerPickedUp, isTutorialAtTaskStation, 
         isTutorialContainerPlacedOutput, isTutorialOutputSent;
+
+    public bool isEggyTouched;
 
     public void SetLevelDistance(bool isNear) //Sets distance of tutorial walls based on 20'x20' or 12'x12' space
     {
@@ -50,13 +52,14 @@ public class TutorialStation : MonoBehaviour
         tutorialNumber++;
         isInteractable = false;
 
-        if (tutorialNumber == 1) instructionsTop.text = "Welcome to C-Spresso! Our ship got damaged in a storm. Could you help us fix our ship? ";
-        if (tutorialNumber == 2) instructionsTop.text = "Great! First, let me get you familiar with the ship’s features. Look at your hands. See how you have fingers that you can wiggle around?";
-        if (tutorialNumber == 3) instructionsTop.text = "Squeeze your middle finger button to close your hand. This is how you will pull levers and grab objects.";
+        if (tutorialNumber == 0) instructionsTop.text = "Welcome to C-Spresso! Our ship got damaged in a storm. Could you help us fix our ship? ";
+        if (tutorialNumber == 1) instructionsTop.text = "Now squeeze your middle finger to close your hand. This is how you will pull levers and grab objects.";//"Great! First, let me get you familiar with the ship’s features. Look at your hands. See how you have fingers that you can wiggle around?";
+        if (tutorialNumber == 2) instructionsTop.text = "Great! Let's get you comfortable with closing your hands by letting you paint all around you!";
+        if (tutorialNumber == 3) instructionsTop.text = "When you are done painting, lets teach you how to interact with levers by closing your hand and pulling on them.";
         if (tutorialNumber == 4) instructionsTop.text = "When the ball on the lever is black, it means it's locked. Since the storm, many of the levers are locked and I need help to unlock them.";
         if (tutorialNumber == 5) instructionsTop.text = "Notice the ball on the lever is white now. This means it is unlocked and you can pull it into its on position.";
         if (tutorialNumber == 6) instructionsTop.text = "Great! Let's return the lever back to its off position so that we can enter the main chamber.";
-        if (tutorialNumber == 7) instructionsTop.text = "You're doing great! \nFollow me to the task station!";
+        if (tutorialNumber == 7) instructionsTop.text = "You're doing great! Wait for the walls to drop, then follow me to the task station.";
         if (tutorialNumber == 8) instructionsTop.text = "You have been given your first task to get one red sphere!";
         if (tutorialNumber == 9) instructionsTop.text = "This is the number station, where you set the number of objects.";
         if (tutorialNumber == 10) instructionsTop.text = "Great job! Follow me to the shape station.";
@@ -73,9 +76,10 @@ public class TutorialStation : MonoBehaviour
 
         instructionsBottom.text = "";
         if (tutorialNumber < 7) interactiveWaitTime = 1f;
-        else if (tutorialNumber == 7) interactiveWaitTime = 4f;
+        else if (tutorialNumber == 7) interactiveWaitTime = 30f;
         else if (tutorialNumber == 8) interactiveWaitTime = 3f;
-        else if (tutorialNumber == 10 || tutorialNumber == 12 || tutorialNumber == 14 || tutorialNumber == 17) interactiveWaitTime = 1f;
+        else if (tutorialNumber == 10 || tutorialNumber == 12 || tutorialNumber == 14) interactiveWaitTime = 1f;
+        else if (tutorialNumber == 17) interactiveWaitTime = 1f;
         else interactiveWaitTime = 3f;
 
         Invoke("StartTutorialInteractive", interactiveWaitTime);
@@ -85,9 +89,10 @@ public class TutorialStation : MonoBehaviour
     {
         isInteractable = true;
 
-        if (tutorialNumber == 1) instructionsBottom.text = "Press any key to continue...";
-        if (tutorialNumber == 2) instructionsBottom.text = "Press any key to continue...";
-        if (tutorialNumber == 3) instructionsBottom.text = "Squeeze either middle finger to close a hand to continue...";
+        if (tutorialNumber == 0) instructionsBottom.text = "Touch Eggy to continue...";
+        if (tutorialNumber == 1) instructionsBottom.text = "Squeeze either middle finger to close a hand to continue..."; //"Press any of your fingers to continue...";
+        if (tutorialNumber == 2) instructionsBottom.text = "Close either hand to paint all around you...";
+        if (tutorialNumber == 3) instructionsBottom.text = "Touch Eggy when you are done painting and want to continue...";
         if (tutorialNumber == 4) instructionsBottom.text = "Close either hand to continue...";
         if (tutorialNumber == 5)
         {
@@ -151,20 +156,38 @@ public class TutorialStation : MonoBehaviour
         {
             switch (tutorialNumber)
             {
-                case 1:
-                case 2:
-                    if (OVRInput.Get(OVRInput.Button.One) || OVRInput.Get(OVRInput.Button.Two) || OVRInput.Get(OVRInput.Button.Three) || OVRInput.Get(OVRInput.Button.Four) ||
-                        OVRInput.Get(OVRInput.RawButton.LIndexTrigger) || OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
+                case 0:
+                    if(isEggyTouched)
                     {
                         StartTutorialNonInteractive();
                         LevelManager.instance.SetStationHeight();
                     }
                     break;
 
-                case 3:
+                case 1:
+                    if (OVRInput.Get(OVRInput.Button.One) || OVRInput.Get(OVRInput.Button.Two) || OVRInput.Get(OVRInput.Button.Three) || OVRInput.Get(OVRInput.Button.Four) ||
+                        OVRInput.Get(OVRInput.RawButton.LIndexTrigger) || OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
+                    {
+                        StartTutorialNonInteractive();
+                        LevelManager.instance.SetStationHeight();
+                        isEggyTouched = false; //reset bool for case 3 testing
+                        Invoke("TurnOnPaintingFeature", 1f);
+                        //GetComponent<PaintingInput>().enabled = true; //turn on painting feature
+                    }
+                    break;
+
+                case 2:
                     if (OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
                     {
                         StartTutorialNonInteractive();
+                    }
+                    break;
+
+                case 3:
+                    if (isEggyTouched)
+                    {
+                        StartTutorialNonInteractive();
+                        GetComponent<PaintingInput>().enabled = false; //turn off painting feature
                     }
                     break;
 
@@ -197,9 +220,9 @@ public class TutorialStation : MonoBehaviour
 
                         //walls go up, revealing the stations 
                         //tutorialWalls.Move(movementTransforms[0], movementTransforms[1], 8f, 0f);
-                        tutorialWalls.DissolveWalls();
-                        tutorialDisplay.Move(movementTransforms[2], movementTransforms[3], 3f, 1f);
-                        Invoke("StartTask01", 4f);
+                        tutorialWalls.SetTrigger("MoveDown");
+                        tutorialDisplay.Move(movementTransforms[2], movementTransforms[3], 5f, 25f);
+                        Invoke("StartTask01", 30f);
                         StartTutorialNonInteractive();
                     }
                     break;
@@ -208,7 +231,7 @@ public class TutorialStation : MonoBehaviour
                     if (isGetTaskLeverPulled)
                     {
                         //remove tutorial walls and lever
-                        tutorialWalls.gameObject.SetActive(false);
+                        //tutorialWalls.gameObject.SetActive(false);
                         leverTutorial.transform.parent.parent.parent.gameObject.SetActive(false);
 
 
@@ -401,5 +424,10 @@ public class TutorialStation : MonoBehaviour
     {
         //user pushed Get Task button on task station
         //remove tutorial sign, lever and walls
+    }
+
+    private void TurnOnPaintingFeature()
+    {
+        GetComponent<PaintingInput>().enabled = true; //turn on painting feature
     }
 }

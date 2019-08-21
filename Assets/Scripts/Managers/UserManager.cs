@@ -46,7 +46,7 @@ public class UserManager : MonoBehaviour
         
         if (OVRInput.Get(OVRInput.Button.One) && OVRInput.Get(OVRInput.Button.Two)) //user is holding down A and B on right controller
         {
-            tutorialWalls.SetTrigger("MoveDown");
+            //tutorialWalls.SetTrigger("MoveDown");
             if(OVRInput.GetDown(OVRInput.Button.Three)) //User double tapped X on left controller to set user height manually
             {
                 if (Time.time - doubleTapTimer < 0.3f)
