@@ -13,11 +13,12 @@ public class TutorialStation : MonoBehaviour
     [SerializeField]
     private Movement tutorialDisplay;
     [SerializeField]
-    private Animator tutorialWalls;
+    private Animator tutorialWalls, speechBubble, eggy;
     [SerializeField]
     private Transform[] movementTransforms;
+    public GameObject highFiveCollider;
 
-    private float interactiveWaitTime;
+    private float interactiveWaitTime, eggyWaitForWallDrop = 25f, eggyMoveTimeToTaskStation = 3f;
     private int tutorialNumber = -1;
     private bool isInteractable, isTutorialLeverOn, isGetTaskLeverPulled, isTutorialAtNumberStation, isTutorialNumberLeverPulled, 
         isTutorialColorLeverPulled, isTutorialAtColorStation, isTutorialAtShapeStation, isTutorialShapeLeverPulled, 
@@ -46,6 +47,23 @@ public class TutorialStation : MonoBehaviour
     {
         leverTutorial.Deactivate();
 	}
+
+    private void CountdownTimer()
+    {
+        StartCoroutine(Countdown());
+    }
+
+    private IEnumerator Countdown()
+    {
+        float duration = eggyWaitForWallDrop;
+        float totalTime = 0;
+        while (totalTime < duration)
+        {
+            instructionsBottom.text = (duration - totalTime).ToString("F0");
+            totalTime += Time.deltaTime;
+            yield return null;
+        }
+    }
 
     public void StartTutorialNonInteractive() //Starts next tutorial step and updates top noninteractive part of instructions
     {
@@ -76,12 +94,16 @@ public class TutorialStation : MonoBehaviour
 
         instructionsBottom.text = "";
         if (tutorialNumber < 7) interactiveWaitTime = 1f;
-        else if (tutorialNumber == 7) interactiveWaitTime = 30f;
+        else if (tutorialNumber == 7)
+        {
+            CountdownTimer();
+            interactiveWaitTime = eggyWaitForWallDrop + eggyMoveTimeToTaskStation;
+        }
         else if (tutorialNumber == 8) interactiveWaitTime = 3f;
         else if (tutorialNumber == 10 || tutorialNumber == 12 || tutorialNumber == 14) interactiveWaitTime = 1f;
         else if (tutorialNumber == 17) interactiveWaitTime = 1f;
         else interactiveWaitTime = 3f;
-
+        
         Invoke("StartTutorialInteractive", interactiveWaitTime);
     }
 
@@ -89,10 +111,20 @@ public class TutorialStation : MonoBehaviour
     {
         isInteractable = true;
 
-        if (tutorialNumber == 0) instructionsBottom.text = "Touch Eggy to continue...";
+        if (tutorialNumber == 0)
+        {
+            instructionsBottom.text = "Give me a high five to continue...";
+            highFiveCollider.SetActive(true);
+            eggy.SetTrigger("highFiveWaiting");
+        }
         if (tutorialNumber == 1) instructionsBottom.text = "Squeeze either middle finger to close a hand to continue..."; //"Press any of your fingers to continue...";
         if (tutorialNumber == 2) instructionsBottom.text = "Close either hand to paint all around you...";
-        if (tutorialNumber == 3) instructionsBottom.text = "Touch Eggy when you are done painting and want to continue...";
+        if (tutorialNumber == 3)
+        {
+            instructionsBottom.text = "Give me a high five when you are done painting and want to continue...";
+            highFiveCollider.SetActive(true);
+            eggy.SetTrigger("highFiveWaiting");
+        }
         if (tutorialNumber == 4) instructionsBottom.text = "Close either hand to continue...";
         if (tutorialNumber == 5)
         {
@@ -159,19 +191,22 @@ public class TutorialStation : MonoBehaviour
                 case 0:
                     if(isEggyTouched)
                     {
+                        highFiveCollider.SetActive(false);
+                        eggy.SetTrigger("highFiveHit");
                         StartTutorialNonInteractive();
                         LevelManager.instance.SetStationHeight();
                     }
                     break;
 
                 case 1:
-                    if (OVRInput.Get(OVRInput.Button.One) || OVRInput.Get(OVRInput.Button.Two) || OVRInput.Get(OVRInput.Button.Three) || OVRInput.Get(OVRInput.Button.Four) ||
-                        OVRInput.Get(OVRInput.RawButton.LIndexTrigger) || OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
+                    //if (OVRInput.Get(OVRInput.Button.One) || OVRInput.Get(OVRInput.Button.Two) || OVRInput.Get(OVRInput.Button.Three) || OVRInput.Get(OVRInput.Button.Four) ||
+                    //OVRInput.Get(OVRInput.RawButton.LIndexTrigger) || OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
+                    if (OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
                     {
                         StartTutorialNonInteractive();
                         LevelManager.instance.SetStationHeight();
-                        isEggyTouched = false; //reset bool for case 3 testing
-                        Invoke("TurnOnPaintingFeature", 1f);
+                        
+                        Invoke("TurnOnPaintingFeature", 2f); //wait to prevent painting before user reads prompt
                         //GetComponent<PaintingInput>().enabled = true; //turn on painting feature
                     }
                     break;
@@ -180,12 +215,15 @@ public class TutorialStation : MonoBehaviour
                     if (OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
                     {
                         StartTutorialNonInteractive();
+                        isEggyTouched = false; //reset bool for case 3 testing
                     }
                     break;
 
                 case 3:
                     if (isEggyTouched)
                     {
+                        highFiveCollider.SetActive(false);
+                        eggy.SetTrigger("highFiveHit");
                         StartTutorialNonInteractive();
                         GetComponent<PaintingInput>().enabled = false; //turn off painting feature
                     }
@@ -221,8 +259,10 @@ public class TutorialStation : MonoBehaviour
                         //walls go up, revealing the stations 
                         //tutorialWalls.Move(movementTransforms[0], movementTransforms[1], 8f, 0f);
                         tutorialWalls.SetTrigger("MoveDown");
-                        tutorialDisplay.Move(movementTransforms[2], movementTransforms[3], 5f, 25f);
-                        Invoke("StartTask01", 30f);
+                        tutorialDisplay.Move(movementTransforms[2], movementTransforms[3], eggyWaitForWallDrop, eggyMoveTimeToTaskStation);
+                        Invoke("CloseSpeechBubble", eggyWaitForWallDrop - 1f);
+                        Invoke("EggyMove", eggyWaitForWallDrop);
+                        Invoke("StartTask01", eggyWaitForWallDrop + eggyMoveTimeToTaskStation);
                         StartTutorialNonInteractive();
                     }
                     break;
@@ -386,6 +426,8 @@ public class TutorialStation : MonoBehaviour
     private void StartTask01()
     {
         LevelManager.instance.SetTask("start", 1);
+        speechBubble.SetTrigger("open");
+        eggy.SetTrigger("floating");
     }
 
     private void TutorialAtNumberStation()
@@ -429,5 +471,15 @@ public class TutorialStation : MonoBehaviour
     private void TurnOnPaintingFeature()
     {
         GetComponent<PaintingInput>().enabled = true; //turn on painting feature
+    }
+
+    private void CloseSpeechBubble()
+    {
+        speechBubble.SetTrigger("close");
+    }
+
+    private void EggyMove()
+    {
+        eggy.SetTrigger("moving");
     }
 }

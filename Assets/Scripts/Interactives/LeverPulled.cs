@@ -25,10 +25,15 @@ public class LeverPulled : MonoBehaviour
         //leverBaseMin = zeroPosition.localRotation.x;
         //leverBaseMax = onePosition.localRotation.x;
         
-        if (transform.parent.name == "lever01" || transform.parent.name == "lever10" || transform.parent.name == "leverTutorial")
+        if (transform.parent.name == "lever01" || transform.parent.name == "lever10")
         {
             leverBaseMin = -70f;
             leverBaseMax = -110f;
+        }
+        else if (transform.parent.name == "leverTutorial")
+        {
+            leverBaseMin = -110f;
+            leverBaseMax = -150f;
         }
         else
         {

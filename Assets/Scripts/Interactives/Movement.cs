@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
     private Transform startTransform, endTransform;
     private float animTime, waitTime;
 
-    public void Move(Transform start, Transform end, float moveTime, float holdTime)
+    public void Move(Transform start, Transform end, float holdTime, float moveTime)
     {
         startTransform = start;
         endTransform = end;
