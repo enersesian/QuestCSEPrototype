@@ -46,6 +46,7 @@ public class TutorialStation : MonoBehaviour
     private void Start () //Ensure tutorial lever is disabled when starting
     {
         leverTutorial.Deactivate();
+        if (Application.isEditor) eggyWaitForWallDrop = 5f;
 	}
 
     private void CountdownTimer()
@@ -118,7 +119,11 @@ public class TutorialStation : MonoBehaviour
             eggy.SetTrigger("highFiveWaiting");
         }
         if (tutorialNumber == 1) instructionsBottom.text = "Squeeze either middle finger to close a hand to continue..."; //"Press any of your fingers to continue...";
-        if (tutorialNumber == 2) instructionsBottom.text = "Close either hand to paint all around you...";
+        if (tutorialNumber == 2)
+        {
+            instructionsBottom.text = "Close either hand to paint all around you...";
+            TurnOnPaintingFeature();
+        }
         if (tutorialNumber == 3)
         {
             instructionsBottom.text = "Give me a high five when you are done painting and want to continue...";
@@ -148,35 +153,37 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 8)
         {
             instructionsBottom.text = "Follow me to the number station to start your task.";
-            tutorialDisplay.Move(movementTransforms[3], movementTransforms[4], 4f, 0.5f);
-            Invoke("TutorialAtNumberStation", 4.5f);
+            tutorialDisplay.Move(movementTransforms[3], movementTransforms[4], 2f, 3f);
+            Invoke("CloseSpeechBubble", 1f);
+            Invoke("EggyMove", 2f);
+            Invoke("TutorialAtNumberStation", 5f);
         }
         if (tutorialNumber == 9) instructionsBottom.text = "Pull lever labeled \"1\" down to its on position to set output to 1.";
 
         if (tutorialNumber == 10)
         {
-            tutorialDisplay.Move(movementTransforms[4], movementTransforms[6], 4f, 0f);
+            tutorialDisplay.Move(movementTransforms[4], movementTransforms[6], 0f, 4f);
             Invoke("TutorialAtShapeStation", 4f);
         }
         if (tutorialNumber == 11) instructionsBottom.text = "Pull the right lever down to its on position to set output to Sphere.";
 
         if (tutorialNumber == 12)
         {
-            tutorialDisplay.Move(movementTransforms[6], movementTransforms[5], 4f, 0f);
+            tutorialDisplay.Move(movementTransforms[6], movementTransforms[5], 0f, 4f);
             Invoke("TutorialAtColorStation", 4f);
         }
         if (tutorialNumber == 13) instructionsBottom.text = "Pull lever labeled \"4\" down to its on position to set output to Red.";
 
         if (tutorialNumber == 14)
         {
-            tutorialDisplay.Move(movementTransforms[5], movementTransforms[7], 4f, 0f);
+            tutorialDisplay.Move(movementTransforms[5], movementTransforms[7], 0f, 4f);
             Invoke("TutorialAtOutputStation", 4f);
         }
         if (tutorialNumber == 15) instructionsBottom.text = "Pull the Run Output lever to generate output.";
         if (tutorialNumber == 16) instructionsBottom.text = "Close your hand on container and keep hand closed to carry container.";
         if (tutorialNumber == 17)
         {
-            tutorialDisplay.Move(movementTransforms[7], movementTransforms[3], 4f, 0f);
+            tutorialDisplay.Move(movementTransforms[7], movementTransforms[3], 0f, 4f);
             Invoke("TutorialAtTaskStation", 4f);
         }
         if (tutorialNumber == 20) EndTutorial();
@@ -206,7 +213,7 @@ public class TutorialStation : MonoBehaviour
                         StartTutorialNonInteractive();
                         LevelManager.instance.SetStationHeight();
                         
-                        Invoke("TurnOnPaintingFeature", 2f); //wait to prevent painting before user reads prompt
+                        //Invoke("TurnOnPaintingFeature", 2f); //wait to prevent painting before user reads prompt
                         //GetComponent<PaintingInput>().enabled = true; //turn on painting feature
                     }
                     break;
@@ -427,12 +434,13 @@ public class TutorialStation : MonoBehaviour
     {
         LevelManager.instance.SetTask("start", 1);
         speechBubble.SetTrigger("open");
-        eggy.SetTrigger("floating");
+        //eggy.SetTrigger("floating");
     }
 
     private void TutorialAtNumberStation()
     {
         isTutorialAtNumberStation = true;
+        speechBubble.SetTrigger("open");
     }
 
     private void TutorialAtColorStation()
