@@ -11,6 +11,7 @@ public class LeverPulled : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion leverBaseStartRotation, numberWheelStartRotation;
     private bool isActive, isOnePosition;
+    public Renderer leverGlow;
 
     private void Awake()
     {
@@ -27,18 +28,33 @@ public class LeverPulled : MonoBehaviour
         
         if (transform.parent.name == "lever01" || transform.parent.name == "lever10")
         {
-            leverBaseMin = -70f;
-            leverBaseMax = -110f;
+            leverBaseMin = -90f;
+            leverBaseMax = -60f;
         }
         else if (transform.parent.name == "leverTutorial")
         {
             leverBaseMin = -110f;
             leverBaseMax = -150f;
         }
+        else if (transform.parent.name == "leverRunOutput")
+        {
+            leverBaseMin = -90f;
+            leverBaseMax = -50f;
+        }
+        else if(transform.parent.name == "leverGetTask" || transform.parent.name == "leverSendOutput")
+        {
+            leverBaseMin = -80f;
+            leverBaseMax = -120f;
+        }
+        else if(transform.parent.name == "leverRed" || transform.parent.name == "leverGreen" || transform.parent.name == "leverBlue")
+        {
+            leverBaseMin = -60f;
+            leverBaseMax = -20f;
+        }
         else
         {
             leverBaseMin = -60f;
-            leverBaseMax = -120f;
+            leverBaseMax = -20f;
         }
     }
 
@@ -142,7 +158,7 @@ public class LeverPulled : MonoBehaviour
         UserManager.instance.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = true;
         GetComponent<Collider>().enabled = true;
-        GetComponent<Renderer>().material.SetColor("_Color", LevelManager.instance.activeColor);
+        leverGlow.material.SetColor("_EmissionColor", LevelManager.instance.activeColor);
         foreach (GameObject element in unlockedElements)
         {
             element.SetActive(true);
@@ -159,7 +175,7 @@ public class LeverPulled : MonoBehaviour
         UserManager.instance.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = false;
         GetComponent<Collider>().enabled = false;
-        GetComponent<Renderer>().material.SetColor("_Color", LevelManager.instance.disabledColor);
+        leverGlow.material.SetColor("_EmissionColor", LevelManager.instance.disabledColor);
         foreach (GameObject element in unlockedElements)
         {
             element.SetActive(false);

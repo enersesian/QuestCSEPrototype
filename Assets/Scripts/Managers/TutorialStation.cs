@@ -47,6 +47,7 @@ public class TutorialStation : MonoBehaviour
     {
         leverTutorial.Deactivate();
         if (Application.isEditor) eggyWaitForWallDrop = 5f;
+        tutorialWalls.transform.position = new Vector3(0f, -0.22f, 0f);
 	}
 
     private void CountdownTimer()

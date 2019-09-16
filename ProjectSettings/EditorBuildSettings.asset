@@ -17,7 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/NewModelsLayoutWithoutHCI.unity
     guid: 82159e3bca290c448a9ea094bff7305a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/001_BinaryMathLevel.unity
     guid: 230740233e8434b498d32c0b01961125
+  - enabled: 1
+    path: Assets/Scenes/000_OC6Demo.unity
+    guid: bb5c789de9c475c4c933ce7086d38c69
   m_configObjects: {}

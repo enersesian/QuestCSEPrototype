@@ -11,6 +11,6 @@ public class EggyTouched : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        transform.parent.parent.parent.GetComponent<TutorialStation>().isEggyTouched = true;
+        transform.parent.parent.parent.parent.GetComponent<TutorialStation>().isEggyTouched = true;
     }
 }
