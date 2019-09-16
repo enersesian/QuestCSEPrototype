@@ -13,10 +13,12 @@ public class LeverPulled : MonoBehaviour
     private bool isActive, isOnePosition;
     public Renderer leverGlow;
 
-    private void Awake()
+    private void Start()
     {
-        GetComponent<OVRGrabbable>().enabled = false;
-        GetComponent<Collider>().enabled = false;
+        //GetComponent<OVRGrabbable>().enabled = false;
+        //GetComponent<Collider>().enabled = false;
+        Deactivate();
+
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
         startPosition = transform.localPosition;
         leverBaseStartRotation = leverBase.rotation;
@@ -26,35 +28,35 @@ public class LeverPulled : MonoBehaviour
         //leverBaseMin = zeroPosition.localRotation.x;
         //leverBaseMax = onePosition.localRotation.x;
         
-        if (transform.parent.name == "lever01" || transform.parent.name == "lever10")
+        if (transform.parent.name == "lever01" || transform.parent.name == "lever10") //shape station
         {
             leverBaseMin = -90f;
             leverBaseMax = -60f;
         }
-        else if (transform.parent.name == "leverTutorial")
+        else if (transform.parent.name == "leverTutorial") //tutorial station
         {
             leverBaseMin = -110f;
             leverBaseMax = -150f;
         }
-        else if (transform.parent.name == "leverRunOutput")
+        else if (transform.parent.name == "leverRunOutput") //output station
         {
             leverBaseMin = -90f;
             leverBaseMax = -50f;
         }
-        else if(transform.parent.name == "leverGetTask" || transform.parent.name == "leverSendOutput")
+        else if(transform.parent.name == "leverGetTask" || transform.parent.name == "leverSendOutput") //task station
         {
             leverBaseMin = -80f;
             leverBaseMax = -120f;
         }
-        else if(transform.parent.name == "leverRed" || transform.parent.name == "leverGreen" || transform.parent.name == "leverBlue")
+        else if(transform.parent.name == "leverRed" || transform.parent.name == "leverGreen" || transform.parent.name == "leverBlue") //color station
         {
-            leverBaseMin = -60f;
-            leverBaseMax = -20f;
+            leverBaseMin = -120f;
+            leverBaseMax = -160f;
         }
-        else
+        else //number station
         {
-            leverBaseMin = -60f;
-            leverBaseMax = -20f;
+            leverBaseMin = 280f;
+            leverBaseMax = 240f;
         }
     }
 
@@ -154,6 +156,7 @@ public class LeverPulled : MonoBehaviour
 
     public void Activate()
     {
+        Debug.Log(transform.parent.name.ToString() + " deactivated");
         isActive = true;
         UserManager.instance.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = true;
@@ -171,11 +174,12 @@ public class LeverPulled : MonoBehaviour
 
     public void Deactivate()
     {
+        Debug.Log(transform.parent.name.ToString() + " deactivated");
         isActive = false;
         UserManager.instance.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = false;
         GetComponent<Collider>().enabled = false;
-        leverGlow.material.SetColor("_EmissionColor", LevelManager.instance.disabledColor);
+        leverGlow.material.SetColor("_EmissionColor", Color.red);//LevelManager.instance.disabledColor);
         foreach (GameObject element in unlockedElements)
         {
             element.SetActive(false);

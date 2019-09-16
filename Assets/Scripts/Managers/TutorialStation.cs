@@ -163,14 +163,14 @@ public class TutorialStation : MonoBehaviour
 
         if (tutorialNumber == 10)
         {
-            tutorialDisplay.Move(movementTransforms[4], movementTransforms[6], 0f, 4f);
+            tutorialDisplay.Move(movementTransforms[4], movementTransforms[5], 0f, 4f);
             Invoke("TutorialAtShapeStation", 4f);
         }
         if (tutorialNumber == 11) instructionsBottom.text = "Pull the right lever down to its on position to set output to Sphere.";
 
         if (tutorialNumber == 12)
         {
-            tutorialDisplay.Move(movementTransforms[6], movementTransforms[5], 0f, 4f);
+            tutorialDisplay.Move(movementTransforms[5], movementTransforms[6], 0f, 4f);
             Invoke("TutorialAtColorStation", 4f);
         }
         if (tutorialNumber == 13) instructionsBottom.text = "Pull lever labeled \"4\" down to its on position to set output to Red.";
