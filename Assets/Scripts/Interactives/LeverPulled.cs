@@ -17,6 +17,7 @@ public class LeverPulled : MonoBehaviour
     {
         //GetComponent<OVRGrabbable>().enabled = false;
         //GetComponent<Collider>().enabled = false;
+
         Deactivate();
 
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
@@ -55,77 +56,94 @@ public class LeverPulled : MonoBehaviour
         }
         else //number station
         {
-            leverBaseMin = 280f;
-            leverBaseMax = 240f;
+            leverBaseMin = -80f;
+            leverBaseMax = -120f;
         }
+    }
+
+    private void SetLeverToZeroPosition()
+    {
+        //zeroPosition.localPosition.z < onePosition.localPosition.z
+        transform.localPosition = zeroPosition.localPosition;
+
+        if (isOnePosition)
+        {
+            if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 0); //number bit 1 = 0
+            if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 0); //number bit 2 = 0
+            if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 0); //number bit 3 = 0
+                                                                                             //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 0); //bit 4 = 0
+
+            if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 0); //color bit 1 = 0
+            if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 0); //color bit 2 = 0
+            if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 0); //color bit 3 = 0
+
+            if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 0); //shape bit 1 = 0
+            if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 0); //shape bit 2 = 0
+
+            if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(false);
+
+        }
+        isOnePosition = false;
+    }
+
+    private void SetLeverToOnePosition()
+    {
+        //went past one position, set to one position
+        transform.localPosition = onePosition.localPosition;
+        //update board total
+        if (!isOnePosition)
+        {
+            if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 1); //number bit 1 = 1
+            if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 1); //number bit 2 = 1
+            if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 1); //number bit 3 = 1
+                                                                                             //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 1); //bit 4 = 1
+
+            if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 1); //color bit 1 = 1
+            if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 1); //color bit 2 = 1
+            if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 1); //color bit 3 = 1
+
+            //if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 1); //shape bit 1 = 1
+            //if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 1); //shape bit 2 = 1
+
+            if (transform.parent.name == "leverGetTask")
+            {
+                Deactivate();
+                LevelManager.instance.GetTaskLeverPulled("User pulled leverGetTask to one position at ");
+            }
+            if (transform.parent.name == "leverRunOutput")
+            {
+                Deactivate();
+                LevelManager.instance.RunOutputLeverPulled("User pulled leverRunOutput to one position at ");
+            }
+            if (transform.parent.name == "leverSendOutput")
+            {
+                Deactivate();
+                LevelManager.instance.OutputSent("User pulled leverSendOutput to one position at ");
+            }
+
+            if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(true);
+        }
+        isOnePosition = true;
     }
 
     private void Update()
     {
         if (isActive)
         {
-            if (transform.localPosition.z > zeroPosition.localPosition.z)
-            {//went past zero position, set to zero position
-                transform.localPosition = zeroPosition.localPosition;
-
-                if (isOnePosition)
-                {
-                    if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 0); //number bit 1 = 0
-                    if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 0); //number bit 2 = 0
-                    if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 0); //number bit 3 = 0
-                                                                                                     //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 0); //bit 4 = 0
-
-                    if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 0); //color bit 1 = 0
-                    if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 0); //color bit 2 = 0
-                    if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 0); //color bit 3 = 0
-
-                    if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 0); //shape bit 1 = 0
-                    if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 0); //shape bit 2 = 0
-
-                    if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(false);
-
-                }
-                isOnePosition = false;
+            //Had to add additional check as now zeroPosition.z is not guarenteed to be greater than onePosition.z
+            if(zeroPosition.localPosition.z > onePosition.localPosition.z)
+            {
+                if (transform.localPosition.z > zeroPosition.localPosition.z) SetLeverToZeroPosition();
+                else if (transform.localPosition.z < onePosition.localPosition.z) SetLeverToOnePosition();
+                else transform.localPosition = new Vector3(startPosition.x, leverTopYLocalPosition.localPosition.y, transform.localPosition.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
             }
-            else if (transform.localPosition.z < onePosition.localPosition.z)
-            {//went past one position, set to one position
-                transform.localPosition = onePosition.localPosition;
-                //update board total
-                if (!isOnePosition)
-                {
-                    if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 1); //number bit 1 = 1
-                    if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 1); //number bit 2 = 1
-                    if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 1); //number bit 3 = 1
-                                                                                                     //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 1); //bit 4 = 1
-
-                    if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 1); //color bit 1 = 1
-                    if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 1); //color bit 2 = 1
-                    if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 1); //color bit 3 = 1
-
-                    if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 1); //shape bit 1 = 1
-                    if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 1); //shape bit 2 = 1
-
-                    if (transform.parent.name == "leverGetTask")
-                    {
-                        Deactivate();
-                        LevelManager.instance.GetTaskLeverPulled("User pulled leverGetTask to one position at ");
-                    }
-                    if (transform.parent.name == "leverRunOutput")
-                    {
-                        Deactivate();
-                        LevelManager.instance.RunOutputLeverPulled("User pulled leverRunOutput to one position at ");
-                    }
-                    if (transform.parent.name == "leverSendOutput")
-                    {
-                        Deactivate();
-                        LevelManager.instance.OutputSent("User pulled leverSendOutput to one position at ");
-                    }
-
-                    if (transform.parent.name == "leverTutorial") LevelManager.instance.TutorialLeverPulled(true);
-                }
-                isOnePosition = true;
+            else 
+            {
+                if (transform.localPosition.z < zeroPosition.localPosition.z) SetLeverToZeroPosition();
+                else if (transform.localPosition.z > onePosition.localPosition.z) SetLeverToOnePosition();
+                else transform.localPosition = new Vector3(startPosition.x, leverTopYLocalPosition.localPosition.y, transform.localPosition.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
             }
-            else transform.localPosition = new Vector3(startPosition.x, leverTopYLocalPosition.localPosition.y, transform.localPosition.z);//Mathf.Clamp(transform.localPosition.y, 0.15f, 0.18f), transform.localPosition.z);
+
             transform.localRotation = Quaternion.identity;
 
             //rebuild lever system off center rotation of 0 so its easy to find angle hence use cosine to find where to fix y position of levelTop
@@ -156,7 +174,7 @@ public class LeverPulled : MonoBehaviour
 
     public void Activate()
     {
-        Debug.Log(transform.parent.name.ToString() + " deactivated");
+        Debug.Log(transform.parent.name.ToString() + " activated");
         isActive = true;
         UserManager.instance.ForceGrabberRelease(GetComponent<OVRGrabbable>());
         GetComponent<OVRGrabbable>().enabled = true;
