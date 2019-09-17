@@ -51,7 +51,7 @@ public class UserManager : MonoBehaviour
             {
                 if (Time.time - doubleTapTimer < 0.3f)
                 {
-                    LevelManager.instance.SetStationHeight();
+                    //LevelManager.instance.SetStationHeight();
                 }
                 doubleTapTimer = Time.time;
             }
