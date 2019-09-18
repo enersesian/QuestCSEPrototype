@@ -43,7 +43,7 @@ public class UserManager : MonoBehaviour
             LevelManager.instance.transform.position = new Vector3(LevelManager.instance.transform.position.x - thumbAxis.x,
                 LevelManager.instance.transform.position.y, LevelManager.instance.transform.position.z - thumbAxis.y);
         }
-        
+        /*
         if (OVRInput.Get(OVRInput.Button.One) && OVRInput.Get(OVRInput.Button.Two)) //user is holding down A and B on right controller
         {
             //tutorialWalls.SetTrigger("MoveDown");
@@ -77,6 +77,7 @@ public class UserManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     /// <summary>

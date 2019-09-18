@@ -202,7 +202,7 @@ public class TutorialStation : MonoBehaviour
                         highFiveCollider.SetActive(false);
                         eggy.SetTrigger("highFiveHit");
                         StartTutorialNonInteractive();
-                        LevelManager.instance.SetStationHeight();
+                        //LevelManager.instance.SetStationHeight(); //bring back
                     }
                     break;
 
@@ -212,8 +212,8 @@ public class TutorialStation : MonoBehaviour
                     if (OVRInput.Get(OVRInput.RawButton.LHandTrigger) || OVRInput.Get(OVRInput.RawButton.RHandTrigger))
                     {
                         StartTutorialNonInteractive();
-                        LevelManager.instance.SetStationHeight();
-                        
+                        //LevelManager.instance.SetStationHeight(); //bring back
+
                         //Invoke("TurnOnPaintingFeature", 2f); //wait to prevent painting before user reads prompt
                         //GetComponent<PaintingInput>().enabled = true; //turn on painting feature
                     }
