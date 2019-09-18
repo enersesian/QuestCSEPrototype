@@ -47834,7 +47834,7 @@ Prefab:
     - target: {fileID: 114561855159712898, guid: efe266538a8dcda4dbd04fbff7997053,
         type: 2}
       propertyPath: LevelOfDetail
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114679561723151852, guid: efe266538a8dcda4dbd04fbff7997053,
         type: 2}
@@ -47896,12 +47896,12 @@ Prefab:
     - target: {fileID: 54628437887728124, guid: efe266538a8dcda4dbd04fbff7997053,
         type: 2}
       propertyPath: m_Interpolate
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 54545555999691506, guid: efe266538a8dcda4dbd04fbff7997053,
         type: 2}
       propertyPath: m_Interpolate
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 20547158359302298, guid: efe266538a8dcda4dbd04fbff7997053,
         type: 2}
