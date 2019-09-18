@@ -167,8 +167,8 @@ public class LevelManager : MonoBehaviour
             currentTaskStatus[bit] = bitStatus;
             currentNumber = currentTaskStatus[1] + (2 * currentTaskStatus[2]) + (4 * currentTaskStatus[3]);
 
-            numberStation.UpdateBitText(bit, bitStatus);
-            outputStation.UpdateNumText(GetNumber());
+            numberStation.UpdateBitText(GetNumber());
+            outputStation.UpdateNumText(GetNumber(), currentTask);
             tutorialStation.TutorialNumberLeverIsPulled(); //only need to call this once at first ever number lever pull, but its just setting a bool to true so leave as is
         }
     }

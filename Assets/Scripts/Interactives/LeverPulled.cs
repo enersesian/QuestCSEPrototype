@@ -15,9 +15,6 @@ public class LeverPulled : MonoBehaviour
 
     private void Start()
     {
-        //GetComponent<OVRGrabbable>().enabled = false;
-        //GetComponent<Collider>().enabled = false;
-
         Deactivate();
 
         distanceToLeverBase = Vector3.Distance(transform.position, leverBase.position);
@@ -71,7 +68,6 @@ public class LeverPulled : MonoBehaviour
             if (transform.parent.name == "lever0001") LevelManager.instance.SetNumber(1, 0); //number bit 1 = 0
             if (transform.parent.name == "lever0010") LevelManager.instance.SetNumber(2, 0); //number bit 2 = 0
             if (transform.parent.name == "lever0100") LevelManager.instance.SetNumber(3, 0); //number bit 3 = 0
-                                                                                             //if (transform.parent.name == "lever1000") levelManager.SetNumber(4, 0); //bit 4 = 0
 
             if (transform.parent.name == "leverRed") LevelManager.instance.SetColor(4, 0); //color bit 1 = 0
             if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 0); //color bit 2 = 0
@@ -102,8 +98,8 @@ public class LeverPulled : MonoBehaviour
             if (transform.parent.name == "leverGreen") LevelManager.instance.SetColor(5, 1); //color bit 2 = 1
             if (transform.parent.name == "leverBlue") LevelManager.instance.SetColor(6, 1); //color bit 3 = 1
 
-            //if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 1); //shape bit 1 = 1
-            //if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 1); //shape bit 2 = 1
+            if (transform.parent.name == "lever01") LevelManager.instance.SetShape(7, 1); //shape bit 1 = 1
+            if (transform.parent.name == "lever10") LevelManager.instance.SetShape(8, 1); //shape bit 2 = 1
 
             if (transform.parent.name == "leverGetTask")
             {

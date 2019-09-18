@@ -25,7 +25,7 @@ public class ColorStation : MonoBehaviour
 
     public void SetTask()
     {
-        foreach(LeverPulled lever in levers) lever.SetTask();
+        foreach(LeverPulled lever in levers) lever.SetTask(); //deactivate and set to zero
         UpdateColorText(LevelManager.instance.GetColor(), LevelManager.instance.GetColorText());
     }
 
@@ -35,12 +35,16 @@ public class ColorStation : MonoBehaviour
         colorText.text = currentColorText;
     }
 
+    public void ActivateLever(int leverNumber)
+    {
+        levers[leverNumber].Activate();
+    }
+
     public void GetTaskLeverPulled(int currentTask)
     {
         switch(currentTask)
         {
             case 1:
-                levers[0].Activate();
                 break;
 
             case 2:

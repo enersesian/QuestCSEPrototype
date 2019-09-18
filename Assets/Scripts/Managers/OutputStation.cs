@@ -23,11 +23,9 @@ public class OutputStation : MonoBehaviour
 
     public void SetTask()
     {
-        //runButton.ResetButton(false);
         leverRunOutput.SetTask();
         stationText.text = "No output currently available...";
         numberItem.text = "-";
-        //sizeItem.text = "Small";
         colorItem.text = "-";
         shapeItem.text = "-";
         currentShapeSelection = cube;
@@ -54,11 +52,15 @@ public class OutputStation : MonoBehaviour
         if (shape == "Sphere") currentShapeSelection = sphere;
         if (shape == "Cone") currentShapeSelection = cone;
         if (shape == "Ring") currentShapeSelection = ring;
+
+        /* May want floating objects in the top container for future versionx
         //destroy objects floating in output station
         foreach (Transform child in spawnLocation)
         {
             Destroy(child.gameObject);
         }
+        */
+
         //generate objects in carrying container
         for (int i = 0; i < number; i++)
         {
@@ -90,9 +92,9 @@ public class OutputStation : MonoBehaviour
         objectSpawn.transform.localScale *= 5f;
     }
 
-    public void UpdateNumText(int number)
+    public void UpdateNumText(int number, int currentTask)
     {
-        if (number > 0)
+        if (number > 0 && currentTask > 1)
         {
             stationText.text = "Hit button to generate output:";
             numberItem.text = LevelManager.instance.GetNumber().ToString();

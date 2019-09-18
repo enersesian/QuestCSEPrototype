@@ -20,7 +20,7 @@ public class PaintingInput : MonoBehaviour
     [SerializeField]
     private float size = 1.0f;
 
-    private Vector3 lastClickPosition = Vector3.zero; // Right = Vector3.zero, lastClickPositionLeft = Vector3.zero;
+    private Vector3 lastClickPositionRight = Vector3.zero, lastClickPositionLeft = Vector3.zero;
     public Text lifeTime;
 
     public GameObject paintedObject00, paintedObject01, paintedObject02, explosion;
@@ -42,46 +42,17 @@ public class PaintingInput : MonoBehaviour
 
     void Update ()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Alpha1)) animDropDown.value = 0;
-        if (Input.GetKeyDown(KeyCode.Alpha2)) animDropDown.value = 1;
-        if (Input.GetKeyDown(KeyCode.Alpha3)) animDropDown.value = 2;
-        if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeShape(0);
-        if (Input.GetKeyDown(KeyCode.Alpha5)) ChangeShape(1);
-        if (Input.GetKeyDown(KeyCode.Alpha6)) ChangeShape(2);
-
-        if (Input.GetMouseButton(1) && (EventSystem.current.currentSelectedGameObject == null)) //right hold
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.RTouch) < 0.9f) //user released right controller hand trigger so reset lastPosition to avoid large spawns at next paint drop
         {
-            //distance += distanceChange;
-
-            //checking for an colliders out in the virtual world that my mousePosition 
-            //is over when the user left clicks or holds
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit; //dont have to assign this as the raycast will assign this procedurally
-
-            if (Physics.Raycast(ray, out hit)) //export out the information to hit
-            {
-                if (hit.transform.gameObject.layer == 12) //PaintedObject
-                {
-                    Destroy(hit.transform.gameObject);
-                    primitive = Instantiate(explosion, hit.transform.position, Quaternion.identity);
-                    Destroy(primitive, 1f);
-                }
-                //this destroys the paint object, but we can modify it, scale it, recolor it, etc
-            }
+            lastClickPositionRight = Vector3.zero;
         }
-        */
-        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.RTouch) < 0.9f) //user released left mouse button so reset lastPosition to avoid large spawns at next paint drop
-        {
-            lastClickPosition = Vector3.zero;
-        }
-        /*
-        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.LTouch) < 0.9f) //user released left mouse button so reset lastPosition to avoid large spawns at next paint drop
+        
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.LTouch) < 0.9f) //user released left controller hand trigger so reset lastPosition to avoid large spawns at next paint drop
         {
             lastClickPositionLeft = Vector3.zero;
         }
-        */
-        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.RTouch) > 0.9f || OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.LTouch) > 0.9f)
+
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.RTouch) > 0.9f)
         {
 
             clickPosition = rightHandAnchor.forward * (distance + Random.Range(-distanceChange, distanceChange)) + rightHandAnchor.transform.position;
@@ -98,28 +69,25 @@ public class PaintingInput : MonoBehaviour
                     break;
 
                 case 1:
-                    //primitive = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     primitive = Instantiate(paintedObject01, clickPosition, Quaternion.identity);
                     break;
 
                 case 2:
-                    //primitive = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                     primitive = Instantiate(paintedObject02, clickPosition, Quaternion.identity);
                     break;
 
                 default:
-                    //if no cases are true, do this by default
                     break;
             }
 
             //for the first paint drop as it doesnt have reference
             //primitive.transform.localScale = new Vector3(Random.Range(0.1f, 1f)* size, Random.Range(0.1f, 1f)*size, Random.Range(0.1f, 1f)*size);
-            if (lastClickPosition == Vector3.zero) primitive.transform.localScale = new Vector3(Random.Range(0.1f, 0.2f)*size, Random.Range(0.1f, 0.2f)*size, Random.Range(0.1f, 0.2f)*size);
+            if (lastClickPositionRight == Vector3.zero) primitive.transform.localScale = new Vector3(Random.Range(0.1f, 0.2f)*size, Random.Range(0.1f, 0.2f)*size, Random.Range(0.1f, 0.2f)*size);
             else
             {
-                float x = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPosition.x - clickPosition.x), .01f, size * 3f);
-                float y = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPosition.y - clickPosition.y), .01f, size * 3f);
-                float z = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPosition.z - clickPosition.z), .01f, size * 3f);
+                float x = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPositionRight.x - clickPosition.x), .01f, size * 3f);
+                float y = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPositionRight.y - clickPosition.y), .01f, size * 3f);
+                float z = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPositionRight.z - clickPosition.z), .01f, size * 3f);
                 primitive.transform.localScale = new Vector3(x, y, z);
             }
 
@@ -142,7 +110,6 @@ public class PaintingInput : MonoBehaviour
                 if (isAnimTypeRandom)
                 {
                     animationState = (int)Random.Range(0f, 2.99f);
-                    //animDropDown.value = animationState;
                 }
                 primitive.GetComponent<Animator>().SetInteger("state", animationState);
 
@@ -150,17 +117,88 @@ public class PaintingInput : MonoBehaviour
                 else primitive.GetComponent<Animator>().speed = animationSpeed;
                 primitive.GetComponent<PrefabData>().initialAnimSpeed = primitive.GetComponent<Animator>().speed;
             }
-
             primitive.transform.parent = this.transform;
             if(timedDestroyIsOn)
             {
                 if(isSpawnTimeRandom) Destroy(primitive, Random.Range(0f, timeToDestroy));
                 else Destroy(primitive, timeToDestroy);
             }
-            lastClickPosition = clickPosition;
-
+            lastClickPositionRight = clickPosition;
         }
-        //mousePosition.text = "Mouse Position x: " + Input.mousePosition.x.ToString("F0") + ", y: " + Input.mousePosition.y.ToString("F0");
+
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.LTouch) > 0.9f)
+        {
+
+            clickPosition = leftHandAnchor.forward * (distance + Random.Range(-distanceChange, distanceChange)) + leftHandAnchor.transform.position;
+
+            if (isSpawnTypeRandom)
+            {
+                ChangeShape((int)Random.Range(0.0f, 2.99f));
+            }
+
+            switch (shape)
+            {
+                case 0:
+                    primitive = Instantiate(paintedObject00, clickPosition, Quaternion.identity);
+                    break;
+
+                case 1:
+                    primitive = Instantiate(paintedObject01, clickPosition, Quaternion.identity);
+                    break;
+
+                case 2:
+                    primitive = Instantiate(paintedObject02, clickPosition, Quaternion.identity);
+                    break;
+
+                default:
+                    break;
+            }
+
+            //for the first paint drop as it doesnt have reference
+            //primitive.transform.localScale = new Vector3(Random.Range(0.1f, 1f)* size, Random.Range(0.1f, 1f)*size, Random.Range(0.1f, 1f)*size);
+            if (lastClickPositionLeft == Vector3.zero) primitive.transform.localScale = new Vector3(Random.Range(0.1f, 0.2f) * size, Random.Range(0.1f, 0.2f) * size, Random.Range(0.1f, 0.2f) * size);
+            else
+            {
+                float x = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPositionLeft.x - clickPosition.x), .01f, size * 3f);
+                float y = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPositionLeft.y - clickPosition.y), .01f, size * 3f);
+                float z = Mathf.Clamp(Random.Range(.01f, size) * Mathf.Abs(lastClickPositionLeft.z - clickPosition.z), .01f, size * 3f);
+                primitive.transform.localScale = new Vector3(x, y, z);
+            }
+
+            //prefabs built to only have renderers on their children not root
+            foreach (Transform child in primitive.transform)
+            {
+                if (child.gameObject.GetComponent<Renderer>() != null)
+                {
+                    paintedObjectColor = new Color(Random.Range(0.0f, red), Random.Range(0.0f, green), Random.Range(0.0f, blue), opacityStrength);
+                    child.gameObject.GetComponent<Renderer>().material.color = paintedObjectColor;
+                    primitive.gameObject.GetComponent<PrefabData>().initialColorInfo.Add(paintedObjectColor);
+                    paintedObjectEmission = new Color(paintedObjectColor.r * emissionStrength, paintedObjectColor.g * emissionStrength, paintedObjectColor.b * emissionStrength);
+                    child.gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", paintedObjectEmission);
+                }
+            }
+
+            //prefabs built to only have animators on their root
+            if (primitive.GetComponent<Animator>() != null)
+            {
+                if (isAnimTypeRandom)
+                {
+                    animationState = (int)Random.Range(0f, 2.99f);
+                }
+                primitive.GetComponent<Animator>().SetInteger("state", animationState);
+
+                if (isAnimSpeedRandom) primitive.GetComponent<Animator>().speed = Random.Range(0f, animationSpeed);
+                else primitive.GetComponent<Animator>().speed = animationSpeed;
+                primitive.GetComponent<PrefabData>().initialAnimSpeed = primitive.GetComponent<Animator>().speed;
+            }
+            primitive.transform.parent = this.transform;
+            if (timedDestroyIsOn)
+            {
+                if (isSpawnTimeRandom) Destroy(primitive, Random.Range(0f, timeToDestroy));
+                else Destroy(primitive, timeToDestroy);
+            }
+            lastClickPositionLeft = clickPosition;
+        }
     }
 
     public void ChangeShape(int temp)

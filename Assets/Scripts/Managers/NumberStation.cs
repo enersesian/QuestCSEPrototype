@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class NumberStation : MonoBehaviour
 {
     public LeverPulled[] levers;
-    public Text stationText, bit01, bit02, bit03, bit04;
+    public Text stationText;
     public Transform farLocation, nearLocation;
     private int totalCount;
 
@@ -20,10 +20,6 @@ public class NumberStation : MonoBehaviour
     {
         foreach(LeverPulled lever in levers) lever.SetTask();
         stationText.text = "0";
-        /*bit01.text = "0";
-        bit02.text = "0";
-        bit03.text = "0";
-        bit04.text = "0";*/
     }
 
     public void GetTaskLeverPulled(int currentTask)
@@ -46,10 +42,6 @@ public class NumberStation : MonoBehaviour
                 break;
         }
         stationText.text = "0";
-        /*bit01.text = "0";
-        bit02.text = "0";
-        bit03.text = "0";
-        bit04.text = "0";*/
     }
 
     public void RunOutputButtonPushed()
@@ -57,33 +49,8 @@ public class NumberStation : MonoBehaviour
         foreach (LeverPulled lever in levers) lever.Deactivate();
     }
 
-    public void UpdateBitText(int bit, int bitStatus)
+    public void UpdateBitText(int number)
     {
-        /*switch(bit)
-        {
-            case 1:
-                if (bitStatus == 1) bit01.text = "1";
-                else bit01.text = "0";
-                break;
-
-            case 2:
-                if (bitStatus == 1) bit02.text = "2";
-                else bit02.text = "0";
-                break;
-
-            case 3:
-                if (bitStatus == 1) bit03.text = "4";
-                else bit03.text = "0";
-                break;
-
-            case 4:
-                if (bitStatus == 1) bit04.text = "8";
-                else bit04.text = "0";
-                break;
-
-            default:
-                break;
-        }*/
-        stationText.text = LevelManager.instance.GetNumber().ToString();
+        stationText.text = number.ToString();
     }
 }

@@ -298,6 +298,7 @@ public class TutorialStation : MonoBehaviour
                     if (isTutorialNumberLeverPulled)
                     {
                         StartTutorialNonInteractive();
+                        LevelManager.instance.shapeStation.ActivateLever(0);
                     }
                     break;
 
@@ -312,6 +313,7 @@ public class TutorialStation : MonoBehaviour
                     if (isTutorialShapeLeverPulled)
                     {
                         StartTutorialNonInteractive();
+                        LevelManager.instance.colorStation.ActivateLever(0);
                     }
                     break;
 
@@ -326,6 +328,7 @@ public class TutorialStation : MonoBehaviour
                     if (isTutorialColorLeverPulled)
                     {
                         StartTutorialNonInteractive();
+                        LevelManager.instance.outputStation.leverRunOutput.Activate();
                     }
                     break;
 

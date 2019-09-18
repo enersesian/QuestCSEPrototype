@@ -22,7 +22,6 @@ public class ShapeStation : MonoBehaviour
         else transform.position = nearLocation.position;
     }
 
-
     public void SetTask()
     {
         foreach(LeverPulled lever in levers) lever.SetTask();
@@ -30,12 +29,16 @@ public class ShapeStation : MonoBehaviour
         shapeImage.sprite = shapes[0];
     }
 
+    public void ActivateLever(int leverNumber)
+    {
+        levers[leverNumber].Activate();
+    }
+
     public void GetTaskLeverPulled(int currentTask)
     {
         switch(currentTask)
         {
             case 1:
-                levers[0].Activate();
                 break;
 
             case 2:
@@ -57,21 +60,9 @@ public class ShapeStation : MonoBehaviour
     public void UpdateShapeText(string shape)
     {
         stationText.text = shape;
-        if(shape == "Cube")
-        {
-            shapeImage.sprite = shapes[0];
-        }
-        else if (shape == "Sphere")
-        {
-            shapeImage.sprite = shapes[1];
-        }
-        else if (shape == "Cone")
-        {
-            shapeImage.sprite = shapes[2];
-        }
-        else
-        {
-            shapeImage.sprite = shapes[3];
-        }
+        if(shape == "Cube") shapeImage.sprite = shapes[0];
+        else if (shape == "Sphere") shapeImage.sprite = shapes[1];
+        else if (shape == "Cone") shapeImage.sprite = shapes[2];
+        else shapeImage.sprite = shapes[3];
     }
 }
