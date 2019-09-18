@@ -18,7 +18,7 @@ public class TutorialStation : MonoBehaviour
     private Transform[] movementTransforms;
     public GameObject highFiveCollider;
 
-    private float interactiveWaitTime, eggyWaitForWallDrop = 25f, eggyMoveTimeToTaskStation = 3f;
+    private float interactiveWaitTime, eggyWaitForWallDrop = 10f, eggyMoveTimeToTaskStation = 3f; //eggyWait was 25f
     private int tutorialNumber = -1;
     private bool isInteractable, isTutorialLeverOn, isGetTaskLeverPulled, isTutorialAtNumberStation, isTutorialNumberLeverPulled, 
         isTutorialColorLeverPulled, isTutorialAtColorStation, isTutorialAtShapeStation, isTutorialShapeLeverPulled, 

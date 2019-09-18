@@ -20,7 +20,7 @@ public class PaintingInput : MonoBehaviour
     [SerializeField]
     private float size = 1.0f;
 
-    private Vector3 lastClickPosition = Vector3.zero;
+    private Vector3 lastClickPosition = Vector3.zero; // Right = Vector3.zero, lastClickPositionLeft = Vector3.zero;
     public Text lifeTime;
 
     public GameObject paintedObject00, paintedObject01, paintedObject02, explosion;
@@ -38,7 +38,7 @@ public class PaintingInput : MonoBehaviour
     public Dropdown animDropDown, shapeDropDown;
 
     [SerializeField]
-    private Transform rightHandAnchor;
+    private Transform rightHandAnchor, leftHandAnchor;
 
     void Update ()
     {
@@ -75,7 +75,12 @@ public class PaintingInput : MonoBehaviour
         {
             lastClickPosition = Vector3.zero;
         }
-
+        /*
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.LTouch) < 0.9f) //user released left mouse button so reset lastPosition to avoid large spawns at next paint drop
+        {
+            lastClickPositionLeft = Vector3.zero;
+        }
+        */
         if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.RTouch) > 0.9f || OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.LTouch) > 0.9f)
         {
 

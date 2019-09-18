@@ -31,8 +31,8 @@ public class LeverPulled : MonoBehaviour
         
         if (transform.parent.name == "lever01" || transform.parent.name == "lever10") //shape station
         {
-            leverBaseMin = -90f;
-            leverBaseMax = -60f;
+            leverBaseMin = 270f;
+            leverBaseMax = 240f;
         }
         else if (transform.parent.name == "leverTutorial") //tutorial station
         {
@@ -41,8 +41,8 @@ public class LeverPulled : MonoBehaviour
         }
         else if (transform.parent.name == "leverRunOutput") //output station
         {
-            leverBaseMin = -90f;
-            leverBaseMax = -50f;
+            leverBaseMin = -120f;
+            leverBaseMax = -160f;
         }
         else if(transform.parent.name == "leverGetTask" || transform.parent.name == "leverSendOutput") //task station
         {
