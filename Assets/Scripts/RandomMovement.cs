@@ -22,14 +22,14 @@ public class RandomMovement : MonoBehaviour
 
     private void Start()
     {
-        xScale *= Random.Range(0.8f, 1.2f);
+        xScale *= Random.Range(0.3f, 0.6f);
     }
 
     void Update()
     {
         if (!isSent)
         {
-            height = (heightScale * Mathf.PerlinNoise(Time.time * xScale, 0.0f) - 1f) / 2f;
+            height = (0.4f*Mathf.PerlinNoise(Time.time * xScale, 0.0f));
             position = transform.localPosition;
             position.y = height;
             transform.localPosition = position;
@@ -41,5 +41,15 @@ public class RandomMovement : MonoBehaviour
             position.y = height;
             transform.position = position;
         }
+    }
+
+    public float Scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
+    {
+        float OldRange = (OldMax - OldMin);
+        float NewRange = (NewMax - NewMin);
+        float NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin;
+        if (NewValue < NewMax) NewValue = NewMax;
+        if (NewValue > NewMin) NewValue = NewMin;
+        return (NewValue);
     }
 }

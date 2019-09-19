@@ -79,8 +79,9 @@ public class OutputStation : MonoBehaviour
         {
             objectSpawn = Instantiate(currentShapeSelection);
             objectPosition = new Vector3(cubeGrabbable.position.x + Random.Range(-0.05f, 0.05f), 
-                cubeGrabbable.position.y + Random.Range(-0.2f, 0.2f), cubeGrabbable.position.z + Random.Range(-0.05f, 0.05f));
+                cubeGrabbable.position.y + Random.Range(0.3f, 0.6f), cubeGrabbable.position.z + Random.Range(-0.05f, 0.05f));
             objectSpawn.transform.position = objectPosition;
+            objectSpawn.transform.localScale *= Random.Range(1.5f, 3f);
             objectSpawn.transform.parent = cubeGrabbable;
             objectSpawn.GetComponent<RandomMovement>().isSent = false;
             objectSpawn.transform.GetChild(0).GetComponent<Renderer>().material.color = currentColor;
@@ -110,7 +111,7 @@ public class OutputStation : MonoBehaviour
     {
         if (number > 0)
         {
-            stationText.text = "Hit button to generate output:";
+            stationText.text = "Pull lever to generate output:";
             taskNumberText.text = LevelManager.instance.GetNumber().ToString();
             UpdateColorText(LevelManager.instance.GetColor(), LevelManager.instance.GetColorText());
             UpdateShapeText(LevelManager.instance.GetShape());

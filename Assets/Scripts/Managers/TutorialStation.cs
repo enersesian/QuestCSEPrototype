@@ -177,7 +177,7 @@ public class TutorialStation : MonoBehaviour
 
         if (tutorialNumber == 14)
         {
-            tutorialDisplay.Move(movementTransforms[5], movementTransforms[7], 0f, 4f);
+            tutorialDisplay.Move(movementTransforms[6], movementTransforms[7], 0f, 4f);
             Invoke("TutorialAtOutputStation", 4f);
         }
         if (tutorialNumber == 15) instructionsBottom.text = "Pull the lever on theleft to generate output.";
@@ -202,7 +202,7 @@ public class TutorialStation : MonoBehaviour
                         highFiveCollider.SetActive(false);
                         eggy.SetTrigger("highFiveHit");
                         StartTutorialNonInteractive();
-                        //LevelManager.instance.SetStationHeight(); //bring back
+                        LevelManager.instance.SetStationHeight(); //bring back
                     }
                     break;
 
