@@ -158,6 +158,8 @@ public class TutorialStation : MonoBehaviour
             Invoke("CloseSpeechBubble", 1f);
             Invoke("EggyMove", 2f);
             Invoke("TutorialAtNumberStation", 5f);
+
+
         }
         if (tutorialNumber == 9) instructionsBottom.text = "Pull lever labeled \"1\" down to its on position to set output to 1.";
 
@@ -280,8 +282,12 @@ public class TutorialStation : MonoBehaviour
                     {
                         //remove tutorial walls and lever
                         //tutorialWalls.gameObject.SetActive(false);
-                        leverTutorial.transform.parent.parent.parent.gameObject.SetActive(false);
+                        //leverTutorial.transform.parent.parent.parent.gameObject.SetActive(false);
 
+                        //parent eggy under levelmanager
+                        tutorialDisplay.transform.parent = LevelManager.instance.transform;
+                        //disabled tutorial station
+                        gameObject.SetActive(false);
 
                         StartTutorialNonInteractive();
                     }
@@ -471,7 +477,7 @@ public class TutorialStation : MonoBehaviour
 
     private void EndTutorial()
     {
-        tutorialDisplay.gameObject.SetActive(false);
+
     }
 
     private void FinishTutorial()

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OutputStation : MonoBehaviour
 {
-    public Text stationText, numberItem, colorItem, shapeItem, sizeItem;
+    public Text stationText;
     public Transform cubeGrabbable, cubeGrabbleStartPosition, spawnLocation, tempSpawnLocation, farLocation, nearLocation;
     public ButtonPushed runButton;
     public LeverPulled leverRunOutput;
@@ -14,6 +14,9 @@ public class OutputStation : MonoBehaviour
     private GameObject objectSpawn;
     private Vector3 objectPosition;
     private int spawnedObjects;
+    public Text taskNumberText;
+    public Transform taskShapeList;
+    public Image taskColorImage;
 
     public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
     {
@@ -25,9 +28,13 @@ public class OutputStation : MonoBehaviour
     {
         leverRunOutput.SetTask();
         stationText.text = "No output currently available...";
-        numberItem.text = "-";
-        colorItem.text = "-";
-        shapeItem.text = "-";
+        taskNumberText.text = "";
+        taskShapeList.GetChild(0).gameObject.SetActive(false);
+        taskShapeList.GetChild(1).gameObject.SetActive(false);
+        taskShapeList.GetChild(2).gameObject.SetActive(false);
+        taskShapeList.GetChild(3).gameObject.SetActive(false);
+        taskColorImage.color = new Color(0f, 0f, 0f, 0f);
+
         currentShapeSelection = cube;
         //ResetCubeGrabbable(); //only useful for user resetting level with A button
     }
@@ -82,6 +89,7 @@ public class OutputStation : MonoBehaviour
         }
     }
 
+    //was used when I spawned 3d objects to show the current output state from across the room
     private void ObjectSpawner(float xOffset, float yOffset, float zOffset)
     {
         objectSpawn = Instantiate(currentShapeSelection);
@@ -97,24 +105,25 @@ public class OutputStation : MonoBehaviour
         if (number > 0 && currentTask > 1)
         {
             stationText.text = "Hit button to generate output:";
-            numberItem.text = LevelManager.instance.GetNumber().ToString();
-            colorItem.text = LevelManager.instance.GetColorText();
-            shapeItem.text = LevelManager.instance.GetShape();
-            if (number > 1) shapeItem.text += "s";
-            //runButton.ResetButton(true);
+            taskNumberText.text = LevelManager.instance.GetNumber().ToString();
+            UpdateColorText(LevelManager.instance.GetColor(), LevelManager.instance.GetColorText());
+            UpdateShapeText(LevelManager.instance.GetShape());
             leverRunOutput.Activate();
-            //destroy current objects
-            foreach (Transform child in spawnLocation)
-            {
-                Destroy(child.gameObject);
-            }
 
             if (LevelManager.instance.GetShape() == "Cube") currentShapeSelection = cube;
             if (LevelManager.instance.GetShape() == "Sphere") currentShapeSelection = sphere;
             if (LevelManager.instance.GetShape() == "Cone") currentShapeSelection = cone;
             if (LevelManager.instance.GetShape() == "Ring") currentShapeSelection = ring;
+
+            //was used when I spawned 3d objects to show the current output state from across the room
+            /*
+            //destroy current objects
+            foreach (Transform child in spawnLocation)
+            {
+                Destroy(child.gameObject);
+            }
             //build new objects
-            switch(number)
+            switch (number)
             {
                 case 1:
                     ObjectSpawner(0f, 0f, 0f);
@@ -168,26 +177,63 @@ public class OutputStation : MonoBehaviour
                 default:
                     break;
             }
+            */
         }
         else
         {
             stationText.text = "No output currently available...";
-            numberItem.text = "-";
-            colorItem.text = "-";
-            shapeItem.text = "-";
-            //runButton.ResetButton(false);
+            taskNumberText.text = "";
+            taskShapeList.GetChild(0).gameObject.SetActive(false);
+            taskShapeList.GetChild(1).gameObject.SetActive(false);
+            taskShapeList.GetChild(2).gameObject.SetActive(false);
+            taskShapeList.GetChild(3).gameObject.SetActive(false);
+            taskColorImage.color = new Color(0f, 0f, 0f, 0f);
             leverRunOutput.SetTask();
+
+            //was used when I spawned 3d objects to show the current output state from across the room
+            /*
             //destroy current objects
             foreach (Transform child in spawnLocation)
             {
                 Destroy(child.gameObject);
             }
+            */
         }
     }
 
     public void UpdateShapeText(string shape)
     {
-        shapeItem.text = shape;
+        if (shape == "Cube")
+        {
+            taskShapeList.GetChild(0).gameObject.SetActive(true);
+            taskShapeList.GetChild(1).gameObject.SetActive(false);
+            taskShapeList.GetChild(2).gameObject.SetActive(false);
+            taskShapeList.GetChild(3).gameObject.SetActive(false);
+        }
+        if (shape == "Sphere")
+        {
+            taskShapeList.GetChild(0).gameObject.SetActive(false);
+            taskShapeList.GetChild(1).gameObject.SetActive(true);
+            taskShapeList.GetChild(2).gameObject.SetActive(false);
+            taskShapeList.GetChild(3).gameObject.SetActive(false);
+        }
+        if (shape == "Cone")
+        {
+            taskShapeList.GetChild(0).gameObject.SetActive(false);
+            taskShapeList.GetChild(1).gameObject.SetActive(false);
+            taskShapeList.GetChild(2).gameObject.SetActive(true);
+            taskShapeList.GetChild(3).gameObject.SetActive(false);
+        }
+        if (shape == "Ring")
+        {
+            taskShapeList.GetChild(0).gameObject.SetActive(false);
+            taskShapeList.GetChild(1).gameObject.SetActive(false);
+            taskShapeList.GetChild(2).gameObject.SetActive(false);
+            taskShapeList.GetChild(3).gameObject.SetActive(true);
+        }
+
+        //was used when I spawned 3d objects to show the current output state from across the room
+        /*
         //read in each child's information, destroy it and create new shape with color and location
         Debug.Log("UpdateShapeText method");
         if (LevelManager.instance.GetNumber() > 0)
@@ -199,12 +245,6 @@ public class OutputStation : MonoBehaviour
 
             for (int i = 0; i < LevelManager.instance.GetNumber(); i++)
             {
-                /*
-                if (shape == "Cube") child.GetComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().mesh;
-                if (shape == "Sphere") child.GetComponent<MeshFilter>().mesh = sphere.GetComponent<MeshFilter>().mesh;
-                if (shape == "Cone") child.GetComponent<MeshFilter>().mesh = cone.GetComponent<MeshFilter>().mesh;
-                if (shape == "Ring") child.GetComponent<MeshFilter>().mesh = ring.GetComponent<MeshFilter>().mesh;
-                */
                 Debug.Log("Went through spawnLocation "+ i.ToString());
                 objectSpawn = Instantiate(currentShapeSelection);
                 objectSpawn.transform.position = spawnLocation.GetChild(i).position;
@@ -226,17 +266,22 @@ public class OutputStation : MonoBehaviour
                 tempSpawnLocation.GetChild(0).parent = spawnLocation; //prevents infinite loop crash as I am adding elements to a list that I am deleting elements from as well
             }
         }
-        
+        */
     }
 
     public void UpdateColorText(Color currentColor, string currentColorText)
     {
-        colorItem.text = currentColorText;
+        //colorItem.text = currentColorText;
+        taskColorImage.color = currentColor;
+
+        //was used when I spawned 3d objects to show the current output state from across the room
+        /*
         //change color for all spawned 3D objects
         foreach (Transform child in spawnLocation)
         {
             child.GetChild(0).GetComponent<Renderer>().material.color = currentColor;
         }
+        */
     }
 
     private void ResetCubeGrabbable() //Place carrying container back to original location 

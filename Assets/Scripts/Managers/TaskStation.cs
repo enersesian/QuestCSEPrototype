@@ -12,6 +12,16 @@ public class TaskStation : MonoBehaviour
     public Image taskColorImage;
     public Transform taskShapeList;
 
+    private void Start()
+    {
+        taskNumberText.text = "";
+        taskShapeList.GetChild(0).gameObject.SetActive(false);
+        taskShapeList.GetChild(1).gameObject.SetActive(false);
+        taskShapeList.GetChild(2).gameObject.SetActive(false);
+        taskShapeList.GetChild(3).gameObject.SetActive(false);
+        taskColorImage.color = new Color(0f, 0f, 0f, 0f);
+    }
+
     public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
     {
         if (isNear) transform.position = farLocation.position;  //near to far
