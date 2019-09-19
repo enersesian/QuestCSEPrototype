@@ -76,8 +76,8 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 1) instructionsTop.text = "Now squeeze your middle finger to close your hand. This is how you will pull levers and grab objects.";//"Great! First, let me get you familiar with the ship’s features. Look at your hands. See how you have fingers that you can wiggle around?";
         if (tutorialNumber == 2) instructionsTop.text = "Great! Let's get you comfortable with closing your hands by letting you paint all around you!";
         if (tutorialNumber == 3) instructionsTop.text = "When you are done painting, lets teach you how to interact with levers by closing your hand and pulling on them.";
-        if (tutorialNumber == 4) instructionsTop.text = "When the ball on the lever is black, it means it's locked. Since the storm, many of the levers are locked and I need help to unlock them.";
-        if (tutorialNumber == 5) instructionsTop.text = "Notice the ball on the lever is white now. This means it is unlocked and you can pull it into its on position.";
+        if (tutorialNumber == 4) instructionsTop.text = "When the top of the lever is red, it means it's locked. Since the storm, many of the levers are locked and I need help to unlock them.";
+        if (tutorialNumber == 5) instructionsTop.text = "Notice the top of the lever is green now. This means it is unlocked and you can pull it into its on position.";
         if (tutorialNumber == 6) instructionsTop.text = "Great! Let's return the lever back to its off position so that we can enter the main chamber.";
         if (tutorialNumber == 7) instructionsTop.text = "You're doing great! Wait for the walls to drop, then follow me to the task station.";
         if (tutorialNumber == 8) instructionsTop.text = "You have been given your first task to get one red sphere!";
@@ -88,10 +88,10 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 13) instructionsTop.text = "This is the color station, where you set the color of objects.";
         if (tutorialNumber == 14) instructionsTop.text = "Great job! Follow me to the output station.";
         if (tutorialNumber == 15) instructionsTop.text = "This is the output station, where you generate output for the task.";
-        if (tutorialNumber == 16) instructionsTop.text = "Grab the output container and carry it to the task station.";
+        if (tutorialNumber == 16) instructionsTop.text = "Grab the espresso cup and carry it to the task station.";
         if (tutorialNumber == 17) instructionsTop.text = "Great job! Follow me to the task station.";
-        if (tutorialNumber == 18) instructionsTop.text = "Place the output container on the Place Output location.";
-        if (tutorialNumber == 19) instructionsTop.text = "Great job! Pull the Send Output lever to finish the task.";
+        if (tutorialNumber == 18) instructionsTop.text = "Place the espresso cup into the espresso machine on the left side.";
+        if (tutorialNumber == 19) instructionsTop.text = "Great job! Pull the lever on the left to finish the task.";
         if (tutorialNumber == 20) instructionsTop.text = "Congratulations! Now proceed through the rest of the tasks by yourself.";
 
         instructionsBottom.text = "";
@@ -147,49 +147,47 @@ public class TutorialStation : MonoBehaviour
             //move tutorial to task station
 
             //activate Get Task button on task station
-            instructionsBottom.text = "This is where you start and end tasks.\nPull the Get Task lever to get your first task.";
+            instructionsBottom.text = "This is where you start and end tasks.\nPull the lever on the right to get your first task.";
 
             //levelManager.StartLevel();
         }
         if (tutorialNumber == 8)
         {
             instructionsBottom.text = "Follow me to the number station to start your task.";
-            tutorialDisplay.Move(movementTransforms[3], movementTransforms[4], 2f, 3f);
-            Invoke("CloseSpeechBubble", 1f);
-            Invoke("EggyMove", 2f);
-            Invoke("TutorialAtNumberStation", 5f);
-
-
+            tutorialDisplay.Move(movementTransforms[3], movementTransforms[4], 3f, 4f);
+            Invoke("CloseSpeechBubble", 3f);
+            Invoke("EggyMove", 3f);
+            Invoke("TutorialAtNumberStation", 7f);
         }
-        if (tutorialNumber == 9) instructionsBottom.text = "Pull lever labeled \"1\" down to its on position to set output to 1.";
+        if (tutorialNumber == 9) instructionsBottom.text = "Pull lever on the right to its on position to set output to 1.";
 
         if (tutorialNumber == 10)
         {
             tutorialDisplay.Move(movementTransforms[4], movementTransforms[5], 0f, 4f);
             Invoke("TutorialAtShapeStation", 4f);
         }
-        if (tutorialNumber == 11) instructionsBottom.text = "Pull the right lever down to its on position to set output to Sphere.";
+        if (tutorialNumber == 11) instructionsBottom.text = "Pull the lever on the right to its on position to set output to Sphere.";
 
         if (tutorialNumber == 12)
         {
             tutorialDisplay.Move(movementTransforms[5], movementTransforms[6], 0f, 4f);
             Invoke("TutorialAtColorStation", 4f);
         }
-        if (tutorialNumber == 13) instructionsBottom.text = "Pull lever labeled \"4\" down to its on position to set output to Red.";
+        if (tutorialNumber == 13) instructionsBottom.text = "Pull lever on the left to its on position to set output to Red.";
 
         if (tutorialNumber == 14)
         {
             tutorialDisplay.Move(movementTransforms[5], movementTransforms[7], 0f, 4f);
             Invoke("TutorialAtOutputStation", 4f);
         }
-        if (tutorialNumber == 15) instructionsBottom.text = "Pull the Run Output lever to generate output.";
-        if (tutorialNumber == 16) instructionsBottom.text = "Close your hand on container and keep hand closed to carry container.";
+        if (tutorialNumber == 15) instructionsBottom.text = "Pull the lever on theleft to generate output.";
+        if (tutorialNumber == 16) instructionsBottom.text = "Grab the espresso cup and keep your hand closed to carry it with you.";
         if (tutorialNumber == 17)
         {
             tutorialDisplay.Move(movementTransforms[7], movementTransforms[3], 0f, 4f);
             Invoke("TutorialAtTaskStation", 4f);
         }
-        if (tutorialNumber == 20) EndTutorial();
+        if (tutorialNumber == 20) Invoke("CloseSpeechBubble", 3f);
     }
 
     private void Update() //Checks if user is done with interactive part of tutorial to move to next instruction
@@ -286,8 +284,8 @@ public class TutorialStation : MonoBehaviour
 
                         //parent eggy under levelmanager
                         tutorialDisplay.transform.parent = LevelManager.instance.transform;
-                        //disabled tutorial station
-                        gameObject.SetActive(false);
+                        //disabled tutorial station but not the parent with the TutorialStation script
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
                         StartTutorialNonInteractive();
                     }
@@ -471,19 +469,6 @@ public class TutorialStation : MonoBehaviour
     private void TutorialAtTaskStation()
     {
         isTutorialAtTaskStation = true;
-    }
-
-
-
-    private void EndTutorial()
-    {
-
-    }
-
-    private void FinishTutorial()
-    {
-        //user pushed Get Task button on task station
-        //remove tutorial sign, lever and walls
     }
 
     private void TurnOnPaintingFeature()

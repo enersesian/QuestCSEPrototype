@@ -13,7 +13,7 @@ public class ColorStation : MonoBehaviour
 
     private void Start()
     {
-        //if (Application.isEditor) transform.position = new Vector3(0.4f, 0.2f, -0.4f); //Sitting Rift position
+        if (Application.isEditor) transform.position = nearLocation.position;
         colorText.text = "Black";
     }
 

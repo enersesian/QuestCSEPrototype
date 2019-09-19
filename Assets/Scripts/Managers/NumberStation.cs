@@ -10,6 +10,11 @@ public class NumberStation : MonoBehaviour
     public Transform farLocation, nearLocation;
     private int totalCount;
 
+    private void Start()
+    {
+        if (Application.isEditor) transform.position = nearLocation.position;
+    }
+
     public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
     {
         if (isNear) transform.position = farLocation.position;

@@ -208,7 +208,7 @@ public class LeverPulled : MonoBehaviour
     {
         transform.localPosition = zeroPosition.localPosition;
         leverBase.localRotation = zeroPosition.localRotation;
-        if (numberWheel != null) numberWheel.rotation = numberWheelStartRotation;
+        if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(numberWheelMin, numberWheel.localRotation.y, numberWheel.localRotation.z);
         isOnePosition = false;
     }
 
@@ -216,7 +216,7 @@ public class LeverPulled : MonoBehaviour
     {
         transform.localPosition = onePosition.localPosition;
         leverBase.localRotation = onePosition.localRotation;
-        if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(numberWheelMax, 0f, 0f);
+        if (numberWheel != null) numberWheel.localRotation = Quaternion.Euler(numberWheelMax, numberWheel.localRotation.y, numberWheel.localRotation.z);
         isOnePosition = true;
     }
 

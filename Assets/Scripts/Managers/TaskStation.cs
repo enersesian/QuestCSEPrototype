@@ -20,6 +20,8 @@ public class TaskStation : MonoBehaviour
         taskShapeList.GetChild(2).gameObject.SetActive(false);
         taskShapeList.GetChild(3).gameObject.SetActive(false);
         taskColorImage.color = new Color(0f, 0f, 0f, 0f);
+
+        if (Application.isEditor) transform.position = nearLocation.position;
     }
 
     public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
@@ -30,9 +32,9 @@ public class TaskStation : MonoBehaviour
 
     public void SetTask(string condition)
     {
-        if (condition == "start") taskText.text = "Waiting for new task...\nPull lever on right to get task.";
-        if(condition == "success") taskText.text = "You performed the task perfectly! \nPull lever on right for next task.";
-        if(condition == "failure") taskText.text = "Incorrect Output! \nPull lever on right to try again.";
+        if (condition == "start") taskText.text = "Waiting for new task...\n\nPull lever on right to get task.";
+        if(condition == "success") taskText.text = "You performed the task perfectly! \n\nPull lever on right for next task.";
+        if(condition == "failure") taskText.text = "Incorrect Output! \n\nPull lever on right to try again.";
 
         leverGetTask.SetTask();
     }
@@ -46,7 +48,7 @@ public class TaskStation : MonoBehaviour
     {
         if (currentTask == 1)
         {
-            taskText.text = "Welcome to Task 1.\nBring back 1 Red Sphere.";
+            taskText.text = "Welcome to Task 1.\n\nBring back 1 Red Sphere.";
             taskNumberText.text = "1";
             taskShapeList.GetChild(0).gameObject.SetActive(false);
             taskShapeList.GetChild(1).gameObject.SetActive(true);
@@ -57,7 +59,7 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 2)
         {
-            taskText.text = "Welcome to Task 2.\nBring back 2 Red Spheres.";
+            taskText.text = "Welcome to Task 2.\n\nBring back 2 Red Spheres.";
             taskNumberText.text = "2";
             taskShapeList.GetChild(0).gameObject.SetActive(false);
             taskShapeList.GetChild(1).gameObject.SetActive(true);
@@ -68,7 +70,7 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 3)
         {
-            taskText.text = "Welcome to Task 3.\nBring back 4 Green Cubes.";
+            taskText.text = "Welcome to Task 3.\n\nBring back 4 Green Cubes.";
             taskNumberText.text = "4";
             taskShapeList.GetChild(0).gameObject.SetActive(true);
             taskShapeList.GetChild(1).gameObject.SetActive(false);
@@ -79,7 +81,7 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 4)
         {
-            taskText.text = "Welcome to Task 4.\nBring back 3 Blue Cones.";
+            taskText.text = "Welcome to Task 4.\n\nBring back 3 Blue Cones.";
             taskNumberText.text = "3";
             taskShapeList.GetChild(0).gameObject.SetActive(false);
             taskShapeList.GetChild(1).gameObject.SetActive(false);
@@ -90,7 +92,7 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 5)
         {
-            taskText.text = "Welcome to Task 5.\nBring back 5 Yellow Rings.";
+            taskText.text = "Welcome to Task 5.\n\nBring back 5 Yellow Rings.";
             taskNumberText.text = "5";
             taskShapeList.GetChild(0).gameObject.SetActive(false);
             taskShapeList.GetChild(1).gameObject.SetActive(false);
@@ -101,7 +103,7 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 6)
         {
-            taskText.text = "Welcome to Task 6.\nBring back 7 Cyan Cones.";
+            taskText.text = "Welcome to Task 6.\n\nBring back 7 Cyan Cones.";
             taskNumberText.text = "6";
             taskShapeList.GetChild(0).gameObject.SetActive(false);
             taskShapeList.GetChild(1).gameObject.SetActive(false);
@@ -112,7 +114,7 @@ public class TaskStation : MonoBehaviour
 
         if (currentTask == 7)
         {
-            taskText.text = "Welcome to Task 7.\nBring back 6 Purple Ring.";
+            taskText.text = "Welcome to Task 7.\n\nBring back 6 Purple Ring.";
             taskNumberText.text = "7";
             taskShapeList.GetChild(0).gameObject.SetActive(false);
             taskShapeList.GetChild(1).gameObject.SetActive(false);

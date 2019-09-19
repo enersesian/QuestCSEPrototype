@@ -18,6 +18,12 @@ public class OutputStation : MonoBehaviour
     public Transform taskShapeList;
     public Image taskColorImage;
 
+    private void Start()
+    {
+        if (Application.isEditor) transform.position = nearLocation.position;
+    }
+
+
     public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
     {
         if (isNear) transform.position = farLocation.position;
@@ -50,7 +56,7 @@ public class OutputStation : MonoBehaviour
     {
         LevelManager.instance.RunOutput(); //to reset the sendOutputLever
 
-        stationText.text = "Output generated\nPlease take output to task station";
+        stationText.text = "Output generated\nPlease take to task station";
         cubeGrabbable.GetComponent<Collider>().enabled = true;
         cubeGrabbable.GetComponent<OVRGrabbable>().enabled = true;
         Debug.Log(number.ToString() + currentColor.ToString() + shape.ToString());
@@ -102,13 +108,15 @@ public class OutputStation : MonoBehaviour
 
     public void UpdateNumText(int number, int currentTask)
     {
-        if (number > 0 && currentTask > 1)
+        if (number > 0)
         {
             stationText.text = "Hit button to generate output:";
             taskNumberText.text = LevelManager.instance.GetNumber().ToString();
             UpdateColorText(LevelManager.instance.GetColor(), LevelManager.instance.GetColorText());
             UpdateShapeText(LevelManager.instance.GetShape());
-            leverRunOutput.Activate();
+
+            //for tutorial task, wait to turn on leverRunOutput
+            if(currentTask > 1) leverRunOutput.Activate();
 
             if (LevelManager.instance.GetShape() == "Cube") currentShapeSelection = cube;
             if (LevelManager.instance.GetShape() == "Sphere") currentShapeSelection = sphere;
