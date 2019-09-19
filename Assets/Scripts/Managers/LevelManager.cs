@@ -48,11 +48,6 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        Invoke("SetStationHeight", 0.5f); //set station height multiple times in beginning as dont know when headset passed to user
-        Invoke("SetStationHeight", 1f);
-        Invoke("SetStationHeight", 2f);
-        tutorialStation.StartTutorialNonInteractive(); //Begin the tutorial
-       
         if (!Application.isEditor)
         {
             //Start recording text data, user started level and tutorial task 00
@@ -65,6 +60,13 @@ public class LevelManager : MonoBehaviour
             HCInvestigatorManager.instance.StartRecordingVideo();
             textRecordTimer = Time.time;
         }
+
+        Invoke("SetStationHeight", 0.5f); //set station height multiple times in beginning as dont know when headset passed to user
+        Invoke("SetStationHeight", 1f);
+        Invoke("SetStationHeight", 2f);
+        tutorialStation.StartTutorialNonInteractive(); //Begin the tutorial
+       
+        
     }
 
     private void Update()

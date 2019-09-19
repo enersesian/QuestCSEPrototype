@@ -13,7 +13,7 @@ public class ColorStation : MonoBehaviour
 
     private void Start()
     {
-        if (Application.isEditor) transform.position = nearLocation.position;
+        //if (Application.isEditor) transform.position = nearLocation.position;
         colorText.text = "Black";
     }
 

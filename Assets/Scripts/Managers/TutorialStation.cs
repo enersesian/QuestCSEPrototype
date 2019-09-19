@@ -18,7 +18,7 @@ public class TutorialStation : MonoBehaviour
     private Transform[] movementTransforms;
     public GameObject highFiveCollider;
 
-    private float interactiveWaitTime, eggyWaitForWallDrop = 10f, eggyMoveTimeToTaskStation = 3f; //eggyWait was 25f
+    private float interactiveWaitTime, eggyWaitForWallDrop = 15f, eggyMoveTimeToTaskStation = 3f; //eggyWait was 25f
     private int tutorialNumber = -1;
     private bool isInteractable, isTutorialLeverOn, isGetTaskLeverPulled, isTutorialAtNumberStation, isTutorialNumberLeverPulled, 
         isTutorialColorLeverPulled, isTutorialAtColorStation, isTutorialAtShapeStation, isTutorialShapeLeverPulled, 
@@ -164,6 +164,7 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 10)
         {
             tutorialDisplay.Move(movementTransforms[4], movementTransforms[5], 0f, 4f);
+            Invoke("CloseSpeechBubble", 0f);
             Invoke("TutorialAtShapeStation", 4f);
         }
         if (tutorialNumber == 11) instructionsBottom.text = "Pull the lever on the right to its on position to set output to Sphere.";
@@ -171,6 +172,7 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 12)
         {
             tutorialDisplay.Move(movementTransforms[5], movementTransforms[6], 0f, 4f);
+            Invoke("CloseSpeechBubble", 0f);
             Invoke("TutorialAtColorStation", 4f);
         }
         if (tutorialNumber == 13) instructionsBottom.text = "Pull lever on the left to its on position to set output to Red.";
@@ -178,6 +180,7 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 14)
         {
             tutorialDisplay.Move(movementTransforms[6], movementTransforms[7], 0f, 4f);
+            Invoke("CloseSpeechBubble", 0f);
             Invoke("TutorialAtOutputStation", 4f);
         }
         if (tutorialNumber == 15) instructionsBottom.text = "Pull the lever on theleft to generate output.";
@@ -185,6 +188,7 @@ public class TutorialStation : MonoBehaviour
         if (tutorialNumber == 17)
         {
             tutorialDisplay.Move(movementTransforms[7], movementTransforms[3], 0f, 4f);
+            Invoke("CloseSpeechBubble", 0f);
             Invoke("TutorialAtTaskStation", 4f);
         }
         if (tutorialNumber == 20) Invoke("CloseSpeechBubble", 3f);

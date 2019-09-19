@@ -20,7 +20,7 @@ public class OutputStation : MonoBehaviour
 
     private void Start()
     {
-        if (Application.isEditor) transform.position = nearLocation.position;
+        //if (Application.isEditor) transform.position = nearLocation.position;
     }
 
 

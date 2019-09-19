@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 1b083ac09fd8cfa46ad30695f8329484
+guid: 801821c4b13b78a40af7a58db36b0fb1
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: blinn1
+    2100000: blinn6
     2300000: //RootNode
     3300000: //RootNode
-    4300000: ConveyorBelt_StationConnector
+    4300000: outputStationPipe
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -48,7 +48,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
