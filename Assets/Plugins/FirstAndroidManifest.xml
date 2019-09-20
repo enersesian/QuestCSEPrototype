@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.njit.questdemo"
     android:installLocation="auto">
-	
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.RECORD_AUDIO" />
-	
     <uses-feature android:name="android.hardware.vr.headtracking" android:version="1" android:required="true" /><!-- Request the headset DoF mode -->
     <application
         android:allowBackup="false">
@@ -20,5 +15,6 @@
                 <category android:name="android.intent.category.INFO"/>
             </intent-filter>
         </activity>
+        <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
     </application>
 </manifest>

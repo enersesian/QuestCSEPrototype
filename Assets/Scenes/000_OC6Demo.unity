@@ -33,7 +33,7 @@ RenderSettings:
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
   m_DefaultReflectionMode: 0
-  m_DefaultReflectionResolution: 256
+  m_DefaultReflectionResolution: 512
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
@@ -57,8 +57,8 @@ LightmapSettings:
   m_LightmapEditorSettings:
     serializedVersion: 10
     m_Resolution: 2
-    m_BakeResolution: 10
-    m_AtlasSize: 1024
+    m_BakeResolution: 30
+    m_AtlasSize: 2048
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -74,8 +74,8 @@ LightmapSettings:
     m_MixedBakeMode: 2
     m_BakeBackend: 1
     m_PVRSampling: 1
-    m_PVRDirectSampleCount: 32
-    m_PVRSampleCount: 256
+    m_PVRDirectSampleCount: 256
+    m_PVRSampleCount: 1024
     m_PVRBounces: 3
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
@@ -46127,7 +46127,7 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 8534bc5810197ed418f55ab6f10fead7, type: 2}
     - target: {fileID: 100000, guid: 1b083ac09fd8cfa46ad30695f8329484, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b083ac09fd8cfa46ad30695f8329484, type: 3}
