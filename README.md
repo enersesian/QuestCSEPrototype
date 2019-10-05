@@ -1,12 +1,12 @@
 # QuestCSEPrototype
 Oculus Quest prototype for a computer science educational experience. Current level is introduction lesson on binary math for middle school and high school students. Next step is a low fidelity prototype of the next level, which is bubble sort. User testing for buble sort prototype is November 22nd, 2019. Bubble sort learning mechanics should work well with the physical movements that our interactions are designed around. Developer blog: http://artncoding.com/vrcsapp-blog Design doc: http://artncoding.com/vrcsapp-design-doc
 
-5/28/19 - Completed first prototype iteration
-6/08/19 - Completed user testing on 50 middle school students
-6/14/19 - Learning assessments confirm VR experience is as effective as an instructor led lesson following csunplugged.org
-6/28/19 - Finish refining core interactions, UX/UI, and learning goals before moving on to graphics, narrative and audio
-9/24/19 - Completed refinement of binary math level and presented demo at Oculus Connect 6 Educational Summit
-10/5/19 - Finished cleaning scripts after OC6 demo
+5/28/19 - Completed first prototype iteration<br/>
+6/08/19 - Completed user testing on 50 middle school students<br/>
+6/14/19 - Learning assessments confirm VR experience is as effective as an instructor led lesson following csunplugged.org<br/>
+6/28/19 - Finish refining core interactions, UX/UI, and learning goals before moving on to graphics, narrative and audio<br/>
+9/24/19 - Completed refinement of binary math level and presented demo at Oculus Connect 6 Educational Summit<br/>
+10/5/19 - Finished cleaning scripts after OC6 demo<br/>
 
 000_OC6Demo.unity is setup to play on Oculus Rift in editor and builds to Oculus Quest. Both use touch controllers, and has standard grab input on levers and grabbables. Level is 20'x20'. For Rift use in editor, use thumbpad on right or left controller, defaults to right, to move around scene. Press all four buttons, A B X Y, to reset station height mid-game. Station height gets set multiple times at beginning based on user height but may need to be reset mid-game. 
 
