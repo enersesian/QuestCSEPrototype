@@ -17,7 +17,9 @@ public class ColorStation : MonoBehaviour
         colorText.text = "Black";
     }
 
-    public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
+    //Currently not using, meant for Rift testing, but now use quick move feature
+    //Sets distance of tutorial walls based on 20'x20' or 12'x12' space
+    public void SetLevelDistance(bool isNear)
     {
         if (isNear) transform.position = farLocation.position;
         else transform.position = nearLocation.position;
@@ -64,7 +66,7 @@ public class ColorStation : MonoBehaviour
         }
     }
 
-    public void RunOutputButtonPushed()
+    public void RunOutputLeverPulled()
     {
         foreach (LeverPulled lever in levers) lever.Deactivate();
     }

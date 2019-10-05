@@ -5,19 +5,21 @@ using UnityEngine;
 public class UserManager : MonoBehaviour
 {
     public static UserManager instance;
-    
+
+    private enum HandPreference { Right, Left}
     [SerializeField]
-    [Range(0.01f, 0.03f)]
-    [Tooltip("Move with right thumbstick")]
+    [Tooltip("Pick hand for Rift quick move")]
+    private HandPreference handPreference;
+    [SerializeField]
+    [Range(0.01f, 0.02f)]
+    [Tooltip("Movement speed with thumbstick")]
     private float movementSpeed;
     [SerializeField]
     private OVRGrabber leftHandGrabber, rightHandGrabber;
-    [SerializeField]
-    private Transform rightHandAnchor;
-    private Vector2 thumbAxis;
+    private Transform rightHandAnchor, leftHandAnchor;
+    private Vector2 thumbAxis, localThumbAxis;
     private float doubleTapTimer, holdTriggerTimer;
     private bool isNear;
-    public Animator tutorialWalls;
 
     private void Awake()
     {
@@ -30,28 +32,41 @@ public class UserManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        rightHandAnchor = rightHandGrabber.transform;
+        leftHandAnchor = leftHandGrabber.transform;
+    }
+
+    /// <summary>
+    /// Call this when user releases a lever as found interactions got sticky without this forced release
+    /// </summary>
+    public void ForceGrabberRelease(OVRGrabbable grabbable)
+    {
+        if (grabbable != null)
+        {
+            leftHandGrabber.ForceRelease(grabbable);
+            rightHandGrabber.ForceRelease(grabbable);
+        }
     }
 
     private void Update ()
     {
-        if(Application.isEditor) //quick move feature for in editor rift testing
+        //quick move feature for in editor rift testing
+        if (Application.isEditor) 
         {
-            thumbAxis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) * movementSpeed;
-            //Use the direction that the right hand is pointing to orient the direction to move the task stations around the user
-            thumbAxis.x = (thumbAxis.x * rightHandAnchor.forward.z) + (thumbAxis.y * rightHandAnchor.forward.x);
-            thumbAxis.y = (thumbAxis.x * rightHandAnchor.forward.x) + (thumbAxis.y * rightHandAnchor.forward.z);
-            LevelManager.instance.transform.position = new Vector3(LevelManager.instance.transform.position.x - thumbAxis.x,
-                LevelManager.instance.transform.position.y, LevelManager.instance.transform.position.z - thumbAxis.y);
+            if (handPreference == HandPreference.Right) QuickMove(OVRInput.Get(OVRInput.RawAxis2D.RThumbstick), rightHandAnchor.forward);
+            else QuickMove(OVRInput.Get(OVRInput.RawAxis2D.LThumbstick), leftHandAnchor.forward);
         }
 
+        //hold down all four buttons to reset station heights if user is not comfortable
         if (OVRInput.Get(OVRInput.Button.One) && OVRInput.Get(OVRInput.Button.Two) && OVRInput.Get(OVRInput.Button.Three) && OVRInput.Get(OVRInput.Button.Four))
         {
-            LevelManager.instance.SetStationHeight();
+            LevelManager.instance.SetStationHeight(); 
         }
+
+        //double tap commands for setting station height, resetting level, and moving stations closer
         /*
         if (OVRInput.Get(OVRInput.Button.One) && OVRInput.Get(OVRInput.Button.Two)) //user is holding down A and B on right controller
         {
-            //tutorialWalls.SetTrigger("MoveDown");
             if(OVRInput.GetDown(OVRInput.Button.Three)) //User double tapped X on left controller to set user height manually
             {
                 if (Time.time - doubleTapTimer < 0.3f)
@@ -85,15 +100,13 @@ public class UserManager : MonoBehaviour
         */
     }
 
-    /// <summary>
-    /// Call when user releases a lever as found interactions got sticky without this forced release
-    /// </summary>
-    public void ForceGrabberRelease(OVRGrabbable grabbable)
+    private void QuickMove(Vector2 rawThumbstickAxis, Vector3 handAnchor)
     {
-        if (grabbable != null)
-        {
-            leftHandGrabber.ForceRelease(grabbable);
-            rightHandGrabber.ForceRelease(grabbable);
-        }
+        thumbAxis = movementSpeed * rawThumbstickAxis;
+        //Use the direction that the preferred hand is pointing to orient the direction to move the task stations around the user
+        localThumbAxis.x = (-thumbAxis.x * handAnchor.z) + (-thumbAxis.y * handAnchor.x);
+        localThumbAxis.y = (thumbAxis.x * handAnchor.x) + (-thumbAxis.y * handAnchor.z);
+        LevelManager.instance.transform.position = new Vector3(LevelManager.instance.transform.position.x + localThumbAxis.x,
+            LevelManager.instance.transform.position.y, LevelManager.instance.transform.position.z + localThumbAxis.y);
     }
 }

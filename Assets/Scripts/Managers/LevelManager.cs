@@ -7,8 +7,11 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
+    //keeping hitColor for now as we may reintroduce the buttons into the experience later
     [Tooltip("Active and disabled colors for levers")]
     public Color activeColor, disabledColor, hitColor;
+
+    //refactor: create a station base class and turn these into singletons
     [Space(10)]
     public TaskStation taskStation;
     public NumberStation numberStation;
@@ -17,9 +20,11 @@ public class LevelManager : MonoBehaviour
     public OutputStation outputStation;
     public TutorialStation tutorialStation;
 
+    //used for data collection
     [SerializeField]
     private Transform centerEyeAnchor, leftHandAnchor, rightHandAnchor;
 
+    //refactor: Convert task status and requirements from int arrays into enums
     private int currentTask;
     //0 = task, 1 = number bit 1, 2 = number bit 2, 3 = number bit 3, 4 = size bit 1, 5 = size bit 2
     //6 = color red bit, 7 = color green bit, 8 = color blue bit, possibly add shape later
@@ -44,10 +49,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    //Methods to handle user data collection
-
     private void Start()
     {
+        //User data collection initialization
         if (!Application.isEditor)
         {
             //Start recording text data, user started level and tutorial task 00
@@ -61,16 +65,18 @@ public class LevelManager : MonoBehaviour
             textRecordTimer = Time.time;
         }
 
-        Invoke("SetStationHeight", 0.5f); //set station height multiple times in beginning as dont know when headset passed to user
+        //set station height multiple times in beginning as dont know when headset passed to user
+        Invoke("SetStationHeight", 0.5f); 
         Invoke("SetStationHeight", 1f);
         Invoke("SetStationHeight", 2f);
-        tutorialStation.StartTutorialNonInteractive(); //Begin the tutorial
-       
-        
+
+        //Begin the tutorial session of the experience
+        tutorialStation.StartTutorialNonInteractive();
     }
 
     private void Update()
     {
+        //record head position/rotation and hand positions every 0.5 seconds
         if (Time.time - textRecordTimer >= 0.5f && !Application.isEditor)
         {
             recordingValues = DateTime.Now.ToString("hh:mm:ss:ff") + "," + 
@@ -86,6 +92,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnApplicationPause(bool pause)
     {
+        //pause recordings if user temporary leaves app
         if (!Application.isEditor)
         {
             if (pause)
@@ -101,7 +108,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    //Setters
+    //Setters for user interactions with the number, shape, and color stations
 
     /// <summary>
     /// Set distance of play area, ie station distance, from 20'x20' to 12'x12' and vice versa
@@ -150,6 +157,7 @@ public class LevelManager : MonoBehaviour
 
     public void SetNumber(int bit, int bitStatus)
     {
+        //recording user's interactions with the number station
         if (!Application.isEditor)
         {
             if (bit == 1)
@@ -166,19 +174,22 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        if (currentTaskStatus[bit] != bitStatus) 
         {
             currentTaskStatus[bit] = bitStatus;
             currentNumber = currentTaskStatus[1] + (2 * currentTaskStatus[2]) + (4 * currentTaskStatus[3]);
 
             numberStation.UpdateBitText(GetNumber());
             outputStation.UpdateNumText(GetNumber(), currentTask);
-            tutorialStation.TutorialNumberLeverIsPulled(); //only need to call this once at first ever number lever pull, but its just setting a bool to true so leave as is
+            //only need to call this once at first ever number lever pull, but its just setting same bool to true over and over so leave for now
+            tutorialStation.TutorialNumberLeverIsPulled(); 
         }
     }
 
     public void SetColor(int bit, int bitStatus)
     {
+        //recording user's interactions with the color station
         if (!Application.isEditor)
         {
             if (bit == 4)
@@ -195,8 +206,8 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-
-        if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        if (currentTaskStatus[bit] != bitStatus) 
         {
             currentTaskStatus[bit] = bitStatus;
             currentColor = new Color(currentTaskStatus[4], currentTaskStatus[5], currentTaskStatus[6]);
@@ -222,6 +233,7 @@ public class LevelManager : MonoBehaviour
 
     public void SetShape(int bit, int bitStatus)
     {
+        //recording user's interactions with the shape station
         if (!Application.isEditor)
         {
             if (bit == 7)
@@ -234,8 +246,8 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-
-        if (currentTaskStatus[bit] != bitStatus) //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        //prevents resetting bit to same bitStatus multiple times when user places lever in new position
+        if (currentTaskStatus[bit] != bitStatus) 
         {
             currentTaskStatus[bit] = bitStatus;
             if (currentTaskStatus[7] == 0 && currentTaskStatus[8] == 0) currentShape = "Cube";
@@ -253,7 +265,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    //Getters
+    //Getters for current state of task
 
     public int GetNumber()
     {
@@ -277,7 +289,8 @@ public class LevelManager : MonoBehaviour
 
     //Task event handlers
 
-    public void GetTaskLeverPulled(string inputText) //start task message
+    //initialize task since pulling the get task lever starts off each task
+    public void GetTaskLeverPulled(string inputText) 
     {
         if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
 
@@ -384,10 +397,10 @@ public class LevelManager : MonoBehaviour
     {
         if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
 
-        numberStation.RunOutputButtonPushed();
-        colorStation.RunOutputButtonPushed();
-        shapeStation.RunOutputButtonPushed();
-        outputStation.RunOutputButtonPushed(GetNumber(), currentColor, currentShape);
+        numberStation.RunOutputLeverPulled();
+        colorStation.RunOutputLeverPulled();
+        shapeStation.RunOutputLeverPulled();
+        outputStation.RunOutputLeverPulled(GetNumber(), currentColor, currentShape);
         if (!isTutorialRunOutputLeverPulled)
         {
             isTutorialRunOutputLeverPulled = true;
@@ -416,7 +429,8 @@ public class LevelManager : MonoBehaviour
         tutorialStation.TutorialContainerPickedUp();
     }
 
-    public void OutputSent(string inputText) //end of a task
+    //user ends task, success or failure resets stations for repeat of task or give new task
+    public void OutputSent(string inputText) 
     {
         if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
 
@@ -427,6 +441,7 @@ public class LevelManager : MonoBehaviour
             currentTaskStatus[5] == currentTaskRequirements[5] && currentTaskStatus[6] == currentTaskRequirements[6] &&
             currentTaskStatus[7] == currentTaskRequirements[7] && currentTaskStatus[8] == currentTaskRequirements[8])
         {
+            //finished last task and end the game
             if (currentTask == 7)
             {
 
@@ -435,6 +450,7 @@ public class LevelManager : MonoBehaviour
 
                 LevelComplete();
             }
+            //finished a task, give next task
             else
             {
                 if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " successful - " + DateTime.Now.ToString("hh:mm:ss"));
@@ -442,9 +458,11 @@ public class LevelManager : MonoBehaviour
                 SetTask("success", currentTask + 1);
             }
         }
+
         else
         {
             if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " failed - " + DateTime.Now.ToString("hh:mm:ss"));
+
             SetTask("failure", currentTask);
         }
         if (!isTutorialOutputSent)
@@ -468,7 +486,6 @@ public class LevelManager : MonoBehaviour
             }
         }
             
-
         tutorialStation.SetTutorialLeverBool(isTutorialLeverOn);
     }
 

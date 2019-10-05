@@ -7,7 +7,7 @@ public class TaskStation : MonoBehaviour
 {
     public Text taskText, taskNumberText;
     public LeverPulled leverGetTask, leverSendOutput;
-    public Transform spawnLocation, miniSpawnLocation, farLocation, nearLocation;
+    public Transform farLocation, nearLocation;
     public Sprite cubeIcon, sphereIcon, coneIcon, ringIcon;
     public Image taskColorImage;
     public Transform taskShapeList;
@@ -20,11 +20,12 @@ public class TaskStation : MonoBehaviour
         taskShapeList.GetChild(2).gameObject.SetActive(false);
         taskShapeList.GetChild(3).gameObject.SetActive(false);
         taskColorImage.color = new Color(0f, 0f, 0f, 0f);
-
         //if (Application.isEditor) transform.position = nearLocation.position;
     }
 
-    public void SetLevelDistance(bool isNear) //Sets distance of station based on 20'x20' or 12'x12' space
+    //Currently not using, meant for Rift testing, but now use quick move feature
+    //Sets distance of tutorial walls based on 20'x20' or 12'x12' space
+    public void SetLevelDistance(bool isNear) 
     {
         if (isNear) transform.position = farLocation.position;  //near to far
         else transform.position = nearLocation.position;
@@ -35,7 +36,6 @@ public class TaskStation : MonoBehaviour
         if (condition == "start") taskText.text = "Waiting for new task...\n\nPull lever on right to get task.";
         if(condition == "success") taskText.text = "You performed the task perfectly! \n\nPull lever on right for next task.";
         if(condition == "failure") taskText.text = "Incorrect Output! \n\nPull lever on right to try again.";
-
         leverGetTask.SetTask();
     }
 
@@ -126,19 +126,16 @@ public class TaskStation : MonoBehaviour
 
     public void RunOutput()
     {
-        //sendOutputButton.ResetButton(true);
         leverSendOutput.SetToZeroPosition();
     }
 
     public void PlacedOutput()
     {
-        //sendOutputButton.ResetButton(true);
         leverSendOutput.Activate();
     }
 
     public void RemovedOutput()
     {
-        //sendOutputButton.ResetButton(false);
         leverSendOutput.Deactivate();
     }
 }
