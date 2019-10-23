@@ -8,6 +8,7 @@ ModelImporter:
     400000: TutorialWall
     400002: //RootNode
     2100000: Default_Prototype
+    2100002: TutorialWallMat
     2300000: TutorialWall
     3300000: TutorialWall
     4300000: TutorialWall

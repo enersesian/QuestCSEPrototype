@@ -53,7 +53,7 @@ public class TutorialStation : MonoBehaviour
         //if (Application.isEditor) eggyWaitForWallDrop = 5f;
         leverTutorial.Deactivate();
         //Currently have walls placed low for easy level viewing in editor, resets to up position at runtime
-        tutorialWalls.transform.position = new Vector3(0f, -0.22f, 0f);
+        //tutorialWalls.transform.position = new Vector3(0f, -0.22f, 0f);
 	}
 
     //Starts next tutorial step and updates top noninteractive part of instructions
@@ -260,9 +260,9 @@ public class TutorialStation : MonoBehaviour
                     if (isGetTaskLeverPulled)
                     {
                         //parent eggy under levelmanager to keep eggy but remove tutorial station
-                        tutorialDisplay.transform.parent = LevelManager.instance.transform;
+                        tutorialDisplay.transform.parent = LevelManager.instance.transform.GetChild(1);
                         //disabled tutorial station but not the parent with the TutorialStation script
-                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        transform.GetChild(0).gameObject.SetActive(false);
                         StartTutorialNonInteractive();
                     }
                     break;
@@ -368,10 +368,12 @@ public class TutorialStation : MonoBehaviour
     {
         isTutorialLeverOn = leverState;
 
-        if (leverState && !Application.isEditor)
+        /*
+        if (leverState && LevelManager.shouldRecordUserData)
         {
             HCInvestigatorManager.instance.WriteTextData(0, "User pulled tutorial lever at " + DateTime.Now.ToString("hh:mm:ss"));
         }
+        */
     }
 
     public void GetTaskLeverPulled(int currentTask)

@@ -8,6 +8,7 @@ ModelImporter:
     400000: Cylinder
     400002: //RootNode
     2100000: Default_Prototype
+    2100002: CylinderMat
     2300000: Cylinder
     3300000: Cylinder
     4300000: Cylinder

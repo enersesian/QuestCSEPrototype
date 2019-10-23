@@ -23,6 +23,8 @@ public class LevelManager : MonoBehaviour
     //used for data collection
     [SerializeField]
     private Transform centerEyeAnchor, leftHandAnchor, rightHandAnchor;
+    [SerializeField]
+    private bool shouldRecordUserData;
 
     //refactor: Convert task status and requirements from int arrays into enums
     private int currentTask;
@@ -52,7 +54,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         //User data collection initialization
-        if (!Application.isEditor)
+        if (shouldRecordUserData)
         {
             //Start recording text data, user started level and tutorial task 00
             HCInvestigatorManager.instance.StartRecordingText(0);
@@ -65,6 +67,7 @@ public class LevelManager : MonoBehaviour
             textRecordTimer = Time.time;
         }
 
+        SetLevelScale();
         //set station height multiple times in beginning as dont know when headset passed to user
         Invoke("SetStationHeight", 0.5f); 
         Invoke("SetStationHeight", 1f);
@@ -77,7 +80,7 @@ public class LevelManager : MonoBehaviour
     private void Update()
     {
         //record head position/rotation and hand positions every 0.5 seconds
-        if (Time.time - textRecordTimer >= 0.5f && !Application.isEditor)
+        if (Time.time - textRecordTimer >= 0.5f && shouldRecordUserData)
         {
             recordingValues = DateTime.Now.ToString("hh:mm:ss:ff") + "," + 
                 centerEyeAnchor.position.x.ToString("F3") + "," + centerEyeAnchor.position.y.ToString("F3") + "," + centerEyeAnchor.position.z.ToString("F3") + "," +
@@ -93,7 +96,7 @@ public class LevelManager : MonoBehaviour
     private void OnApplicationPause(bool pause)
     {
         //pause recordings if user temporary leaves app
-        if (!Application.isEditor)
+        if (shouldRecordUserData)
         {
             if (pause)
             {
@@ -128,7 +131,15 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void SetStationHeight()
     {
-        transform.position = new Vector3(transform.position.x, centerEyeAnchor.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, centerEyeAnchor.position.y - 2, transform.position.z);
+    }
+
+    /// <summary>
+    /// Turn on/off scaling effect on level based on user set boundary size
+    /// </summary>
+    public void SetLevelScale()
+    {
+        GetComponent<LevelScaling>().SetLevelScale();
     }
 
     /// <summary>
@@ -158,7 +169,7 @@ public class LevelManager : MonoBehaviour
     public void SetNumber(int bit, int bitStatus)
     {
         //recording user's interactions with the number station
-        if (!Application.isEditor)
+        if (shouldRecordUserData)
         {
             if (bit == 1)
             {
@@ -190,7 +201,7 @@ public class LevelManager : MonoBehaviour
     public void SetColor(int bit, int bitStatus)
     {
         //recording user's interactions with the color station
-        if (!Application.isEditor)
+        if (shouldRecordUserData)
         {
             if (bit == 4)
             {
@@ -234,7 +245,7 @@ public class LevelManager : MonoBehaviour
     public void SetShape(int bit, int bitStatus)
     {
         //recording user's interactions with the shape station
-        if (!Application.isEditor)
+        if (shouldRecordUserData)
         {
             if (bit == 7)
             {
@@ -292,7 +303,7 @@ public class LevelManager : MonoBehaviour
     //initialize task since pulling the get task lever starts off each task
     public void GetTaskLeverPulled(string inputText) 
     {
-        if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
+        if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
 
         switch (currentTask)
         {
@@ -395,7 +406,7 @@ public class LevelManager : MonoBehaviour
 
     public void RunOutputLeverPulled(string inputText)
     {
-        if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
+        if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
 
         numberStation.RunOutputLeverPulled();
         colorStation.RunOutputLeverPulled();
@@ -432,7 +443,7 @@ public class LevelManager : MonoBehaviour
     //user ends task, success or failure resets stations for repeat of task or give new task
     public void OutputSent(string inputText) 
     {
-        if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
+        if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, inputText + DateTime.Now.ToString("hh:mm:ss"));
 
         int number = GetNumber();
         outputStation.OutputSent(number);
@@ -445,15 +456,15 @@ public class LevelManager : MonoBehaviour
             if (currentTask == 7)
             {
 
-                if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " successful - " + DateTime.Now.ToString("hh:mm:ss"));
-                if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, "Level complete - " + DateTime.Now.ToString("hh:mm:ss"));
+                if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " successful - " + DateTime.Now.ToString("hh:mm:ss"));
+                if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, "Level complete - " + DateTime.Now.ToString("hh:mm:ss"));
 
                 LevelComplete();
             }
             //finished a task, give next task
             else
             {
-                if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " successful - " + DateTime.Now.ToString("hh:mm:ss"));
+                if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " successful - " + DateTime.Now.ToString("hh:mm:ss"));
 
                 SetTask("success", currentTask + 1);
             }
@@ -461,7 +472,7 @@ public class LevelManager : MonoBehaviour
 
         else
         {
-            if (!Application.isEditor) HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " failed - " + DateTime.Now.ToString("hh:mm:ss"));
+            if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, "Task " + currentTask + " failed - " + DateTime.Now.ToString("hh:mm:ss"));
 
             SetTask("failure", currentTask);
         }
@@ -474,7 +485,7 @@ public class LevelManager : MonoBehaviour
 
     public void TutorialLeverPulled(bool isTutorialLeverOn)
     {
-        if (!Application.isEditor)
+        if (shouldRecordUserData)
         {
             if (isTutorialLeverOn)
             {
