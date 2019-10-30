@@ -2646,8 +2646,6 @@ MonoBehaviour:
   taskNumberText: {fileID: 114948385978704338}
   leverGetTask: {fileID: 114562323679042988}
   leverSendOutput: {fileID: 114675024160104376}
-  spawnLocation: {fileID: 0}
-  miniSpawnLocation: {fileID: 0}
   farLocation: {fileID: 0}
   nearLocation: {fileID: 0}
   cubeIcon: {fileID: 21300000, guid: 42ab5fe92cb436047b001bbd4c737083, type: 3}
