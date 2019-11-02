@@ -4,14 +4,17 @@ using UnityEngine;
 
 public enum BubbleSortState
 {
-    Welcome,
-    Introduction,
-    Task01,
-    Task02,
-    Task03,
-    Task04,
-    Task05,
-    Task06,
-    Task07,
-    Congratulations
+    IntroductionToNextButton,
+    IntroductionToSwapButton,
+    IntroductionToSubmitButton,
+    IntroductionToThreeElementList01,
+    IntroductionToThreeElementList02,
+    IntroductionToThreeElementList03,
+    IntroductionToThreeElementList04,
+    IntroductionToThreeElementList05,
+    IntroductionToThreeElementList06,
+    IntroductionToThreeElementList07,
+    IntroductionToThreeElementList08,
+    IntroductionToThreeElementList09,
+    BeginnerBubbleSortTask01,
 }

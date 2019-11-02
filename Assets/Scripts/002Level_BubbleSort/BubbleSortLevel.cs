@@ -11,7 +11,7 @@ public class BubbleSortLevel : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        SetAppState(BubbleSortState.Welcome);
+        SetAppState(BubbleSortState.IntroductionToNextButton);
     }
 
     public void RegisterListener(Listener newListener)
@@ -30,8 +30,12 @@ public class BubbleSortLevel : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SetAppState(BubbleSortState.Welcome);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SetAppState(BubbleSortState.Introduction);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SetAppState(BubbleSortState.Task01);
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SetAppState(BubbleSortState.IntroductionToNextButton);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SetAppState(BubbleSortState.BeginnerBubbleSortTask01);
+    }
+
+    public void ButtonPushed(string buttonName)
+    {
+        if (currentState == BubbleSortState.IntroductionToNextButton && buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToSwapButton);
     }
 }

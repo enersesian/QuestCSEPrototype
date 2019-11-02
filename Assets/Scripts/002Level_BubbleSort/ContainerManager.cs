@@ -29,11 +29,12 @@ public class ContainerManager : Listener
 
         switch (currentState)
         {
-            case BubbleSortState.Welcome:
+            case BubbleSortState.IntroductionToNextButton:
                 ResetContainers();
+                Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
-            case BubbleSortState.Task01:
+            case BubbleSortState.IntroductionToSwapButton:
                 ResetContainers();
                 containers[0].transform.localPosition = new Vector3(-0.25f, 0f, 0f);
                 containers[0].SetActive(true);

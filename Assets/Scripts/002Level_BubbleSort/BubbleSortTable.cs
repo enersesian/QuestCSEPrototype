@@ -11,8 +11,9 @@ public class BubbleSortTable : Listener
     {
         switch (currentState)
         {
-            case BubbleSortState.Welcome:
+            case BubbleSortState.IntroductionToNextButton:
                 tableModel.transform.localScale = new Vector3(1.3f, tableModel.transform.localScale.y, tableModel.transform.localScale.y);
+                Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
             default:

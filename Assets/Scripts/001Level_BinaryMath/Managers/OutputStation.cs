@@ -7,7 +7,6 @@ public class OutputStation : MonoBehaviour
 {
     public Text stationText;
     public Transform cubeGrabbable, cubeGrabbleStartPosition, spawnLocation, tempSpawnLocation, farLocation, nearLocation;
-    public ButtonPushed runButton;
     public LeverPulled leverRunOutput;
     public GameObject cube, sphere, cone, ring, currentShapeSelection;
     public GameObject[] objectIconsLarge;
