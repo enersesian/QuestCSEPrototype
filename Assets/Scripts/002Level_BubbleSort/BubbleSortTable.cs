@@ -11,8 +11,18 @@ public class BubbleSortTable : Listener
     {
         switch (currentState)
         {
-            case BubbleSortState.IntroductionToNextButton:
+            case BubbleSortState.IntroductionToNextButton: //size for 2 containers
                 tableModel.transform.localScale = new Vector3(1.3f, tableModel.transform.localScale.y, tableModel.transform.localScale.y);
+                Debug.Log(gameObject.name + " set to " + currentState.ToString());
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList01: //size for 3 containers
+                tableModel.transform.localScale = new Vector3(3f, tableModel.transform.localScale.y, tableModel.transform.localScale.y);
+                Debug.Log(gameObject.name + " set to " + currentState.ToString());
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask01: //size for 3 containers
+                tableModel.transform.localScale = new Vector3(3f, tableModel.transform.localScale.y, tableModel.transform.localScale.y);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 

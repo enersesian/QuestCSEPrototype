@@ -8,6 +8,8 @@ abstract public class Listener : MonoBehaviour
 
     public virtual void SetListenerState(BubbleSortState currentState) { }
 
+    public virtual void ButtonPushed(string buttonName) { }
+
     protected void Awake()
     {
         if(level == null) level = GameObject.FindGameObjectWithTag("GameController").GetComponent<BubbleSortLevel>();

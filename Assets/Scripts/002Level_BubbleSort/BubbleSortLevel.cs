@@ -34,8 +34,76 @@ public class BubbleSortLevel : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha2)) SetAppState(BubbleSortState.BeginnerBubbleSortTask01);
     }
 
+    private void SetAppStateToIntroductionToCyclingThroughList()
+    {
+        SetAppState(BubbleSortState.IntroductionToCyclingThroughList);
+    }
+
     public void ButtonPushed(string buttonName)
     {
-        if (currentState == BubbleSortState.IntroductionToNextButton && buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToSwapButton);
+        
+        switch (currentState)
+        {
+            case BubbleSortState.IntroductionToNextButton:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToSwapButton);
+                break;
+
+            case BubbleSortState.IntroductionToSwapButton:
+                if (buttonName == "ButtonSwap")
+                {
+                    foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                    Invoke("SetAppStateToIntroductionToCyclingThroughList", 6f);
+                }
+                break;
+
+            case BubbleSortState.IntroductionToCyclingThroughList:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToFinishingBubbleSort);
+                break;
+
+            case BubbleSortState.IntroductionToFinishingBubbleSort:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList01);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList01:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList02);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList02:
+                if (buttonName == "ButtonSwap") SetAppState(BubbleSortState.IntroductionToThreeElementList03);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList03:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList04);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList04:
+                if (buttonName == "ButtonSwap") SetAppState(BubbleSortState.IntroductionToThreeElementList05);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList05:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList06);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList06:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList07);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList07:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList08);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList08:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList09);
+                break;
+
+            case BubbleSortState.IntroductionToThreeElementList09:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.BeginnerBubbleSortTask01);
+                break;
+
+            default:
+                foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                break;
+        }
+        
     }
 }

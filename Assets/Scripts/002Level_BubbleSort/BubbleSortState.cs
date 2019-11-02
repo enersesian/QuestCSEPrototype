@@ -6,7 +6,8 @@ public enum BubbleSortState
 {
     IntroductionToNextButton,
     IntroductionToSwapButton,
-    IntroductionToSubmitButton,
+    IntroductionToCyclingThroughList,
+    IntroductionToFinishingBubbleSort,
     IntroductionToThreeElementList01,
     IntroductionToThreeElementList02,
     IntroductionToThreeElementList03,
