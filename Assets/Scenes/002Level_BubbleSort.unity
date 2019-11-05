@@ -2262,6 +2262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a34c5aef9df9a4ab8d06a910297001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphere: {fileID: 1386937103998186, guid: 77330af032bebb341a32de1d9c1d5433, type: 2}
 --- !u!1 &569342280
 GameObject:
   m_ObjectHideFlags: 0
@@ -7361,6 +7362,18 @@ Prefab:
     - target: {fileID: 1109780100038482, guid: 219a8b6f1f0ac8245ace507a40072960, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321568706867802, guid: 219a8b6f1f0ac8245ace507a40072960, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321568706867802, guid: 219a8b6f1f0ac8245ace507a40072960, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321568706867802, guid: 219a8b6f1f0ac8245ace507a40072960, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 219a8b6f1f0ac8245ace507a40072960, type: 2}

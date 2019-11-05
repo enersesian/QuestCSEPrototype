@@ -15,21 +15,22 @@ public class RandomMovement : MonoBehaviour
 
     public float min = -1f, max = 1f;
 
-    public bool isSent = false;
+    public bool isSent = false, originalHeightInclusion;
 
-    private float height;
+    private float height, heightOffset;
     private Vector3 position;
 
     private void Start()
     {
         xScale *= Random.Range(0.3f, 0.6f);
+        if (originalHeightInclusion) heightOffset = transform.localPosition.y;
     }
 
     void Update()
     {
         if (!isSent)
         {
-            height = (0.4f*Mathf.PerlinNoise(Time.time * xScale, 0.0f));
+            height = (0.4f*Mathf.PerlinNoise(Time.time * xScale, 0.0f) + heightOffset);
             position = transform.localPosition;
             position.y = height;
             transform.localPosition = position;

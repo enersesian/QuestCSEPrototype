@@ -5,8 +5,12 @@ using UnityEngine;
 public class ContainerManager : Listener
 {
     private GameObject[] containers = new GameObject[8];
+    private int[] containerContents = new int[8];
     private IEnumerator coroutine;
     private int containerOnLeftSideOfTray;
+    private Vector3 sphereLocation;
+    public GameObject sphere;
+    private GameObject primitive;
 
     private void Awake()
     {
@@ -14,6 +18,7 @@ public class ContainerManager : Listener
         for(int i = 0; i < containers.Length; i++)
         {
             containers[i] = transform.GetChild(i).gameObject;
+            containerContents[i] = 0;
         }
     }
 
@@ -29,13 +34,14 @@ public class ContainerManager : Listener
     {
         float yHeightLow = -0.35f, moveTime = 4f;
         
-
         switch(neededAmount)
         {
             case 0:
                 for (int i = 0; i < containers.Length; i++)
                 {
                     containers[i].transform.localPosition = Vector3.zero;
+                    foreach (Transform child in containers[i].transform) Destroy(child.gameObject);
+                    containerContents[i] = 0;
                     containers[i].SetActive(false);
                 }
                 containerOnLeftSideOfTray = -1;
@@ -43,9 +49,28 @@ public class ContainerManager : Listener
 
             case 2:
                 containers[0].SetActive(true);
+                for (int i = 0; i < containerContents[0]; i++)
+                {
+                    Debug.Log("test");
+                    sphereLocation = new Vector3(Random.Range(containers[0].transform.position.x - 0.1f, containers[0].transform.position.x + 0.1f),
+                        Random.Range(containers[0].transform.position.y - 0.1f, containers[0].transform.position.y + 0.1f),
+                        Random.Range(containers[0].transform.position.z - 0.1f, containers[0].transform.position.z + 0.1f));
+                    primitive = Instantiate(sphere);
+                    primitive.transform.position = sphereLocation;
+                    primitive.transform.parent = containers[0].transform;
+                }
                 coroutine = MoveContainer(containers[0], new Vector3(-0.25f, yHeightLow, 0f), new Vector3(-0.25f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containers[1].SetActive(true);
+                for (int i = 0; i < containerContents[1]; i++)
+                {
+                    sphereLocation = new Vector3(Random.Range(containers[1].transform.position.x - 0.1f, containers[1].transform.position.x + 0.1f),
+                        Random.Range(containers[1].transform.position.y - 0.1f, containers[1].transform.position.y + 0.1f),
+                        Random.Range(containers[1].transform.position.z - 0.1f, containers[1].transform.position.z + 0.1f));
+                    primitive = Instantiate(sphere);
+                    primitive.transform.position = sphereLocation;
+                    primitive.transform.parent = containers[1].transform;
+                }
                 coroutine = MoveContainer(containers[1], new Vector3(0.25f, yHeightLow, 0f), new Vector3(0.25f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
@@ -96,7 +121,6 @@ public class ContainerManager : Listener
         Vector3 rightPosition = containers[containerOnLeftSideOfTray + 1].transform.localPosition;
         while (elapsedTime < moveTime)
         {
-            
             containers[containerOnLeftSideOfTray].transform.localPosition = Vector3.Slerp(leftPosition, rightPosition, (elapsedTime / moveTime));
             containers[containerOnLeftSideOfTray + 1].transform.localPosition = Vector3.Slerp(rightPosition, leftPosition, (elapsedTime / moveTime));
             containers[containerOnLeftSideOfTray + 1].transform.localPosition = new Vector3(containers[containerOnLeftSideOfTray + 1].transform.localPosition.x, containers[containerOnLeftSideOfTray + 1].transform.localPosition.y, -containers[containerOnLeftSideOfTray + 1].transform.localPosition.z);
@@ -123,7 +147,6 @@ public class ContainerManager : Listener
 
     public override void SetListenerState(BubbleSortState currentState)
     {
-
         switch (currentState)
         {
             case BubbleSortState.IntroductionToNextButton:
@@ -132,6 +155,8 @@ public class ContainerManager : Listener
                 break;
 
             case BubbleSortState.IntroductionToSwapButton:
+                containerContents[0] = (int)Random.Range(5, 9);
+                containerContents[1] = (int)Random.Range(1, 4);
                 ResetContainers(2);
                 break;
 
