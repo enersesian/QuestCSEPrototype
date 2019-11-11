@@ -40,6 +40,16 @@ public class BubbleSortLevel : MonoBehaviour {
         SetAppState(BubbleSortState.IntroductionToCyclingThroughList);
     }
 
+    private void SetAppStateToIntroductionToThreeElementList03()
+    {
+        SetAppState(BubbleSortState.IntroductionToThreeElementList03);
+    }
+
+    private void SetAppStateToIntroductionToThreeElementList05()
+    {
+        SetAppState(BubbleSortState.IntroductionToThreeElementList05);
+    }
+
     public void ButtonPushed(string buttonName)
     {
         
@@ -66,11 +76,19 @@ public class BubbleSortLevel : MonoBehaviour {
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList01:
-                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList02);
+                if (buttonName == "ButtonNext")
+                {
+                    foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                    SetAppState(BubbleSortState.IntroductionToThreeElementList02);
+                }
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList02:
-                if (buttonName == "ButtonSwap") SetAppState(BubbleSortState.IntroductionToThreeElementList03);
+                if (buttonName == "ButtonSwap")
+                {
+                    foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                    Invoke("SetAppStateToIntroductionToThreeElementList03", 4f);
+                }
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList03:
@@ -78,7 +96,11 @@ public class BubbleSortLevel : MonoBehaviour {
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList04:
-                if (buttonName == "ButtonSwap") SetAppState(BubbleSortState.IntroductionToThreeElementList05);
+                if (buttonName == "ButtonSwap")
+                {
+                    foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                    Invoke("SetAppStateToIntroductionToThreeElementList05", 4f);
+                }
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList05:

@@ -12,10 +12,25 @@ public class BubbleSortTray : Listener
     private ButtonPushable buttonSwap, buttonNext;
     private IEnumerator coroutine;
     private string passiveInstruction, activeInstruction;
+    private Vector3 trayEndPosition;
 
     private void Awake()
     {
         base.Awake();
+    }
+
+    private IEnumerator TrayTransition(Vector3 startPosition, Vector3 endPosition, float moveTime = 4f, float waitTime = 0f)
+    {
+        yield return new WaitForSeconds(waitTime);
+        float elapsedTime = 0;
+        while (elapsedTime < moveTime)
+        {
+            transform.localPosition = Vector3.Lerp(startPosition, endPosition, (elapsedTime / moveTime));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.localPosition = endPosition;
+        yield return null;
     }
 
     private IEnumerator TextTransition(Text textElement, Color startColor, Color endColor, string endText, float moveTime = 4f, float waitTime = 0f)
@@ -29,7 +44,7 @@ public class BubbleSortTray : Listener
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        //if(endColor.a == 0) textElement.text = "";
+        textElement.color = endColor;
         yield return null;
     }
 
@@ -139,6 +154,9 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList01:
+                trayEndPosition = new Vector3(-0.25f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -154,6 +172,9 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList02:
+                trayEndPosition = new Vector3(0.25f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -184,6 +205,9 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList04:
+                trayEndPosition = new Vector3(-0.25f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -214,6 +238,9 @@ public class BubbleSortTray : Listener
                 break;
                 
             case BubbleSortState.IntroductionToThreeElementList06:
+                trayEndPosition = new Vector3(0.25f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -229,6 +256,9 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList07:
+                trayEndPosition = new Vector3(-0.25f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -244,6 +274,9 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList08:
+                trayEndPosition = new Vector3(0.25f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -274,6 +307,9 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask01:
+                trayEndPosition = new Vector3(-0.25f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);

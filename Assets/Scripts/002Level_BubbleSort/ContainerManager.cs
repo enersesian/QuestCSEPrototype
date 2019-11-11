@@ -28,11 +28,30 @@ public class ContainerManager : Listener
         {
             if (containerOnLeftSideOfTray >= 0) StartCoroutine("SwapContainer");
         }
+
+        if (buttonName == "ButtonNext")
+        {
+            containerOnLeftSideOfTray++;
+            if (containers[containerOnLeftSideOfTray + 1].activeSelf == false) containerOnLeftSideOfTray = 0;
+        }
     }
 
     private void CleanupContainers()
     {
         ResetContainers(0);
+    }
+
+    private void PopulateContainer(int containerPosition)
+    {
+        for (int i = 0; i < containerContents[containerPosition]; i++)
+        {
+            sphereLocation = new Vector3(Random.Range(containers[containerPosition].transform.position.x - 0.05f, containers[containerPosition].transform.position.x + 0.05f),
+                Random.Range(containers[containerPosition].transform.position.y - 0.1f, containers[containerPosition].transform.position.y + 0.1f),
+                Random.Range(containers[containerPosition].transform.position.z - 0.05f, containers[containerPosition].transform.position.z + 0.05f));
+            primitive = Instantiate(sphere);
+            primitive.transform.position = sphereLocation;
+            primitive.transform.parent = containers[containerPosition].transform;
+        }
     }
 
     private void ResetContainers(int neededAmount = 0)
@@ -54,27 +73,11 @@ public class ContainerManager : Listener
 
             case 2:
                 containers[0].SetActive(true);
-                for (int i = 0; i < containerContents[0]; i++)
-                {
-                    sphereLocation = new Vector3(Random.Range(containers[0].transform.position.x - 0.05f, containers[0].transform.position.x + 0.05f),
-                        Random.Range(containers[0].transform.position.y - 0.1f, containers[0].transform.position.y + 0.1f),
-                        Random.Range(containers[0].transform.position.z - 0.05f, containers[0].transform.position.z + 0.05f));
-                    primitive = Instantiate(sphere);
-                    primitive.transform.position = sphereLocation;
-                    primitive.transform.parent = containers[0].transform;
-                }
+                PopulateContainer(0);
                 coroutine = MoveContainer(containers[0], new Vector3(-0.25f, yHeightLow, 0f), new Vector3(-0.25f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containers[1].SetActive(true);
-                for (int i = 0; i < containerContents[1]; i++)
-                {
-                    sphereLocation = new Vector3(Random.Range(containers[1].transform.position.x - 0.1f, containers[1].transform.position.x + 0.1f),
-                        Random.Range(containers[1].transform.position.y - 0.1f, containers[1].transform.position.y + 0.1f),
-                        Random.Range(containers[1].transform.position.z - 0.1f, containers[1].transform.position.z + 0.1f));
-                    primitive = Instantiate(sphere);
-                    primitive.transform.position = sphereLocation;
-                    primitive.transform.parent = containers[1].transform;
-                }
+                PopulateContainer(1);
                 coroutine = MoveContainer(containers[1], new Vector3(0.25f, yHeightLow, 0f), new Vector3(0.25f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
@@ -90,12 +93,15 @@ public class ContainerManager : Listener
 
             case 3:
                 containers[0].SetActive(true);
+                PopulateContainer(0);
                 coroutine = MoveContainer(containers[0], new Vector3(-0.5f, yHeightLow, 0f), new Vector3(-0.5f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containers[1].SetActive(true);
+                PopulateContainer(1);
                 coroutine = MoveContainer(containers[1], new Vector3(0f, yHeightLow, 0f), new Vector3(0f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containers[2].SetActive(true);
+                PopulateContainer(2);
                 coroutine = MoveContainer(containers[2], new Vector3(0.5f, yHeightLow, 0f), new Vector3(0.5f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
@@ -123,15 +129,19 @@ public class ContainerManager : Listener
         Debug.Log(containerOnLeftSideOfTray);
         Vector3 leftPosition = containers[containerOnLeftSideOfTray].transform.localPosition;
         Vector3 rightPosition = containers[containerOnLeftSideOfTray + 1].transform.localPosition;
+        Vector3 rightPositionOffset = new Vector3(containers[containerOnLeftSideOfTray + 1].transform.localPosition.x - 0.01f, containers[containerOnLeftSideOfTray + 1].transform.localPosition.y, containers[containerOnLeftSideOfTray + 1].transform.localPosition.z + 0.01f);
         while (elapsedTime < moveTime)
         {
             containers[containerOnLeftSideOfTray].transform.localPosition = Vector3.Lerp(leftPosition, rightPosition, (elapsedTime / moveTime));
-            containers[containerOnLeftSideOfTray + 1].transform.localPosition = Vector3.Slerp(rightPosition, leftPosition, (elapsedTime / moveTime));
-            containers[containerOnLeftSideOfTray + 1].transform.localPosition = new Vector3(containers[containerOnLeftSideOfTray + 1].transform.localPosition.x, containers[containerOnLeftSideOfTray + 1].transform.localPosition.y, -containers[containerOnLeftSideOfTray + 1].transform.localPosition.z);
+            containers[containerOnLeftSideOfTray + 1].transform.localPosition = Vector3.Slerp(rightPositionOffset, leftPosition, (elapsedTime / moveTime));
+            //what the hell is this line?
+            //containers[containerOnLeftSideOfTray + 1].transform.localPosition = new Vector3(containers[containerOnLeftSideOfTray + 1].transform.localPosition.x, containers[containerOnLeftSideOfTray + 1].transform.localPosition.y, -containers[containerOnLeftSideOfTray + 1].transform.localPosition.z);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         tempGO = containers[containerOnLeftSideOfTray];
+        containers[containerOnLeftSideOfTray].transform.localPosition = rightPosition;
+        containers[containerOnLeftSideOfTray + 1].transform.localPosition = leftPosition;
         containers[containerOnLeftSideOfTray] = containers[containerOnLeftSideOfTray + 1];
         containers[containerOnLeftSideOfTray + 1] = tempGO;
         yield return null;
