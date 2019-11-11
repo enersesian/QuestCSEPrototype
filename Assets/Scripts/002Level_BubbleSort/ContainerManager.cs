@@ -30,6 +30,11 @@ public class ContainerManager : Listener
         }
     }
 
+    private void CleanupContainers()
+    {
+        ResetContainers(0);
+    }
+
     private void ResetContainers(int neededAmount = 0)
     {
         float yHeightLow = -0.35f, moveTime = 4f;
@@ -51,10 +56,9 @@ public class ContainerManager : Listener
                 containers[0].SetActive(true);
                 for (int i = 0; i < containerContents[0]; i++)
                 {
-                    Debug.Log("test");
-                    sphereLocation = new Vector3(Random.Range(containers[0].transform.position.x - 0.1f, containers[0].transform.position.x + 0.1f),
+                    sphereLocation = new Vector3(Random.Range(containers[0].transform.position.x - 0.05f, containers[0].transform.position.x + 0.05f),
                         Random.Range(containers[0].transform.position.y - 0.1f, containers[0].transform.position.y + 0.1f),
-                        Random.Range(containers[0].transform.position.z - 0.1f, containers[0].transform.position.z + 0.1f));
+                        Random.Range(containers[0].transform.position.z - 0.05f, containers[0].transform.position.z + 0.05f));
                     primitive = Instantiate(sphere);
                     primitive.transform.position = sphereLocation;
                     primitive.transform.parent = containers[0].transform;
@@ -81,7 +85,7 @@ public class ContainerManager : Listener
                 StartCoroutine(coroutine);
                 coroutine = MoveContainer(containers[1], new Vector3(0.25f, 0f, 0f), new Vector3(0.25f, yHeightLow, 0f), moveTime);
                 StartCoroutine(coroutine);
-                Invoke("ResetContainers", moveTime);
+                Invoke("CleanupContainers", moveTime);
                 break;
 
             case 3:
@@ -104,7 +108,7 @@ public class ContainerManager : Listener
                 StartCoroutine(coroutine);
                 coroutine = MoveContainer(containers[2], new Vector3(0.5f, 0f, 0f), new Vector3(0.5f, yHeightLow, 0f), moveTime);
                 StartCoroutine(coroutine);
-                Invoke("ResetContainers", moveTime);
+                Invoke("CleanupContainers", moveTime);
                 break;
 
             default:
@@ -121,7 +125,7 @@ public class ContainerManager : Listener
         Vector3 rightPosition = containers[containerOnLeftSideOfTray + 1].transform.localPosition;
         while (elapsedTime < moveTime)
         {
-            containers[containerOnLeftSideOfTray].transform.localPosition = Vector3.Slerp(leftPosition, rightPosition, (elapsedTime / moveTime));
+            containers[containerOnLeftSideOfTray].transform.localPosition = Vector3.Lerp(leftPosition, rightPosition, (elapsedTime / moveTime));
             containers[containerOnLeftSideOfTray + 1].transform.localPosition = Vector3.Slerp(rightPosition, leftPosition, (elapsedTime / moveTime));
             containers[containerOnLeftSideOfTray + 1].transform.localPosition = new Vector3(containers[containerOnLeftSideOfTray + 1].transform.localPosition.x, containers[containerOnLeftSideOfTray + 1].transform.localPosition.y, -containers[containerOnLeftSideOfTray + 1].transform.localPosition.z);
             elapsedTime += Time.deltaTime;
@@ -165,6 +169,9 @@ public class ContainerManager : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList01:
+                containerContents[0] = (int)Random.Range(4, 6);
+                containerContents[1] = (int)Random.Range(7, 9);
+                containerContents[2] = (int)Random.Range(1, 3);
                 ResetContainers(3);
                 break;
 
@@ -173,6 +180,9 @@ public class ContainerManager : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask01:
+                containerContents[0] = (int)Random.Range(7, 9);
+                containerContents[1] = (int)Random.Range(4, 6);
+                containerContents[2] = (int)Random.Range(1, 3);
                 ResetContainers(3);
                 break;
 

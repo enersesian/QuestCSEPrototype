@@ -11,7 +11,8 @@ public class BubbleSortLevel : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        SetAppState(BubbleSortState.IntroductionToNextButton);
+        //SetAppState(BubbleSortState.IntroductionToNextButton);
+        SetAppState(currentState);
     }
 
     public void RegisterListener(Listener newListener)
@@ -52,7 +53,7 @@ public class BubbleSortLevel : MonoBehaviour {
                 if (buttonName == "ButtonSwap")
                 {
                     foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
-                    Invoke("SetAppStateToIntroductionToCyclingThroughList", 6f);
+                    Invoke("SetAppStateToIntroductionToCyclingThroughList", 4f);
                 }
                 break;
 

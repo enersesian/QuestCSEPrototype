@@ -49,7 +49,7 @@ public class ButtonPushable : Listener
 
     private IEnumerator Blinking()
     {
-        float elapsedTime, waitTime = 2f;
+        float elapsedTime, waitTime = 1f;
         Color startColor, endColor;
         bool isFadingUp = false;
 
