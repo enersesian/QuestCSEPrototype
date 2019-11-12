@@ -92,7 +92,11 @@ public class BubbleSortLevel : MonoBehaviour {
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList03:
-                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList04);
+                if (buttonName == "ButtonNext")
+                {
+                    foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                    SetAppState(BubbleSortState.IntroductionToThreeElementList04);
+                }
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList04:
@@ -104,7 +108,11 @@ public class BubbleSortLevel : MonoBehaviour {
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList05:
-                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList06);
+                if (buttonName == "ButtonNext")
+                {
+                    foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                    SetAppState(BubbleSortState.IntroductionToThreeElementList06);
+                }
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList06:

@@ -127,21 +127,27 @@ public class ContainerManager : Listener
         float elapsedTime = 0, moveTime = 4f;
         GameObject tempGO;
         Debug.Log(containerOnLeftSideOfTray);
-        Vector3 leftPosition = containers[containerOnLeftSideOfTray].transform.localPosition;
-        Vector3 rightPosition = containers[containerOnLeftSideOfTray + 1].transform.localPosition;
-        Vector3 rightPositionOffset = new Vector3(containers[containerOnLeftSideOfTray + 1].transform.localPosition.x - 0.01f, containers[containerOnLeftSideOfTray + 1].transform.localPosition.y, containers[containerOnLeftSideOfTray + 1].transform.localPosition.z + 0.01f);
+        Vector3 leftPosition = containers[containerOnLeftSideOfTray].transform.position;
+        Vector3 rightPosition = containers[containerOnLeftSideOfTray + 1].transform.position;
+        //trying to control the normal of the arc that right container slerps across
+        Vector3 centerPosition = (rightPosition - leftPosition) * 0.5f;
+        centerPosition -= new Vector3(0f, 0f, 1f);
+        Vector3 rightRelCenter = rightPosition - centerPosition;
+        Vector3 leftRelCenter = leftPosition - centerPosition;
+
         while (elapsedTime < moveTime)
         {
-            containers[containerOnLeftSideOfTray].transform.localPosition = Vector3.Lerp(leftPosition, rightPosition, (elapsedTime / moveTime));
-            containers[containerOnLeftSideOfTray + 1].transform.localPosition = Vector3.Slerp(rightPositionOffset, leftPosition, (elapsedTime / moveTime));
+            containers[containerOnLeftSideOfTray].transform.position = Vector3.Lerp(leftPosition, rightPosition, (elapsedTime / moveTime));
+            containers[containerOnLeftSideOfTray + 1].transform.position = Vector3.Slerp(rightRelCenter, leftRelCenter, (elapsedTime / moveTime));
+            containers[containerOnLeftSideOfTray + 1].transform.position += centerPosition;
             //what the hell is this line?
             //containers[containerOnLeftSideOfTray + 1].transform.localPosition = new Vector3(containers[containerOnLeftSideOfTray + 1].transform.localPosition.x, containers[containerOnLeftSideOfTray + 1].transform.localPosition.y, -containers[containerOnLeftSideOfTray + 1].transform.localPosition.z);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         tempGO = containers[containerOnLeftSideOfTray];
-        containers[containerOnLeftSideOfTray].transform.localPosition = rightPosition;
-        containers[containerOnLeftSideOfTray + 1].transform.localPosition = leftPosition;
+        containers[containerOnLeftSideOfTray].transform.position = rightPosition;
+        containers[containerOnLeftSideOfTray + 1].transform.position = leftPosition;
         containers[containerOnLeftSideOfTray] = containers[containerOnLeftSideOfTray + 1];
         containers[containerOnLeftSideOfTray + 1] = tempGO;
         yield return null;
