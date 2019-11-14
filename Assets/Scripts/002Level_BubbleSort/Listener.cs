@@ -10,6 +10,10 @@ abstract public class Listener : MonoBehaviour
 
     public virtual void ButtonPushed(string buttonName) { }
 
+    public virtual void PopulateContainer(int containerPosition, int containerContents) { }
+
+    public virtual void DepopulateContainer(int containerPosition) { }
+
     protected void Awake()
     {
         if(level == null) level = GameObject.FindGameObjectWithTag("GameController").GetComponent<BubbleSortLevel>();

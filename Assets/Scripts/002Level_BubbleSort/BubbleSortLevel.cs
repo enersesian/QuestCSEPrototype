@@ -50,6 +50,16 @@ public class BubbleSortLevel : MonoBehaviour {
         SetAppState(BubbleSortState.IntroductionToThreeElementList05);
     }
 
+    public void PopulateContainer(int containerPosition, int containerContents)
+    {
+        foreach (Listener listenerObj in listeners) listenerObj.PopulateContainer(containerPosition, containerContents);
+    }
+
+    public void DepopulateContainer(int containerPosition)
+    {
+        foreach (Listener listenerObj in listeners) listenerObj.DepopulateContainer(containerPosition);
+    }
+
     public void ButtonPushed(string buttonName)
     {
         

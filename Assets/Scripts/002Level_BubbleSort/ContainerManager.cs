@@ -42,7 +42,7 @@ public class ContainerManager : Listener
         ResetContainers(0);
     }
 
-    private void PopulateContainer(int containerPosition)
+    public override void PopulateContainer(int containerPosition, int content) //double data recorded issue
     {
         for (int i = 0; i < containerContents[containerPosition]; i++)
         {
@@ -55,6 +55,12 @@ public class ContainerManager : Listener
         }
     }
 
+    public override void DepopulateContainer(int containerPosition)
+    {
+        foreach (Transform child in containers[containerPosition].transform) Destroy(child.gameObject);
+        containerContents[containerPosition] = 0;
+    }
+
     private void ResetContainers(int neededAmount = 0)
     {
         float yHeightLow = -0.35f, moveTime = 4f;
@@ -65,8 +71,7 @@ public class ContainerManager : Listener
                 for (int i = 0; i < containers.Length; i++)
                 {
                     containers[i].transform.localPosition = Vector3.zero;
-                    foreach (Transform child in containers[i].transform) Destroy(child.gameObject);
-                    containerContents[i] = 0;
+                    level.DepopulateContainer(i);
                     containers[i].SetActive(false);
                 }
                 containerOnLeftSideOfTray = -1;
@@ -74,11 +79,11 @@ public class ContainerManager : Listener
 
             case 2:
                 containers[0].SetActive(true);
-                PopulateContainer(0);
+                level.PopulateContainer(0, containerContents[0]);
                 coroutine = MoveContainer(containers[0], new Vector3(-0.25f, yHeightLow, 0f), new Vector3(-0.25f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containers[1].SetActive(true);
-                PopulateContainer(1);
+                level.PopulateContainer(1, containerContents[1]);
                 coroutine = MoveContainer(containers[1], new Vector3(0.25f, yHeightLow, 0f), new Vector3(0.25f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
@@ -94,15 +99,15 @@ public class ContainerManager : Listener
 
             case 3:
                 containers[0].SetActive(true);
-                PopulateContainer(0);
+                level.PopulateContainer(0, containerContents[0]);
                 coroutine = MoveContainer(containers[0], new Vector3(-0.5f, yHeightLow, 0f), new Vector3(-0.5f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containers[1].SetActive(true);
-                PopulateContainer(1);
+                level.PopulateContainer(1, containerContents[1]);
                 coroutine = MoveContainer(containers[1], new Vector3(0f, yHeightLow, 0f), new Vector3(0f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containers[2].SetActive(true);
-                PopulateContainer(2);
+                level.PopulateContainer(2, containerContents[2]);
                 coroutine = MoveContainer(containers[2], new Vector3(0.5f, yHeightLow, 0f), new Vector3(0.5f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;

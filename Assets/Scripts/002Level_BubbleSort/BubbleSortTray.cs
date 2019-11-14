@@ -13,6 +13,7 @@ public class BubbleSortTray : Listener
     private IEnumerator coroutine;
     private string passiveInstruction, activeInstruction;
     private Vector3 trayEndPosition;
+    public UIControls uiControls;
 
     private void Awake()
     {
@@ -93,6 +94,7 @@ public class BubbleSortTray : Listener
         {
             case BubbleSortState.IntroductionToNextButton:
                 //ResetTray();
+                uiControls.SetUISize(2);
                 passiveInstructionalText.text = "";
                 activeInstructionalText.text = "";
                 buttonSwap.ResetButton(false);
