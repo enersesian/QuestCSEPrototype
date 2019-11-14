@@ -11,6 +11,7 @@ public class ContainerManager : Listener
     private Vector3 sphereLocation;
     public GameObject sphere;
     private GameObject primitive;
+    public Transform rotationCenter;
 
     private void Awake()
     {
@@ -130,26 +131,29 @@ public class ContainerManager : Listener
         Vector3 leftPosition = containers[containerOnLeftSideOfTray].transform.position;
         Vector3 rightPosition = containers[containerOnLeftSideOfTray + 1].transform.position;
         //trying to control the normal of the arc that right container slerps across
-        Vector3 centerPosition = (rightPosition - leftPosition) * 0.5f;
-        centerPosition -= new Vector3(0f, 0f, 1f);
-        Vector3 rightRelCenter = rightPosition - centerPosition;
-        Vector3 leftRelCenter = leftPosition - centerPosition;
+        rotationCenter.position = (rightPosition + leftPosition) * 0.5f;
+        Quaternion startRotation = Quaternion.identity;
+        Quaternion endRotation = Quaternion.Euler(0f, -179.9f, 0f);
+        containers[containerOnLeftSideOfTray + 1].transform.parent = rotationCenter;
 
         while (elapsedTime < moveTime)
         {
             containers[containerOnLeftSideOfTray].transform.position = Vector3.Lerp(leftPosition, rightPosition, (elapsedTime / moveTime));
-            containers[containerOnLeftSideOfTray + 1].transform.position = Vector3.Slerp(rightRelCenter, leftRelCenter, (elapsedTime / moveTime));
-            containers[containerOnLeftSideOfTray + 1].transform.position += centerPosition;
+            rotationCenter.rotation = Quaternion.Slerp(startRotation, endRotation, (elapsedTime / moveTime));
+            //containers[containerOnLeftSideOfTray + 1].transform.position = Vector3.Slerp(rightRelCenter, leftRelCenter, (elapsedTime / moveTime));
+            //containers[containerOnLeftSideOfTray + 1].transform.position += centerPosition;
             //what the hell is this line?
             //containers[containerOnLeftSideOfTray + 1].transform.localPosition = new Vector3(containers[containerOnLeftSideOfTray + 1].transform.localPosition.x, containers[containerOnLeftSideOfTray + 1].transform.localPosition.y, -containers[containerOnLeftSideOfTray + 1].transform.localPosition.z);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        tempGO = containers[containerOnLeftSideOfTray];
         containers[containerOnLeftSideOfTray].transform.position = rightPosition;
         containers[containerOnLeftSideOfTray + 1].transform.position = leftPosition;
+        containers[containerOnLeftSideOfTray + 1].transform.parent = this.transform;
+        tempGO = containers[containerOnLeftSideOfTray];
         containers[containerOnLeftSideOfTray] = containers[containerOnLeftSideOfTray + 1];
         containers[containerOnLeftSideOfTray + 1] = tempGO;
+        rotationCenter.rotation = Quaternion.identity;
         yield return null;
     }
 
