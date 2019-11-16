@@ -14,56 +14,56 @@ public class BubbleSortTable : Listener
         {
             case BubbleSortState.IntroductionToNextButton: //size for 2 containers
                 trayEndScale = new Vector3(1.3f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
-                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, 4f, 0f);
+                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList01: //size for 3 containers
                 trayEndScale = new Vector3(1.7f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
-                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, 4f, 0f);
+                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask01: //size for 3 containers
-                trayEndScale = new Vector3(2.1f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
-                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, 4f, 0f);
+                trayEndScale = new Vector3(1.7f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
+                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask02: //size for 4 containers
-                trayEndScale = new Vector3(2.5f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
-                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, 4f, 0f);
+                trayEndScale = new Vector3(2.1f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
+                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask03: //size for 5 containers
-                trayEndScale = new Vector3(2.9f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
-                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, 4f, 0f);
+                trayEndScale = new Vector3(2.5f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
+                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask04: //size for 6 containers
-                trayEndScale = new Vector3(3.3f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
-                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, 4f, 0f);
+                trayEndScale = new Vector3(2.9f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
+                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask05: //size for 7 containers
-                trayEndScale = new Vector3(3.7f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
-                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, 4f, 0f);
+                trayEndScale = new Vector3(3.3f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
+                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask06: //size for 8 containers
-                trayEndScale = new Vector3(4.1f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
-                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, 4f, 0f);
+                trayEndScale = new Vector3(3.7f, tableModel.transform.localScale.y, tableModel.transform.localScale.z);
+                coroutine = TableTransition(tableModel.transform.localScale, trayEndScale, level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 Debug.Log(gameObject.name + " set to " + currentState.ToString());
                 break;

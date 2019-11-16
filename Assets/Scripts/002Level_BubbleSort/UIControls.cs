@@ -20,13 +20,13 @@ public class UIControls : Listener {
 
     public override void PopulateContainer(int containerPosition, int containerContents)
     {
-        coroutine = TextTransition(textContainerAmount[containerPosition], Color.clear, Color.black, containerContents.ToString(), 6f, 0f);
+        coroutine = TextTransition(textContainerAmount[containerPosition], Color.clear, Color.black, containerContents.ToString(), level.resetTimer + 2f, 0f);
         StartCoroutine(coroutine);
     }
 
     public override void DepopulateContainer(int containerPosition)
     {
-        coroutine = TextTransition(textContainerAmount[containerPosition], Color.black, Color.clear, "", 4f, 0f);
+        coroutine = TextTransition(textContainerAmount[containerPosition], Color.black, Color.clear, "", level.resetTimer, 0f);
         StartCoroutine(coroutine);
     }
 
@@ -129,13 +129,70 @@ public class UIControls : Listener {
                 buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 2.5f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
+            case 6:
+                rectTranBkgrd.sizeDelta = new Vector2(textBkgrdWidth * 6f + textBkgrdWidthOffset, textBkgrdHeight);
+                rectTranHighlightLeft.sizeDelta = new Vector2(highlightWidth, textBkgrdHeight);
+                rectTranHighlightLeft.localPosition = new Vector3(-5f * textOffset, 0f, 0f);
+                rectTranHighlightLeft.GetComponent<Image>().color = highlightColorOn;
+                rectTranHighlightRight.sizeDelta = new Vector2(highlightWidth, textBkgrdHeight);
+                rectTranHighlightRight.localPosition = new Vector3(-3f * textOffset, 0f, 0f);
+                rectTranHighlightRight.GetComponent<Image>().color = highlightColorOn;
+                textContainerAmount[0].rectTransform.localPosition = new Vector3(-5f * textOffset, 0f, 0f);
+                textContainerAmount[1].rectTransform.localPosition = new Vector3(-3f * textOffset, 0f, 0f);
+                textContainerAmount[2].rectTransform.localPosition = new Vector3(-1f * textOffset, 0f, 0f);
+                textContainerAmount[3].rectTransform.localPosition = new Vector3(1f * textOffset, 0f, 0f);
+                textContainerAmount[4].rectTransform.localPosition = new Vector3(3f * textOffset, 0f, 0f);
+                textContainerAmount[5].rectTransform.localPosition = new Vector3(5f * textOffset, 0f, 0f);
+                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 3f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 3f, buttonLocalPositionY, buttonLocalPositionZ);
+                foreach (Text textComponent in textContainerAmount) textComponent.text = "";
+                break;
+            case 7:
+                rectTranBkgrd.sizeDelta = new Vector2(textBkgrdWidth * 7f + textBkgrdWidthOffset, textBkgrdHeight);
+                rectTranHighlightLeft.sizeDelta = new Vector2(highlightWidth, textBkgrdHeight);
+                rectTranHighlightLeft.localPosition = new Vector3(-6f * textOffset, 0f, 0f);
+                rectTranHighlightLeft.GetComponent<Image>().color = highlightColorOn;
+                rectTranHighlightRight.sizeDelta = new Vector2(highlightWidth, textBkgrdHeight);
+                rectTranHighlightRight.localPosition = new Vector3(-4f * textOffset, 0f, 0f);
+                rectTranHighlightRight.GetComponent<Image>().color = highlightColorOn;
+                textContainerAmount[0].rectTransform.localPosition = new Vector3(-6f * textOffset, 0f, 0f);
+                textContainerAmount[1].rectTransform.localPosition = new Vector3(-4f * textOffset, 0f, 0f);
+                textContainerAmount[2].rectTransform.localPosition = new Vector3(-2f * textOffset, 0f, 0f);
+                textContainerAmount[3].rectTransform.localPosition = new Vector3(0f * textOffset, 0f, 0f);
+                textContainerAmount[4].rectTransform.localPosition = new Vector3(2f * textOffset, 0f, 0f);
+                textContainerAmount[5].rectTransform.localPosition = new Vector3(4f * textOffset, 0f, 0f);
+                textContainerAmount[6].rectTransform.localPosition = new Vector3(6f * textOffset, 0f, 0f);
+                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 3.5f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 3.5f, buttonLocalPositionY, buttonLocalPositionZ);
+                foreach (Text textComponent in textContainerAmount) textComponent.text = "";
+                break;
+            case 8:
+                rectTranBkgrd.sizeDelta = new Vector2(textBkgrdWidth * 8f + textBkgrdWidthOffset, textBkgrdHeight);
+                rectTranHighlightLeft.sizeDelta = new Vector2(highlightWidth, textBkgrdHeight);
+                rectTranHighlightLeft.localPosition = new Vector3(-7f * textOffset, 0f, 0f);
+                rectTranHighlightLeft.GetComponent<Image>().color = highlightColorOn;
+                rectTranHighlightRight.sizeDelta = new Vector2(highlightWidth, textBkgrdHeight);
+                rectTranHighlightRight.localPosition = new Vector3(-5f * textOffset, 0f, 0f);
+                rectTranHighlightRight.GetComponent<Image>().color = highlightColorOn;
+                textContainerAmount[0].rectTransform.localPosition = new Vector3(-7f * textOffset, 0f, 0f);
+                textContainerAmount[1].rectTransform.localPosition = new Vector3(-5f * textOffset, 0f, 0f);
+                textContainerAmount[2].rectTransform.localPosition = new Vector3(-3f * textOffset, 0f, 0f);
+                textContainerAmount[3].rectTransform.localPosition = new Vector3(-1f * textOffset, 0f, 0f);
+                textContainerAmount[4].rectTransform.localPosition = new Vector3(1f * textOffset, 0f, 0f);
+                textContainerAmount[5].rectTransform.localPosition = new Vector3(3f * textOffset, 0f, 0f);
+                textContainerAmount[6].rectTransform.localPosition = new Vector3(5f * textOffset, 0f, 0f);
+                textContainerAmount[7].rectTransform.localPosition = new Vector3(7f * textOffset, 0f, 0f);
+                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 4f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 4f, buttonLocalPositionY, buttonLocalPositionZ);
+                foreach (Text textComponent in textContainerAmount) textComponent.text = "";
+                break;
         }
     }
 
     public void UpdateHighlights(int incomingInt)
     {
         containerOnLeftSideOfTray = incomingInt;
-        coroutine = MoveHighlights(4f, 0f);
+        coroutine = MoveHighlights(level.resetTimer, 0f);
         StartCoroutine(coroutine);
         tray.UpdateTray(incomingInt, uiSize);
     }
@@ -143,49 +200,52 @@ public class UIControls : Listener {
     public void SwapContainer(int leftSideContainer, int leftAmount, int rightAmount)
     {
         containerOnLeftSideOfTray = leftSideContainer;
+        /*
         string oldLeftText = textContainerAmount[containerOnLeftSideOfTray].text;
         string oldRightText = textContainerAmount[containerOnLeftSideOfTray + 1].text;
-        coroutine = TextTransition(textContainerAmount[containerOnLeftSideOfTray], Color.black, Color.clear, "", 1f, 0f);
+        coroutine = TextTransition(textContainerAmount[containerOnLeftSideOfTray], Color.black, Color.clear, "", level.resetTimer / 2f, 0f);
         StartCoroutine(coroutine);
-        coroutine = TextTransition(textContainerAmount[containerOnLeftSideOfTray + 1], Color.black, Color.clear, "", 1f, 0f);
+        coroutine = TextTransition(textContainerAmount[containerOnLeftSideOfTray + 1], Color.black, Color.clear, "", level.resetTimer / 2f, 0f);
         StartCoroutine(coroutine);
-        coroutine = TextTransition(textContainerAmount[containerOnLeftSideOfTray], Color.clear, Color.black, oldRightText, 1f, 3f);
+        coroutine = TextTransition(textContainerAmount[containerOnLeftSideOfTray], Color.clear, Color.black, oldRightText, level.resetTimer / 2f, level.resetTimer);
         StartCoroutine(coroutine);
-        coroutine = TextTransition(textContainerAmount[containerOnLeftSideOfTray + 1], Color.clear, Color.black, oldLeftText, 1f, 3f);
+        coroutine = TextTransition(textContainerAmount[containerOnLeftSideOfTray + 1], Color.clear, Color.black, oldLeftText, level.resetTimer / 2f, level.resetTimer);
+        */    
         StartCoroutine(coroutine);
-        //StartCoroutine("SwapContainerText");
+        StartCoroutine("SwapContainerText");
     }
 
     private IEnumerator SwapContainerText()
     {
-        float elapsedTime = 0, moveTime = 4f;
+        float elapsedTime = 0, moveTime = level.resetTimer;
         Text tempTextComponent;
-        Debug.Log(containerOnLeftSideOfTray);
+        //Debug.Log(containerOnLeftSideOfTray);
         Vector3 leftPosition = textContainerAmount[containerOnLeftSideOfTray].transform.position;
         Vector3 rightPosition = textContainerAmount[containerOnLeftSideOfTray + 1].transform.position;
         //trying to control the normal of the arc that right container slerps across
-        //rotationCenter.position = (rightPosition + leftPosition) * 0.5f;
-        //Quaternion startRotation = Quaternion.identity;
-        //Quaternion endRotation = Quaternion.Euler(0f, 0f, 179.9f);
-        //textContainerAmount[containerOnLeftSideOfTray + 1].transform.parent = rotationCenter;
+        rotationCenter.position = (rightPosition + leftPosition) * 0.5f;
+        Quaternion startRotation = Quaternion.identity;
+        Quaternion endRotation = Quaternion.Euler(0f, 0f, 179.0f);
+        Quaternion endRotationReverse = Quaternion.Euler(0f, 0f, -179.0f);
+        textContainerAmount[containerOnLeftSideOfTray + 1].transform.parent = rotationCenter;
 
         while (elapsedTime < moveTime)
         {
             textContainerAmount[containerOnLeftSideOfTray].transform.position = Vector3.Lerp(leftPosition, rightPosition, (elapsedTime / moveTime));
-            textContainerAmount[containerOnLeftSideOfTray + 1].transform.position = Vector3.Lerp(rightPosition, leftPosition, (elapsedTime / moveTime));
+            //textContainerAmount[containerOnLeftSideOfTray + 1].transform.position = Vector3.Lerp(rightPosition, leftPosition, (elapsedTime / moveTime));
             //rotation around a center point has issues with text, simplifying for now
-            //rotationCenter.rotation = Quaternion.Slerp(startRotation, endRotation, (elapsedTime / moveTime));
-
+            rotationCenter.localRotation = Quaternion.Slerp(startRotation, endRotation, (elapsedTime / moveTime));
+            textContainerAmount[containerOnLeftSideOfTray + 1].transform.localRotation = Quaternion.Slerp(startRotation, endRotationReverse, (elapsedTime / moveTime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         textContainerAmount[containerOnLeftSideOfTray].transform.position = rightPosition;
         textContainerAmount[containerOnLeftSideOfTray + 1].transform.position = leftPosition;
-        //textContainerAmount[containerOnLeftSideOfTray + 1].transform.parent = rotationCenter.parent.transform;
+        textContainerAmount[containerOnLeftSideOfTray + 1].transform.parent = rotationCenter.parent.transform;
         tempTextComponent = textContainerAmount[containerOnLeftSideOfTray];
         textContainerAmount[containerOnLeftSideOfTray] = textContainerAmount[containerOnLeftSideOfTray + 1];
         textContainerAmount[containerOnLeftSideOfTray + 1] = tempTextComponent;
-        rotationCenter.rotation = Quaternion.identity;
+        rotationCenter.localRotation = Quaternion.identity;
         yield return null;
     }
 

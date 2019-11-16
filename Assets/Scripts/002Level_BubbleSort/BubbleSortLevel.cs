@@ -6,6 +6,7 @@ public class BubbleSortLevel : MonoBehaviour {
 
     private List<Listener> listeners = new List<Listener>();
     public BubbleSortState currentState;
+    public float resetTimer = 2f;
 
     // Use this for initialization
     void Start()
@@ -30,8 +31,6 @@ public class BubbleSortLevel : MonoBehaviour {
     public void TaskSuccessful()
     {
         foreach (Listener listenerObj in listeners) listenerObj.TaskSuccessful();
-        ResetButtons(false);
-        Invoke("ResetButtons", 4f);
         switch (currentState)
         {
             case BubbleSortState.BeginnerBubbleSortTask01:
@@ -109,7 +108,7 @@ public class BubbleSortLevel : MonoBehaviour {
                 if (buttonName == "ButtonSwap")
                 {
                     foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
-                    Invoke("SetAppStateToIntroductionToCyclingThroughList", 4f);
+                    Invoke("SetAppStateToIntroductionToCyclingThroughList", resetTimer);
                 }
                 break;
 
@@ -133,7 +132,7 @@ public class BubbleSortLevel : MonoBehaviour {
                 if (buttonName == "ButtonSwap")
                 {
                     foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
-                    Invoke("SetAppStateToIntroductionToThreeElementList03", 4f);
+                    Invoke("SetAppStateToIntroductionToThreeElementList03", resetTimer);
                 }
                 break;
 
@@ -149,7 +148,7 @@ public class BubbleSortLevel : MonoBehaviour {
                 if (buttonName == "ButtonSwap")
                 {
                     foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
-                    Invoke("SetAppStateToIntroductionToThreeElementList05", 4f);
+                    Invoke("SetAppStateToIntroductionToThreeElementList05", resetTimer);
                 }
                 break;
 
@@ -204,20 +203,9 @@ public class BubbleSortLevel : MonoBehaviour {
                 break;
 
             default:
+                Debug.Log("button pushed " + buttonName);
                 foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
-                ResetButtons(false);
-                Invoke("ResetButtons", 4f);
                 break;
         }
-    }
-
-    private void ResetButtons(bool status = true)
-    {
-        foreach (Listener listenerObj in listeners) listenerObj.ResetButtons(status);
-    }
-
-    private void ResetButtons()
-    {
-        foreach (Listener listenerObj in listeners) listenerObj.ResetButtons(true);
     }
 }

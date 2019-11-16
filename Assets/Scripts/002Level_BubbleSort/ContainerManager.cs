@@ -117,7 +117,7 @@ public class ContainerManager : Listener
 
     private void ResetContainers(int neededAmount = 0)
     {
-        float yHeightLow = -0.35f, moveTime = 4f;
+        float yHeightLow = -0.35f, moveTime = level.resetTimer;
         
         switch(neededAmount)
         {
@@ -404,10 +404,10 @@ public class ContainerManager : Listener
 
     private IEnumerator SwapContainer()
     {
-        float elapsedTime = 0, moveTime = 4f;
+        float elapsedTime = 0, moveTime = level.resetTimer;
         GameObject tempGO;
         int tempInt;
-        Debug.Log(containerOnLeftSideOfTray);
+        //Debug.Log(containerOnLeftSideOfTray);
         Vector3 leftPosition = containers[containerOnLeftSideOfTray].transform.position;
         Vector3 rightPosition = containers[containerOnLeftSideOfTray + 1].transform.position;
         //trying to control the normal of the arc that right container slerps across

@@ -10,12 +10,17 @@ public class ButtonPushable : Listener
     private float heightDiff, startYHand, startYButton;
     public Transform buttonUpPosition, buttonDownPosition;
     private Color activeColor = new Color(0f, 0f, 0f, 1f);
-    private Color disabledColor = new Color(0f, 0f, 0f, 0f);
-    private Color pushedColor = new Color(0f, 0.6f, 0f, 1f);
+    private Color disabledColor = new Color(0f, 0f, 0f, 0.25f);
+    //private Color pushedColor = new Color(0f, 0.6f, 0f, 1f);
     private bool isBlinking;
 
     //collider isnt popping into the right place
     //color should pop into another color once you release not once its down
+
+    private void Start()
+    {
+        ResetButton(false);
+    }
 
     public void ResetButton(bool active)
     {
@@ -31,6 +36,7 @@ public class ButtonPushable : Listener
         }
         else
         {
+            Debug.Log("turn off " + gameObject.name);
             transform.GetChild(0).GetComponent<Image>().color = disabledColor;
             isPushable = false;
         }
@@ -46,12 +52,12 @@ public class ButtonPushable : Listener
     {
         isBlinking = false;
     }
-
+    /*
     public override void ResetButtons(bool status)
     {
         ResetButton(status);
     }
-
+    */
     private IEnumerator Blinking()
     {
         float elapsedTime, waitTime = 1f;
@@ -107,7 +113,7 @@ public class ButtonPushable : Listener
             if(transform.position.y < buttonDownPosition.position.y)
             {
                 transform.position = buttonDownPosition.position;
-                transform.GetChild(0).GetComponent<Image>().color = pushedColor;
+                transform.GetChild(0).GetComponent<Image>().color = disabledColor;
                 isTouched = false;
                 isPushable = false;
                 isBlinking = false;
