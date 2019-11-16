@@ -47,6 +47,11 @@ public class ButtonPushable : Listener
         isBlinking = false;
     }
 
+    public override void ResetButtons(bool status)
+    {
+        ResetButton(status);
+    }
+
     private IEnumerator Blinking()
     {
         float elapsedTime, waitTime = 1f;

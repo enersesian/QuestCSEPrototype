@@ -88,13 +88,45 @@ public class BubbleSortTray : Listener
         buttonSwap.ResetButton(true);
     }
 
+    public override void TaskUnsuccessful(int hint)
+    {
+        coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
+        StartCoroutine(coroutine);
+        passiveInstruction = "List is not in order. You might want to check around container " + hint.ToString() + ".";
+        coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, 4f, 5f);
+        StartCoroutine(coroutine);
+    }
+
+    public void UpdateTray(int containerPosition, int uiSize)
+    {
+        if(containerPosition > 0) trayEndPosition = new Vector3(transform.localPosition.x + 0.5f, transform.localPosition.y, transform.localPosition.z);
+        else trayEndPosition = new Vector3(transform.localPosition.x - (uiSize * 0.25f) + 0.25f, transform.localPosition.y, transform.localPosition.z);
+        coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+        StartCoroutine(coroutine);
+    }
+
+    public override void TaskSuccessful()
+    {
+        coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 2f, 0f);
+        StartCoroutine(coroutine);
+        coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 2f, 0f);
+        StartCoroutine(coroutine);
+        passiveInstruction = "Great job! You successfully sorted this list.";
+        activeInstruction = "Press next to proceed for next task.";
+        coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, 2f, 3f);
+        StartCoroutine(coroutine);
+        coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, 2f, 5f);
+        StartCoroutine(coroutine);
+        TurnOffButtonSwap();
+    }
+
     public override void SetListenerState(BubbleSortState currentState)
     {
         switch (currentState)
         {
             case BubbleSortState.IntroductionToNextButton:
                 //ResetTray();
-                uiControls.SetUISize(2);
+                uiControls.SetUISize(0);
                 passiveInstructionalText.text = "";
                 activeInstructionalText.text = "";
                 buttonSwap.ResetButton(false);
@@ -111,6 +143,7 @@ public class BubbleSortTray : Listener
 
             case BubbleSortState.IntroductionToSwapButton:
                 //ResetTray();
+                uiControls.SetUISize(2);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -141,6 +174,7 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToFinishingBubbleSort:
+                uiControls.SetUISize(0);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -156,6 +190,7 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList01:
+                uiControls.SetUISize(3);
                 trayEndPosition = new Vector3(-0.25f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
                 StartCoroutine(coroutine);
@@ -294,6 +329,7 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList09:
+                uiControls.SetUISize(0);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
@@ -309,6 +345,7 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask01:
+                uiControls.SetUISize(3);
                 trayEndPosition = new Vector3(-0.25f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
                 StartCoroutine(coroutine);
@@ -317,6 +354,101 @@ public class BubbleSortTray : Listener
                 coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
                 StartCoroutine(coroutine);
                 passiveInstruction = "Here is a list of 3 containers. Short them in ascending order. Focus on two containers at a time.";
+                activeInstruction = "Remember you must cycle through the list without a swap to complete the bubble sort correctly.";
+                coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, 4f, 5f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, 4f, 9f);
+                StartCoroutine(coroutine);
+                Invoke("TurnOffButtonNext", 4f);
+                Invoke("TurnOnButtons", 14f);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask02:
+                uiControls.SetUISize(4);
+                trayEndPosition = new Vector3(-0.5f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                passiveInstruction = "Here is a list of 4 containers. Short them in ascending order. Focus on two containers at a time.";
+                activeInstruction = "Remember you must cycle through the list without a swap to complete the bubble sort correctly.";
+                coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, 4f, 5f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, 4f, 9f);
+                StartCoroutine(coroutine);
+                Invoke("TurnOffButtonNext", 4f);
+                Invoke("TurnOnButtons", 14f);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask03:
+                uiControls.SetUISize(5);
+                trayEndPosition = new Vector3(-0.75f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                passiveInstruction = "Here is a list of 5 containers. Short them in ascending order. Focus on two containers at a time.";
+                activeInstruction = "Remember you must cycle through the list without a swap to complete the bubble sort correctly.";
+                coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, 4f, 5f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, 4f, 9f);
+                StartCoroutine(coroutine);
+                Invoke("TurnOffButtonNext", 4f);
+                Invoke("TurnOnButtons", 14f);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask04:
+                uiControls.SetUISize(6);
+                trayEndPosition = new Vector3(-1f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                passiveInstruction = "Here is a list of 6 containers. Short them in ascending order. Focus on two containers at a time.";
+                activeInstruction = "Remember you must cycle through the list without a swap to complete the bubble sort correctly.";
+                coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, 4f, 5f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, 4f, 9f);
+                StartCoroutine(coroutine);
+                Invoke("TurnOffButtonNext", 4f);
+                Invoke("TurnOnButtons", 14f);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask05:
+                uiControls.SetUISize(7);
+                trayEndPosition = new Vector3(-1.25f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                passiveInstruction = "Here is a list of 7 containers. Short them in ascending order. Focus on two containers at a time.";
+                activeInstruction = "Remember you must cycle through the list without a swap to complete the bubble sort correctly.";
+                coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, 4f, 5f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, 4f, 9f);
+                StartCoroutine(coroutine);
+                Invoke("TurnOffButtonNext", 4f);
+                Invoke("TurnOnButtons", 14f);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask06:
+                uiControls.SetUISize(8);
+                trayEndPosition = new Vector3(-1.5f, transform.localPosition.y, transform.localPosition.z);
+                coroutine = TrayTransition(transform.localPosition, trayEndPosition, 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", 4f, 0f);
+                StartCoroutine(coroutine);
+                passiveInstruction = "Here is a list of 8 containers. Short them in ascending order. Focus on two containers at a time.";
                 activeInstruction = "Remember you must cycle through the list without a swap to complete the bubble sort correctly.";
                 coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, 4f, 5f);
                 StartCoroutine(coroutine);

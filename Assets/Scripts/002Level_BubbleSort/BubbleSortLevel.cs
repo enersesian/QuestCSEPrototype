@@ -5,7 +5,6 @@ using UnityEngine;
 public class BubbleSortLevel : MonoBehaviour {
 
     private List<Listener> listeners = new List<Listener>();
-
     public BubbleSortState currentState;
 
     // Use this for initialization
@@ -26,6 +25,44 @@ public class BubbleSortLevel : MonoBehaviour {
         currentState = tempState;
         Debug.Log(currentState.ToString());
         foreach (Listener listenerObj in listeners) listenerObj.SetListenerState(tempState);
+    }
+
+    public void TaskSuccessful()
+    {
+        foreach (Listener listenerObj in listeners) listenerObj.TaskSuccessful();
+        ResetButtons(false);
+        Invoke("ResetButtons", 4f);
+        switch (currentState)
+        {
+            case BubbleSortState.BeginnerBubbleSortTask01:
+                SetAppState(BubbleSortState.BeginnerBubbleSortTask01Complete);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask02:
+                SetAppState(BubbleSortState.BeginnerBubbleSortTask02Complete);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask03:
+                SetAppState(BubbleSortState.BeginnerBubbleSortTask03Complete);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask04:
+                SetAppState(BubbleSortState.BeginnerBubbleSortTask04Complete);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask05:
+                SetAppState(BubbleSortState.BeginnerBubbleSortTask05Complete);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask06:
+                SetAppState(BubbleSortState.BeginnerBubbleSortTask06Complete);
+                break;
+        }
+    }
+
+    public void TaskUnsuccessful(int hint)
+    {
+        foreach (Listener listenerObj in listeners) listenerObj.TaskUnsuccessful(hint);
     }
 
     // Update is called once per frame
@@ -62,7 +99,6 @@ public class BubbleSortLevel : MonoBehaviour {
 
     public void ButtonPushed(string buttonName)
     {
-        
         switch (currentState)
         {
             case BubbleSortState.IntroductionToNextButton:
@@ -126,11 +162,17 @@ public class BubbleSortLevel : MonoBehaviour {
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList06:
-                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList07);
+                {
+                    foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                    if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList07);
+                }
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList07:
-                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList08);
+                {
+                    foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                    if (buttonName == "ButtonNext") SetAppState(BubbleSortState.IntroductionToThreeElementList08);
+                }
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList08:
@@ -141,10 +183,41 @@ public class BubbleSortLevel : MonoBehaviour {
                 if (buttonName == "ButtonNext") SetAppState(BubbleSortState.BeginnerBubbleSortTask01);
                 break;
 
+            case BubbleSortState.BeginnerBubbleSortTask01Complete:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.BeginnerBubbleSortTask02);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask02Complete:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.BeginnerBubbleSortTask03);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask03Complete:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.BeginnerBubbleSortTask04);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask04Complete:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.BeginnerBubbleSortTask05);
+                break;
+
+            case BubbleSortState.BeginnerBubbleSortTask05Complete:
+                if (buttonName == "ButtonNext") SetAppState(BubbleSortState.BeginnerBubbleSortTask06);
+                break;
+
             default:
                 foreach (Listener listenerObj in listeners) listenerObj.ButtonPushed(buttonName);
+                ResetButtons(false);
+                Invoke("ResetButtons", 4f);
                 break;
         }
-        
+    }
+
+    private void ResetButtons(bool status = true)
+    {
+        foreach (Listener listenerObj in listeners) listenerObj.ResetButtons(status);
+    }
+
+    private void ResetButtons()
+    {
+        foreach (Listener listenerObj in listeners) listenerObj.ResetButtons(true);
     }
 }
