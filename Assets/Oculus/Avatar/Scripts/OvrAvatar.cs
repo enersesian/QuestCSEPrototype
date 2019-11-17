@@ -965,7 +965,6 @@ public class OvrAvatar : MonoBehaviour
             }
         }
     }
-
     bool IsValidMic()
     {
         if (Microphone.devices.Length < 1)
@@ -993,7 +992,6 @@ public class OvrAvatar : MonoBehaviour
         Microphone.End(selectedDevice);
         return true;
     }
-
     void InitPostLoad()
     {
         ExpressiveGlobalInit();

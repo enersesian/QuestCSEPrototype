@@ -123,7 +123,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
         GetMicCaps();
         initialized = true;
     }
-
+    
 
     /// <summary>
     /// Update this instance.

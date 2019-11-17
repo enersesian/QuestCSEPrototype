@@ -10,6 +10,7 @@ using UnityEngine.Events;
 /// </summary>
 public class HCInvestigatorManager : MonoBehaviour
 {
+
     /// <summary>
     /// Singleton variable
     /// </summary>

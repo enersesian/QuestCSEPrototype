@@ -95,7 +95,8 @@ public class BubbleSortTray : Listener
     {
         if(taskSuccessful)
         {
-            buttonNext.ResetButton(true);
+            Invoke("TurnOnButtonNext", 3f);
+            //buttonNext.ResetButton(true);
             taskSuccessful = false;
         }
         else
