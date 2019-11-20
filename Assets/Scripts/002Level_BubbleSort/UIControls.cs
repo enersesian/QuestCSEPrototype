@@ -10,7 +10,7 @@ public class UIControls : Listener {
     public Text[] textContainerAmount;
     private IEnumerator coroutine;
     private const float textOffset = 26f, highlightWidth = 50f, 
-        textBkgrdWidth = 70f, textBkgrdWidthOffset = 50f, textBkgrdHeight = 70f,
+        textBkgrdWidth = 50f, textBkgrdWidthOffset = 80f, textBkgrdHeight = 70f,
         buttonLocalPositionXOffset = 80f, buttonLocalPositionY = -206f, buttonLocalPositionZ = -12f;
     private int containerOnLeftSideOfTray;
     private Color highlightColorOn = new Color(0f, 0.25f, 0.75f, 0.35f), highlightColorOff = new Color(0f, 0.25f, 0.75f, 0f);
@@ -54,7 +54,7 @@ public class UIControls : Listener {
             case 0:
             case 1:
             default:
-                rectTranBkgrd.sizeDelta = new Vector2(textBkgrdWidth * 2f + textBkgrdWidthOffset, textBkgrdHeight);
+                rectTranBkgrd.sizeDelta = new Vector2(textBkgrdWidth * 3f + textBkgrdWidthOffset, textBkgrdHeight);
                 rectTranHighlightLeft.sizeDelta = new Vector2(highlightWidth, textBkgrdHeight);
                 rectTranHighlightLeft.localPosition = new Vector3(-textOffset, 0f, 0f);
                 rectTranHighlightLeft.GetComponent<Image>().color = highlightColorOff;
@@ -63,12 +63,12 @@ public class UIControls : Listener {
                 rectTranHighlightRight.GetComponent<Image>().color = highlightColorOff;
                 textContainerAmount[0].rectTransform.localPosition = new Vector3(-textOffset, 0f, 0f);
                 textContainerAmount[1].rectTransform.localPosition = new Vector3(textOffset, 0f, 0f);
-                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 1.5f, buttonLocalPositionY, buttonLocalPositionZ);
-                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 1.5f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonSwap.localPosition = new Vector3(-120f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(120f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
             case 2:
-                rectTranBkgrd.sizeDelta = new Vector2(textBkgrdWidth * 2f + textBkgrdWidthOffset, textBkgrdHeight);
+                rectTranBkgrd.sizeDelta = new Vector2(textBkgrdWidth * 3f + textBkgrdWidthOffset, textBkgrdHeight);
                 rectTranHighlightLeft.sizeDelta = new Vector2(highlightWidth, textBkgrdHeight);
                 rectTranHighlightLeft.localPosition = new Vector3(-1f * textOffset, 0f, 0f);
                 rectTranHighlightLeft.GetComponent<Image>().color = highlightColorOn;
@@ -77,8 +77,8 @@ public class UIControls : Listener {
                 rectTranHighlightRight.GetComponent<Image>().color = highlightColorOn;
                 textContainerAmount[0].rectTransform.localPosition = new Vector3(-textOffset, 0f, 0f);
                 textContainerAmount[1].rectTransform.localPosition = new Vector3(textOffset, 0f, 0f);
-                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 1.5f, buttonLocalPositionY, buttonLocalPositionZ);
-                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 1.5f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonSwap.localPosition = new Vector3(-120f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(120f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
             case 3:
@@ -92,8 +92,8 @@ public class UIControls : Listener {
                 textContainerAmount[0].rectTransform.localPosition = new Vector3(-2f * textOffset, 0f, 0f);
                 textContainerAmount[1].rectTransform.localPosition = new Vector3(0f * textOffset, 0f, 0f);
                 textContainerAmount[2].rectTransform.localPosition = new Vector3(2f * textOffset, 0f, 0f);
-                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 1.5f, buttonLocalPositionY, buttonLocalPositionZ);
-                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 1.5f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonSwap.localPosition = new Vector3(-120f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(120f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
             case 4:
@@ -108,8 +108,8 @@ public class UIControls : Listener {
                 textContainerAmount[1].rectTransform.localPosition = new Vector3(-1f * textOffset, 0f, 0f);
                 textContainerAmount[2].rectTransform.localPosition = new Vector3(1f * textOffset, 0f, 0f);
                 textContainerAmount[3].rectTransform.localPosition = new Vector3(3f * textOffset, 0f, 0f);
-                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 2f, buttonLocalPositionY, buttonLocalPositionZ);
-                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 2f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonSwap.localPosition = new Vector3(-160f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(160f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
             case 5:
@@ -125,8 +125,8 @@ public class UIControls : Listener {
                 textContainerAmount[2].rectTransform.localPosition = new Vector3(0f * textOffset, 0f, 0f);
                 textContainerAmount[3].rectTransform.localPosition = new Vector3(2f * textOffset, 0f, 0f);
                 textContainerAmount[4].rectTransform.localPosition = new Vector3(4f * textOffset, 0f, 0f);
-                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 2.5f, buttonLocalPositionY, buttonLocalPositionZ);
-                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 2.5f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonSwap.localPosition = new Vector3(-180f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(180f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
             case 6:
@@ -143,8 +143,8 @@ public class UIControls : Listener {
                 textContainerAmount[3].rectTransform.localPosition = new Vector3(1f * textOffset, 0f, 0f);
                 textContainerAmount[4].rectTransform.localPosition = new Vector3(3f * textOffset, 0f, 0f);
                 textContainerAmount[5].rectTransform.localPosition = new Vector3(5f * textOffset, 0f, 0f);
-                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 3f, buttonLocalPositionY, buttonLocalPositionZ);
-                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 3f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonSwap.localPosition = new Vector3(-200f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(200f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
             case 7:
@@ -162,8 +162,8 @@ public class UIControls : Listener {
                 textContainerAmount[4].rectTransform.localPosition = new Vector3(2f * textOffset, 0f, 0f);
                 textContainerAmount[5].rectTransform.localPosition = new Vector3(4f * textOffset, 0f, 0f);
                 textContainerAmount[6].rectTransform.localPosition = new Vector3(6f * textOffset, 0f, 0f);
-                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 3.5f, buttonLocalPositionY, buttonLocalPositionZ);
-                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 3.5f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonSwap.localPosition = new Vector3(-230f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(230f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
             case 8:
@@ -182,8 +182,8 @@ public class UIControls : Listener {
                 textContainerAmount[5].rectTransform.localPosition = new Vector3(3f * textOffset, 0f, 0f);
                 textContainerAmount[6].rectTransform.localPosition = new Vector3(5f * textOffset, 0f, 0f);
                 textContainerAmount[7].rectTransform.localPosition = new Vector3(7f * textOffset, 0f, 0f);
-                buttonSwap.localPosition = new Vector3(-buttonLocalPositionXOffset * 4f, buttonLocalPositionY, buttonLocalPositionZ);
-                buttonNext.localPosition = new Vector3(buttonLocalPositionXOffset * 4f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonSwap.localPosition = new Vector3(-260f, buttonLocalPositionY, buttonLocalPositionZ);
+                buttonNext.localPosition = new Vector3(260f, buttonLocalPositionY, buttonLocalPositionZ);
                 foreach (Text textComponent in textContainerAmount) textComponent.text = "";
                 break;
         }

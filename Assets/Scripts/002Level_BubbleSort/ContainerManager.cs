@@ -25,39 +25,9 @@ public class ContainerManager : Listener
         for(int i = 0; i < containers.Length; i++)
         {
             containers[i] = transform.GetChild(i).gameObject;
+            //Debug.Log(i.ToString() + " is " + containers[i].name);
             containerContents[i] = 0;
         }
-    }
-
-    private int ListIsInOrder()
-    {
-        for(int i = 1; i < containerContents.Length; i++)
-        {
-            //Debug.Log("Container " + containers[i-1] + " has " + containerContents[i-1].ToString());
-            //Debug.Log("Container " + containers[i] +" has " + containerContents[i].ToString());
-            //Debug.Log("Container " + containers[i+1] + " has " + containerContents[i+1].ToString());
-            //means have to leave the last containerContents always unused and as 0
-            if (containerContents[i] == 0) return 0;
-            if (containerContents[i - 1] > containerContents[i]) return i;
-        }
-        return -1; //this should never get sent, just a backup
-    }
-
-    private void UpdateContainerAndUiPositions()
-    {
-        containerOnLeftSideOfTray++;
-        if (containers[containerOnLeftSideOfTray + 2].activeSelf == false) atEndOfList = true;
-        //this method of checking if tray is at end of currently active container list means that there
-        //always needs to be an inactive container gameobject at the end of the list, even when we are
-        //at the maximum active containers, basically always have one container at the end of array thats turned off
-        if (containers[containerOnLeftSideOfTray + 1].activeSelf == false)
-        {
-            containerOnLeftSideOfTray = 0;
-            atEndOfList = false;
-            swapButtonWasPressedThisCycle = false;
-        }
-        //Debug.Log(containerOnLeftSideOfTray.ToString());
-        uiControls.UpdateHighlights(containerOnLeftSideOfTray);
     }
 
     public override void ButtonPushed(string buttonName)
@@ -74,11 +44,13 @@ public class ContainerManager : Listener
 
         if (buttonName == "ButtonNext")
         {
+            if (containers[containerOnLeftSideOfTray + 2].activeSelf == false) atEndOfList = true;
+            Debug.Log("listEnd " + atEndOfList.ToString() + ", swapButtonPressedThisCycle " + swapButtonWasPressedThisCycle.ToString());
+
             if (atEndOfList && !swapButtonWasPressedThisCycle)
             {
-                atEndOfList = false;
+                //atEndOfList = false;
                 int listCheck = ListIsInOrder();
-                Debug.Log(listCheck.ToString());
                 if (listCheck == 0) level.TaskSuccessful();
                 else if (listCheck > 0)
                 {
@@ -89,6 +61,39 @@ public class ContainerManager : Listener
             }
             else UpdateContainerAndUiPositions();
         }
+    }
+
+    private void UpdateContainerAndUiPositions()
+    {
+        //this method of checking if tray is at end of currently active container list means that there
+        //always needs to be an inactive container gameobject at the end of the list, even when we are
+        //at the maximum active containers, basically always have one container at the end of array thats turned off
+        if (atEndOfList)
+        {
+            containerOnLeftSideOfTray = 0;
+            atEndOfList = false;
+            swapButtonWasPressedThisCycle = false;
+        }
+        else
+        {
+            containerOnLeftSideOfTray++;
+        }
+        //Debug.Log(containerOnLeftSideOfTray.ToString());
+        uiControls.UpdateHighlights(containerOnLeftSideOfTray);
+    }
+
+    private int ListIsInOrder()
+    {
+        for (int i = 1; i < containerContents.Length; i++)
+        {
+            //Debug.Log("Container " + containers[i-1] + " has " + containerContents[i-1].ToString());
+            //Debug.Log("Container " + containers[i] +" has " + containerContents[i].ToString());
+            //Debug.Log("Container " + containers[i+1] + " has " + containerContents[i+1].ToString());
+            //means have to leave the last containerContents always unused and as 0
+            if (containerContents[i] == 0) return 0;
+            if (containerContents[i - 1] > containerContents[i]) return i;
+        }
+        return -1; //this should never get sent, just a backup
     }
 
     private void CleanupContainers()
@@ -532,8 +537,8 @@ public class ContainerManager : Listener
                 containerContents[0] = (int)Random.Range(4, 6);
                 containerContents[1] = (int)Random.Range(7, 9);
                 containerContents[2] = (int)Random.Range(10, 12);
-                containerContents[3] = (int)Random.Range(16, 18);
-                containerContents[4] = (int)Random.Range(1, 3);
+                containerContents[3] = (int)Random.Range(1, 3);
+                containerContents[4] = (int)Random.Range(16, 18);
                 containerContents[5] = (int)Random.Range(13, 15);
                 ResetContainers(6);
                 trackNextButton = true;
@@ -550,8 +555,8 @@ public class ContainerManager : Listener
                 containerContents[1] = (int)Random.Range(7, 9);
                 containerContents[2] = (int)Random.Range(4, 6);
                 containerContents[3] = (int)Random.Range(19, 21);
-                containerContents[4] = (int)Random.Range(10, 12);
-                containerContents[5] = (int)Random.Range(1, 3);
+                containerContents[4] = (int)Random.Range(1, 3);
+                containerContents[5] = (int)Random.Range(10, 12);
                 containerContents[6] = (int)Random.Range(13, 15);
                 ResetContainers(7);
                 trackNextButton = true;

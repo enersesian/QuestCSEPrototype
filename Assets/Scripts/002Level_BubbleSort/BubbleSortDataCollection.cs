@@ -30,9 +30,11 @@ public class BubbleSortDataCollection : Listener
             HCInvestigatorManager.instance.StartRecordingVideo();
             textRecordTimer = Time.time;
         }
-
-        Invoke("SetStationHeight", 0.5f);
-        Invoke("SetStationHeight", 1f);
+        if(!Application.isEditor)
+        {
+            Invoke("SetStationHeight", 0.5f);
+            Invoke("SetStationHeight", 1f);
+        }
     }
 
     /// <summary>

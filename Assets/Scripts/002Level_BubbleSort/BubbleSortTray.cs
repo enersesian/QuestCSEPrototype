@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class BubbleSortTray : Listener
 {
-    public Text passiveInstructionalText, activeInstructionalText, stepsTitle, stepsText;
+    public Text passiveInstructionalText, activeInstructionalText, currentStepsText, goalStepsText;
+    public Image passiveInstructionalPanel, activeInstructionalPanel;
     private Color blankColor = new Color(0f, 0f, 0f, 0f);
     private float start, end, time;
     [SerializeField]
@@ -15,13 +16,13 @@ public class BubbleSortTray : Listener
     private Vector3 trayEndPosition;
     public UIControls uiControls;
     private bool taskSuccessful;
-    private int stepsTaken;
+    private int currentStepsTaken, goalSteps;
 
     private void Awake()
     {
         base.Awake();
-        stepsTitle.text = "";
-        stepsText.text = "";
+        currentStepsText.text = "";
+        goalStepsText.text = "";
     }
 
     private IEnumerator TrayTransition(Vector3 startPosition, Vector3 endPosition, float moveTime = 4f, float waitTime = 0f)
@@ -50,6 +51,20 @@ public class BubbleSortTray : Listener
             yield return null;
         }
         textElement.color = endColor;
+        yield return null;
+    }
+
+    private IEnumerator ColorTransition(Image imageElement, Color startColor, Color endColor, float moveTime = 4f, float waitTime = 0f)
+    {
+        yield return new WaitForSeconds(waitTime);
+        float elapsedTime = 0;
+        while (elapsedTime < moveTime)
+        {
+            imageElement.color = Color.Lerp(startColor, endColor, (elapsedTime / moveTime));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        imageElement.color = endColor;
         yield return null;
     }
 
@@ -103,10 +118,14 @@ public class BubbleSortTray : Listener
 
     public override void TaskUnsuccessful(int hint)
     {
-        coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", level.resetTimer, 0f);
+        coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", level.resetTimer / 2f, 0f);
         StartCoroutine(coroutine);
         passiveInstruction = "List is not in order. You might want to check around container " + hint.ToString() + ".";
-        coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, level.resetTimer, level.resetTimer + 1f);
+        coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, level.resetTimer, level.resetTimer / 2f);
+        StartCoroutine(coroutine);
+        coroutine = ColorTransition(passiveInstructionalPanel, Color.white, Color.red, level.resetTimer, level.resetTimer / 2f);
+        StartCoroutine(coroutine);
+        coroutine = ColorTransition(passiveInstructionalPanel, Color.red, Color.white, level.resetTimer, level.resetTimer * 3f);
         StartCoroutine(coroutine);
     }
 
@@ -121,15 +140,27 @@ public class BubbleSortTray : Listener
 
     public override void TaskSuccessful()
     {
-        coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", level.resetTimer, 0f);
+        coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", level.resetTimer / 2f, 0f);
         StartCoroutine(coroutine);
-        coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", level.resetTimer, 0f);
+        coroutine = TextTransition(activeInstructionalText, Color.black, blankColor, "", level.resetTimer / 2f, 0f);
         StartCoroutine(coroutine);
-        passiveInstruction = "Great job! You successfully sorted this list.";
-        activeInstruction = "Press next to proceed for next task.";
-        coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, level.resetTimer, level.resetTimer + 1f);
+        int taskScore = currentStepsTaken - goalSteps;
+        passiveInstruction = "You successfully sorted the list with " + taskScore.ToString() + " step(s) over the goal.";
+        if (level.currentState == BubbleSortState.BeginnerBubbleSortTask06Complete) activeInstruction = "You completed the tutorial! Please remove the headset.";
+        else if (taskScore == 0) activeInstruction = "That is a perfect score, great job! Press next to proceed for next task.";
+        else if (taskScore <= Mathf.CeilToInt(0.15f * taskScore)) activeInstruction = "That is a close score, good job! Press next to proceed for next task.";
+        else activeInstruction = "That is a good try, let's try to get a better score in the next ask. Press next to proceed.";
+        coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, level.resetTimer, level.resetTimer / 2f);
         StartCoroutine(coroutine);
-        coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, level.resetTimer, level.resetTimer * 2f + 1f);
+        coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, level.resetTimer, level.resetTimer * 1.5f);
+        StartCoroutine(coroutine);
+        coroutine = ColorTransition(passiveInstructionalPanel, Color.white, Color.green, level.resetTimer, level.resetTimer / 2f);
+        StartCoroutine(coroutine);
+        coroutine = ColorTransition(passiveInstructionalPanel, Color.green, Color.white, level.resetTimer, level.resetTimer * 2f);
+        StartCoroutine(coroutine);
+        coroutine = ColorTransition(activeInstructionalPanel, Color.white, Color.green, level.resetTimer, level.resetTimer * 1.5f);
+        StartCoroutine(coroutine);
+        coroutine = ColorTransition(activeInstructionalPanel, Color.green, Color.white, level.resetTimer, level.resetTimer * 3f);
         StartCoroutine(coroutine);
         taskSuccessful = true;
     }
@@ -148,8 +179,8 @@ public class BubbleSortTray : Listener
                 if (buttonName == "ButtonSwap") buttonNext.ResetButton(false);
                 else
                 {
-                    stepsTaken++;
-                    stepsText.text = stepsTaken.ToString();
+                    currentStepsTaken++;
+                    currentStepsText.text = currentStepsTaken.ToString();
                     buttonSwap.ResetButton(false);
                 }
                 Invoke("TurnOnButtons", level.resetTimer);
@@ -166,8 +197,8 @@ public class BubbleSortTray : Listener
             case BubbleSortState.IntroductionToThreeElementList09:
                 if (buttonName == "ButtonNext")
                 {
-                    stepsTaken++;
-                    stepsText.text = stepsTaken.ToString();
+                    currentStepsTaken++;
+                    currentStepsText.text = currentStepsTaken.ToString();
                 }
                 break;
         }
@@ -244,7 +275,7 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToElementChecking:
-                coroutine = TextTransition(stepsTitle, blankColor, Color.black, "Steps", level.resetTimer, 0f);
+                coroutine = TextTransition(currentStepsText, blankColor, Color.black, "0", level.resetTimer, 0f);
                 StartCoroutine(coroutine);
                 coroutine = TextTransition(passiveInstructionalText, Color.black, blankColor, "", level.resetTimer, 0f);
                 StartCoroutine(coroutine);
@@ -306,9 +337,9 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.IntroductionToThreeElementList01:
-                coroutine = TextTransition(stepsText, blankColor, Color.black, "0", level.resetTimer, 0f);
+                coroutine = TextTransition(currentStepsText, blankColor, Color.black, "0", level.resetTimer, 0f);
                 StartCoroutine(coroutine);
-                stepsTaken = 0;
+                currentStepsTaken = 0;
                 uiControls.SetUISize(3);
                 trayEndPosition = new Vector3(-0.25f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, level.resetTimer, 0f);
@@ -464,8 +495,11 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask01:
-                stepsText.text = "0";
-                stepsTaken = 0;
+                //stepsTitle.text = "Steps";
+                currentStepsTaken = 0;
+                currentStepsText.text = currentStepsTaken.ToString();
+                goalSteps = 6;
+                goalStepsText.text = goalSteps.ToString();
                 uiControls.SetUISize(3);
                 trayEndPosition = new Vector3(-0.25f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, level.resetTimer, 0f);
@@ -485,8 +519,11 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask02:
-                stepsText.text = "0";
-                stepsTaken = 0;
+                //stepsTitle.text = "Steps";
+                currentStepsTaken = 0;
+                currentStepsText.text = currentStepsTaken.ToString();
+                goalSteps = 9;
+                goalStepsText.text = goalSteps.ToString();
                 uiControls.SetUISize(4);
                 trayEndPosition = new Vector3(-0.5f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, level.resetTimer, 0f);
@@ -506,8 +543,11 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask03:
-                stepsText.text = "0";
-                stepsTaken = 0;
+                //stepsTitle.text = "Steps";
+                currentStepsTaken = 0;
+                currentStepsText.text = currentStepsTaken.ToString();
+                goalSteps = 12;
+                goalStepsText.text = goalSteps.ToString();
                 uiControls.SetUISize(5);
                 trayEndPosition = new Vector3(-0.75f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, level.resetTimer, 0f);
@@ -527,8 +567,11 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask04:
-                stepsText.text = "0";
-                stepsTaken = 0;
+                //stepsTitle.text = "Steps";
+                currentStepsTaken = 0;
+                currentStepsText.text = currentStepsTaken.ToString();
+                goalSteps = 20;
+                goalStepsText.text = goalSteps.ToString();
                 uiControls.SetUISize(6);
                 trayEndPosition = new Vector3(-1f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, level.resetTimer, 0f);
@@ -548,8 +591,11 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask05:
-                stepsText.text = "0";
-                stepsTaken = 0;
+                //stepsTitle.text = "Steps";
+                currentStepsTaken = 0;
+                currentStepsText.text = currentStepsTaken.ToString();
+                goalSteps = 30;
+                goalStepsText.text = goalSteps.ToString();
                 uiControls.SetUISize(7);
                 trayEndPosition = new Vector3(-1.25f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, level.resetTimer, 0f);
@@ -569,8 +615,11 @@ public class BubbleSortTray : Listener
                 break;
 
             case BubbleSortState.BeginnerBubbleSortTask06:
-                stepsText.text = "0";
-                stepsTaken = 0;
+                //stepsTitle.text = "Steps";
+                currentStepsTaken = 0;
+                currentStepsText.text = currentStepsTaken.ToString();
+                goalSteps = 35;
+                goalStepsText.text = goalSteps.ToString();
                 uiControls.SetUISize(8);
                 trayEndPosition = new Vector3(-1.5f, transform.localPosition.y, transform.localPosition.z);
                 coroutine = TrayTransition(transform.localPosition, trayEndPosition, level.resetTimer, 0f);
