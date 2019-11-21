@@ -149,7 +149,7 @@ public class BubbleSortTray : Listener
         if (level.currentState == BubbleSortState.BeginnerBubbleSortTask06Complete) activeInstruction = "You completed the tutorial! Please remove the headset.";
         else if (taskScore == 0) activeInstruction = "That is a perfect score, great job! Press next to proceed for next task.";
         else if (taskScore <= Mathf.CeilToInt(0.15f * taskScore)) activeInstruction = "That is a close score, good job! Press next to proceed for next task.";
-        else activeInstruction = "That is a good try, let's try to get a better score in the next ask. Press next to proceed.";
+        else activeInstruction = "That is a good try, let's try to get a better score in the next task. Press next to proceed.";
         coroutine = TextTransition(passiveInstructionalText, blankColor, Color.black, passiveInstruction, level.resetTimer, level.resetTimer / 2f);
         StartCoroutine(coroutine);
         coroutine = TextTransition(activeInstructionalText, blankColor, Color.black, activeInstruction, level.resetTimer, level.resetTimer * 1.5f);

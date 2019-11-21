@@ -139,7 +139,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void SetLevelScale()
     {
-        GetComponent<LevelScaling>().SetLevelScale();
+        if(GetComponent<LevelScaling>() != null) GetComponent<LevelScaling>().SetLevelScale();
     }
 
     /// <summary>

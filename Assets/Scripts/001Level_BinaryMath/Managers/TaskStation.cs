@@ -14,7 +14,7 @@ public class TaskStation : MonoBehaviour
 
     private void Start()
     {
-        taskNumberText.text = "";
+        if(taskNumberText != null)taskNumberText.text = "";
         taskShapeList.GetChild(0).gameObject.SetActive(false);
         taskShapeList.GetChild(1).gameObject.SetActive(false);
         taskShapeList.GetChild(2).gameObject.SetActive(false);

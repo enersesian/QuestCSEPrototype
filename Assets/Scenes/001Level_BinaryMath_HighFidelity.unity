@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000002, guid: 289894ef07912ea4a82c2e1e182be2e6,
+  m_LightingDataAsset: {fileID: 112000002, guid: 4639540459b4b334ba3e2f13d413eaac,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -32738,7 +32738,6 @@ MonoBehaviour:
   tempSpawnLocation: {fileID: 151345228}
   farLocation: {fileID: 1506979052}
   nearLocation: {fileID: 0}
-  runButton: {fileID: 0}
   leverRunOutput: {fileID: 195450464}
   cube: {fileID: 1684019433986794, guid: f4ad5c903d251684ab90f468a1374c34, type: 2}
   sphere: {fileID: 1386937103998186, guid: 89518f450d796534e892152e48c968f4, type: 2}

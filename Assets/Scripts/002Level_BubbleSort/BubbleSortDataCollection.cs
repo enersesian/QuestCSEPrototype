@@ -86,12 +86,12 @@ public class BubbleSortDataCollection : Listener
 
     public override void TaskSuccessful()
     {
-        if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, "Task is succesful at " + level.currentState.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, "Task is successful at " + level.currentState.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
     }
 
     public override void TaskUnsuccessful(int hint)
     {
-        if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, "Task is unsuccesful at container " + hint.ToString() + " at task " + level.currentState.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
+        if (shouldRecordUserData) HCInvestigatorManager.instance.WriteTextData(0, "Task is unsuccessful at container " + hint.ToString() + " at task " + level.currentState.ToString() + " at " + DateTime.Now.ToString("hh:mm:ss"));
     }
 
     public override void ButtonPushed(string buttonName)
