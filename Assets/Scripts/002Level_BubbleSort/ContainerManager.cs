@@ -7,7 +7,7 @@ public class ContainerManager : Listener
     [SerializeField]
     private GameObject[] containers = new GameObject[9];
     private int[] containerContents = new int[9];
-    private int containerOnLeftSideOfTray;
+    private int containerOnLeftSideOfTray, lastContainerToCheck;
 
     private IEnumerator coroutine;
     private Vector3 sphereLocation;
@@ -45,6 +45,13 @@ public class ContainerManager : Listener
         if (buttonName == "ButtonNext")
         {
             if (containers[containerOnLeftSideOfTray + 2].activeSelf == false) atEndOfList = true;
+            /*
+            if (containerOnLeftSideOfTray == lastContainerToCheck && containerContents[containerOnLeftSideOfTray] <= containerContents[containerOnLeftSideOfTray + 1])
+            {
+                lastContainerToCheck--;
+                atEndOfList = true;
+            }
+            */
             Debug.Log("listEnd " + atEndOfList.ToString() + ", swapButtonPressedThisCycle " + swapButtonWasPressedThisCycle.ToString());
 
             if (atEndOfList && !swapButtonWasPressedThisCycle)
@@ -146,6 +153,7 @@ public class ContainerManager : Listener
                 coroutine = MoveContainer(containers[1], new Vector3(0.25f, yHeightLow, 0f), new Vector3(0.25f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
+                lastContainerToCheck = 0;
                 break;
 
             case -2:
@@ -170,6 +178,7 @@ public class ContainerManager : Listener
                 coroutine = MoveContainer(containers[2], new Vector3(0.5f, yHeightLow, 0f), new Vector3(0.5f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
+                lastContainerToCheck = 1;
                 break;
 
             case -3:
@@ -200,6 +209,7 @@ public class ContainerManager : Listener
                 coroutine = MoveContainer(containers[3], new Vector3(0.75f, yHeightLow, 0f), new Vector3(0.75f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
+                lastContainerToCheck = 2;
                 break;
 
             case -4:
@@ -236,6 +246,7 @@ public class ContainerManager : Listener
                 coroutine = MoveContainer(containers[4], new Vector3(1f, yHeightLow, 0f), new Vector3(1f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
+                lastContainerToCheck = 3;
                 break;
 
             case -5:
@@ -278,6 +289,7 @@ public class ContainerManager : Listener
                 coroutine = MoveContainer(containers[5], new Vector3(1.25f, yHeightLow, 0f), new Vector3(1.25f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
+                lastContainerToCheck = 4;
                 break;
 
             case -6:
@@ -326,6 +338,7 @@ public class ContainerManager : Listener
                 coroutine = MoveContainer(containers[6], new Vector3(1.5f, yHeightLow, 0f), new Vector3(1.5f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
+                lastContainerToCheck = 5;
                 break;
 
             case -7:
@@ -380,6 +393,7 @@ public class ContainerManager : Listener
                 coroutine = MoveContainer(containers[7], new Vector3(1.75f, yHeightLow, 0f), new Vector3(1.75f, 0f, 0f), moveTime);
                 StartCoroutine(coroutine);
                 containerOnLeftSideOfTray = 0;
+                lastContainerToCheck = 6;
                 break;
 
             case -8:
